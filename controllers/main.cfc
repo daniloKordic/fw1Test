@@ -8,6 +8,11 @@
 		<cfset variables.fw = arguments.fw />
 	</cffunction>
 
+	<cffunction name="default">
+		<cfset rc.loginResult=""/>
+	</cffunction>
+
+
 	<cffunction name="startLogin">
 		<cfquery name="checkUser" datasource="fw1Test">
 			select
@@ -28,7 +33,8 @@
 			<cfset session.auth.isLoggedIn = true />
 			<cfset session.auth.fullname = rc.query.FirstName&" "&rc.query.LastName />
 		<cfelse>
-			<cfset variables.fw.redirect('main.default') />
+			<cfset rc.loginResult="failed"/>
+			<cfset variables.fw.redirect('main.default','all') />
 		</cfif>
 	</cffunction>
 
