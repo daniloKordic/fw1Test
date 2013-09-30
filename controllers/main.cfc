@@ -9,7 +9,7 @@
 	</cffunction>
 
 	<cffunction name="default">
-		<cfset rc.loginResult=""/>
+		
 	</cffunction>
 
 
@@ -33,8 +33,8 @@
 			<cfset session.auth.isLoggedIn = true />
 			<cfset session.auth.fullname = rc.query.FirstName&" "&rc.query.LastName />
 		<cfelse>
-			<cfset rc.loginResult="failed"/>
-			<cfset variables.fw.redirect('main.default','all') />
+			<cfset rc.loginResult = "failed" />
+			<cfset variables.fw.redirect(action='main.default',preserve='all') />
 		</cfif>
 	</cffunction>
 

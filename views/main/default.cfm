@@ -6,8 +6,8 @@
 	<cfelse>
 		<h1>Welcome #session.auth.fullName#</h1>
 
-		<cfif rc.loginResult eq "">
-			<h3 style="color:red;">#rc.loginResult#</h3>
+		<cfif isDefined("rc.loginResult") and rc.loginResult neq "">
+			<h3 style="color:red;">User with these credentials does not exist in the database!</h3>
 		</cfif>
 
 		<form action="#buildUrl('main.login')#" method="post">
@@ -17,5 +17,4 @@
 		</form>
 	</cfif>	
 
-	<cfdump var="#rc#"/>
 </cfoutput>
