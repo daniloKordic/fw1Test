@@ -21,8 +21,17 @@
 				users u with (nolock)
 			where
 				1=1
-				and u.username='#rc.user#'
-				and u.password='#rc.pass#'
+				<cfif isDefined("rc.user")>
+					and u.username='#rc.user#'
+				<cfelse>
+					and 1=2	
+				</cfif>
+				<cfif isDefined("rc.pass")>
+					and u.password='#rc.pass#'
+				<cfelse>
+					and 1=2
+				</cfif>
+				and isActive = 1
 		</cfquery>		
 
 		<cfset rc.query = checkUser />
@@ -43,5 +52,13 @@
 		<cfset session.auth.FullName = "Guest" />
 		<cfset this.sessionTimeout = createTimeSpan(0, 0, 0, 1) />
 		<cfset variables.fw.redirect('main.default') />
+	</cffunction>
+
+	<cffunction name="startConfirm">
+		<cfquery name="activateUser" datasource="fw1Test">
+			update users
+			set isActive=1
+			where useruid ='#rc.uid#'
+		</cfquery>
 	</cffunction>
 </cfcomponent>
