@@ -10,6 +10,7 @@
 		
 		<cfset session.auth = {} />
 		<cfset session.auth.isLoggedIn = false />
-		<cfset session.auth.fullname = "Guest" />
+		<cfset session.auth.firstName = "Guest" />
+		<cfset session.auth.lastName = "" />
 	</cffunction>
 </cfcomponent>
