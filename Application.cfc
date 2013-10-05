@@ -12,4 +12,5 @@
 		<cfset controller('security.session') />
 	</cffunction>
 	
+	<!--- test comment --->
 </cfcomponent>
