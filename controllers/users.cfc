@@ -9,6 +9,22 @@
 		<cfset variables.fw = arguments.fw />
 	</cffunction>
 
+	<cffunction name="setUserService" access="public" output="false" returntype="void">
+		<cfargument name="userService" type="any" required="true" />
+		<cfset variables.userService = arguments.userService />
+	</cffunction>
+	<cffunction name="getUserService" access="public" output="false" returntype="any">
+		<cfreturn variables.userService />
+	</cffunction>
+
+	<cffunction name="before" access="public" returntype="void">
+		<cfset setUserService(application.beanFactory.GetBean('userService')) />
+	</cffunction>
+
+	<cffunction name="default" access="public" returntype="void">
+		<cfset var userService = getUserService() />
+	</cffunction>
+
 	<cffunction name="startLogin">
 		<cfquery name="checkUser" datasource="fw1Test">
 			select

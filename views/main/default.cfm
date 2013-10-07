@@ -1,6 +1,6 @@
 <cfoutput>
 
-	<script type="text/javascript">
+	<!---<script type="text/javascript">
 		function register() {
 			window.location="index.cfm?action=users.register";
 		}
@@ -21,7 +21,7 @@
 			<input type="submit" value="Login">
 			<input type="button" value="Register" onclick="register()"/>
 		</form>
-	</cfif>	
-
-	
+	</cfif>--->	
+	<a href="#buildUrl('login.logout')#">Log out</a>
+	<cfdump var="#session#"/>
 </cfoutput>
