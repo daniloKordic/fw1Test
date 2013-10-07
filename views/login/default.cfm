@@ -1,5 +1,8 @@
 <cfoutput>
-
+<cfdump var="#rc#"/>
+<cfif structKeyExists(rc, "message")>
+	#rc.message[1]#
+</cfif>
 <form name="loginform" class="form-signin" action="#buildURL('login.login')#" method="post">
 	<h2 class="form-signin-heading">Sign in</h2>
 	<input type="text" name="email" class="input-block-level" placeholder="Email address">
