@@ -8,6 +8,7 @@
 	<cffunction name="authorize">
 		<cfargument name="rc" type="any" required="true" />
 		<cfif not session.auth.isLoggedIn and 	not listFindNoCase('login', variables.fw.getSection() ) and
+															not listFindNoCase('register', variables.fw.getSection()) and
 															not listFindNoCase('main.error', variables.fw.getFullyQualifiedAction() )>
 			<!--- <cfset this.sessionTimeout = createTimeSpan(0, 0, 0, 30) />
 		<cfelse> --->

@@ -22,6 +22,9 @@
 			<input type="button" value="Register" onclick="register()"/>
 		</form>
 	</cfif>--->	
+	<cfset userUID = session.auth.user.getUID() />
+	<a href="#buildUrl('users.manage?uid=#userUID#')#">Manage User</a>
 	<a href="#buildUrl('login.logout')#">Log out</a>
-	<cfdump var="#session#"/>
+	
+	
 </cfoutput>

@@ -25,6 +25,18 @@
 		<cfset var userService = getUserService() />
 	</cffunction>
 
+	<cffunction name="startManage" access="public" returntype="void">
+		<cfset var userService = getUserService() />
+
+		<cfif structKeyExists(rc, "fsw") and len(rc.fsw)>
+			<cfset var event = getUserService().handleForm(form) />
+		<cfelse>
+			<cfset var event = getUserService().handleRequest(url) />
+		</cfif>		
+
+		<cfset rc = structAppend(rc, event) />
+	</cffunction>
+
 	<cffunction name="startLogin">
 		<cfquery name="checkUser" datasource="fw1Test">
 			select
