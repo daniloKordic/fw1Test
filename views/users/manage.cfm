@@ -28,7 +28,7 @@
 	</script>
 
 <cfif rc.result.message neq "">
-	#rc.result.message#
+	<p class="text-info">#rc.result.message#</p>
 </cfif>
 
 	<h1>Edit user details</h1>
@@ -36,18 +36,22 @@
 		<input type="hidden" id="fsw" name="fsw" value=""/>
 		<input type="hidden" id="uid" name="uid" value="#rc.user.getUID()#"/>
 
+		<label>First Name: </label>
 		<input type="text" id="firstName" name="firstName" value="#rc.user.getFirstName()#" required placeholder="Enter first name"/><br/><br/>
+		<label>Last Name: </label>
 		<input type="text" id="lastName" name="lastName" value="#rc.user.getLastName()#" required placeholder="Enter last name"/><br/><br/>
+		<label>Email: </label>
 		<input type="text" id="email" name="email" value="#rc.user.getEmail()#" required placeholder="Enter email"/></br><br/>
+		<label>Password: </label>
 		<input type="password" id="password" name="password" value="#rc.user.getPassword()#" required placeholder="Enter password"/><br/><br/>
 		<cfif rc.user.getUID() neq "">
-			<input type="button" value="Save changes" onclick="processForm()"/>
+			<input class="btn btn-primary" type="button" value="Save changes" onclick="processForm()"/>
 		<cfelse>	
-			<input type="button" value="Register" onclick="processForm()"/>
+			<input class="btn" type="button" value="Register" onclick="processForm()"/>
 		</cfif>
 		
-		<input type="button" value="Cancel" onclick="cancel()" />
-		<input type="button" value="Home" onclick="gotoHome()"/>
+		<input class="btn" type="button" value="Cancel" onclick="cancel()" />
+		<input class="btn" type="button" value="Home" onclick="gotoHome()"/>
 	</form>
 
 </cfoutput>

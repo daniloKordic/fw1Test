@@ -1,24 +1,78 @@
 <cfoutput>
 	<script type="text/javascript">
 	 $(document).ready(function() {
+
+	 	 $('##loginform').validate(
+			{
+			rules: {
+				email: {
+					required: true,
+					email: true
+				},
+				password: {
+					minlength: 6,
+					required: true
+				}
+			},
+			highlight: function(element) {
+			$(element).closest('.control-group').removeClass('success').addClass('error');
+			},
+			success: function(element) {
+			element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+			}
+		});
+
+
 	 	$("##registerBtn").click(function() {
 	 		document.location="index.cfm?action=register";
 	 	});
 	 });
 	</script>
 
-<cfif structKeyExists(rc, "message")>
-	#rc.message[1]#
-</cfif>
-<form name="loginform" class="form-signin" action="#buildURL('login.login')#" method="post">
-	<h2 class="form-signin-heading">Sign in</h2>
-	<input type="text" name="email" class="input-block-level" placeholder="Email address" required>
-	<input type="password" name="password" class="input-block-level" placeholder="Password" required>
-	<label class="checkbox">
-		<input type="checkbox" name="rememberme"> Remember me
-	</label>
-	<button class="btn btn-large btn-primary" type="submit">Sign in</button>
-	<button type="button" id="registerBtn">Register</button>
-</form>
+	<cfif structKeyExists(rc, "message")>
+		<p class="text-info">#rc.message[1]#</p>
+	</cfif>
 
+	<style type="text/css">
+		label.valid {
+			width: 24px;
+			height: 24px;
+			background: url(assets/img/valid.png) center center no-repeat;
+			display: inline-block;
+			text-indent: -9999px;
+		}
+		label.error {
+			font-weight: bold;
+			color: red;
+			padding: 2px 8px;
+			margin-top: 2px;
+		}
+	</style>
+
+	<div class="span6">
+		<form name="loginform" id="loginform" class="form-horizontal" action="#buildURL('login.login')#" method="post">
+			<fieldset>
+				<h2 class="form-signin-heading">Sign in</h2>
+				<div class="control-group">
+					<label class="control-label" for="email">Email</label>
+					<div class="controls">
+						<input type="text" name="email" class="input-block-level" id="email" style="margin-right:50px;">
+					</div>
+				</div>
+				<div class="contorl-group">
+					<label class="control-label">Password</label>
+					<div class="controls">
+						<input type="password" name="password" class="input-block-level" id="password">
+					</div>
+				</div>
+				<!--- <label class="checkbox">
+					<input type="checkbox" name="rememberme"> Remember me
+				</label> --->
+				<div class="control-group">
+					<button class="btn btn-primary" type="submit">Sign in</button>
+					<button class="btn" type="button" id="registerBtn">Register</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
 </cfoutput>	

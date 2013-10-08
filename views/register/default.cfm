@@ -10,9 +10,9 @@
 	<input type="text" name="email" id="email" class="input-block-level" placeholder="Email address" required><br/>
 	<input type="password" name="password" id="password" class="input-block-level" placeholder="Password" required><br/><br/>
 	
-	<button class="btn btn-large btn-primary" type="button" id="registerBtn" name="registerBtn">Register</button>
-	<button type="button" id="cancelBtn">Cancel</button>
-	<button type="button" id="homeButton">Go to login page</button>
+	<button class="btn btn-primary" type="button" id="registerBtn" name="registerBtn">Register</button>
+	<button class="btn" type="button" id="cancelBtn">Cancel</button>
+	<button class="btn" type="button" id="homeButton">Go to login page</button>
 </form>
 
 

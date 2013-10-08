@@ -151,6 +151,7 @@
 				,email
 				,password
 				,isActive
+				,typeID
 			) values (
 				<cfqueryparam value="#uid#" cfsqltype="cf_sql_varchar" />
 				,<cfqueryparam value="#arguments.user.getFirstName()#" cfsqltype="cf_sql_varchar" />
@@ -158,6 +159,7 @@
 				,<cfqueryparam value="#arguments.user.getEmail()#" cfsqltype="cf_sql_varchar" />
 				,<cfqueryparam value="#arguments.user.getPassword()#" cfsqltype="cf_sql_varchar" />
 				,1
+				,2
 			)
 		</cfquery>
 
