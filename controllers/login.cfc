@@ -1,6 +1,6 @@
 <cfcomponent>
-	<cfset variables.fw = ""/>
 
+	<cfset variables.fw = ""/>
 	<cffunction name="init" access="public" returntype="void">
 		<cfargument name="fw" type="any" required="true"/>
 		<cfset variables.fw = arguments.fw />
@@ -50,6 +50,7 @@
 		<!--- since all ok, set sessoin variables --->
 		<cfset session.auth.isLoggedIn = true />
 		<cfset session.auth.fullName = user.getFirstName() & ' ' & user.getLastName() />
+		<cfset session.auth.TypeID = user.GetTypeID() />
 		<cfset session.auth.user = user />
 
 		<cfset variables.fw.redirect("main") />

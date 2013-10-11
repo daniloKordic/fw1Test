@@ -27,6 +27,7 @@
 					,u.email
 					,u.password
 					,u.isActive
+					,u.TypeID
 				from
 					Users u
 				where
@@ -40,6 +41,7 @@
 					,email = qry.email
 					,password = qry.password
 					,isActive = qry.isActive
+					,TypeID = qry.TypeID
 				) />
 			</cfif>
 		</cfif>
@@ -70,7 +72,7 @@
 					and email = '#arguments.filter.email#'
 				</cfif>
 		</cfquery>
-		<cfdump var="#qry#" output="C:\qewrtt.txt"/>
+		
 		<cfreturn qry />
 	</cffunction>
 
@@ -96,6 +98,8 @@
 					,LastName=qry.LastName
 					,email=qry.email
 					,password=qry.password
+					,isActive=qry.isActive
+					,TypeID=qry.TypeID
 					) />
 			</cfif>
 		</cfif>
@@ -114,6 +118,7 @@
 				,u.email
 				,u.password
 				,u.isActive
+				,u.TypeID
 			from
 				Users u
 			order by

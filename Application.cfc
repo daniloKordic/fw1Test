@@ -1,6 +1,6 @@
 <cfcomponent extends="framework">
 	<cfset this.sessionmanagement = true />
-	<cfset this.sessiontimeout = createTimeSpan(0, 0, 2, 0) />
+	<cfset this.sessiontimeout = createTimeSpan(0, 0, 10, 0) />
 
 	<cfset variables.framework.reloadApplicationOnEveryRequest = true />
 	<cfset variables.framework.suppressImplicitSerice = true />

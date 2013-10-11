@@ -7,6 +7,7 @@
 		variables.instance.Email = "";
 		variables.instance.Password = "";
 		variables.instance.IsActive = 0;
+		variables.instance.TypeID = 0;
 	</cfscript>
 
 	<cffunction name="init" access="public" output="false" returntype="user">
@@ -65,6 +66,14 @@
 		<cfreturn variables.instance.IsActive />
 	</cffunction>
 
+	<cffunction name="setTypeID" access="public" output="false">
+		<cfargument name="TypeID" type="numeric" required="true" />
+		<cfset variables.instance.TypeID = arguments.TypeID />
+	</cffunction>
+	<cffunction name="getTypeID" access="public" returntype="string" output="false">
+		<cfreturn variables.instance.TypeID />
+	</cffunction>
+
 	<cffunction name="setupUser" access="public" output="false" returntype="void">
 		<cfargument name="UID" required="false" type="string" default="" />
 		<cfargument name="FirstName" required="false" type="string" default="" />
@@ -72,6 +81,7 @@
 		<cfargument name="Email" required="false" type="string" default="" />
 		<cfargument name="Password" required="false" type="string" default="" />
 		<cfargument name="IsActive" required="false" type="numeric" default="0" />
+		<cfargument name="TypeID" required="false" type="numeric" default="0" />
 
 		<cfset setUID(arguments.UID)>
 		<cfset setFirstName(arguments.FirstName)>
@@ -79,6 +89,7 @@
 		<cfset setEmail(arguments.Email)>
 		<cfset setPassword(arguments.Password)>
 		<cfset setIsActive(arguments.IsActive)>
+		<cfset setTypeID(arguments.TypeID)>
 	</cffunction>
 
 	<cffunction name="reset" access="public" output="false" returntype="void">
@@ -88,6 +99,7 @@
 		<cfset setEmail('')>
 		<cfset setPassword('')>
 		<cfset setIsActive(0)>
+		<cfset setTypeID(0)>
 	</cffunction>
 
 </cfcomponent>

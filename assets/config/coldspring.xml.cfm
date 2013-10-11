@@ -19,4 +19,9 @@
 	</bean>
 	<bean id="userGateway" autowire="no" parent="ParentConfig" class="fw1Test.model.userGateway" />
 
+	<bean id="menuService" autowire="no" class="fw1Test.model.menuService">
+		<constructor-arg name="menuGateway"><ref bean="menuGateway" /></constructor-arg>
+	</bean>
+	<bean id="menuGateway" autowire="no" parent="ParentConfig" class="fw1Test.model.menuGateway" />
+
 </beans>

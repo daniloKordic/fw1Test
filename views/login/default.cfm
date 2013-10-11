@@ -56,23 +56,21 @@
 				<div class="control-group">
 					<label class="control-label" for="email">Email</label>
 					<div class="controls">
-						<input type="text" name="email" class="input-block-level" id="email" style="margin-right:50px;">
+						<input type="text" name="email" class="input-block-level" id="email" style="margin-right:10px;width:230px;">
 					</div>
 				</div>
 				<div class="contorl-group">
 					<label class="control-label">Password</label>
 					<div class="controls">
-						<input type="password" name="password" class="input-block-level" id="password">
+						<input type="password" name="password" class="input-block-level" id="password" style="margin-right:10px;width:230px;">
 					</div>
 				</div>
-				<!--- <label class="checkbox">
-					<input type="checkbox" name="rememberme"> Remember me
-				</label> --->
-				<div class="control-group">
+				<div class="control-group" style="text-align:right;margin:20px 50px 0 0;">
 					<button class="btn btn-primary" type="submit">Sign in</button>
 					<button class="btn" type="button" id="registerBtn">Register</button>
 				</div>
 			</fieldset>
 		</form>
 	</div>
+
 </cfoutput>	
