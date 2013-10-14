@@ -1,0 +1,57 @@
+<cfcomponent>
+	
+	<cffunction name="init" output="false">
+		<cfargument name="productGateway" required="true" type="component" />
+		<cfset variables.instance.productGateway = arguments.productGateway />
+		<cfreturn this />
+	</cffunction>
+
+	<cffunction name="getProductGateway" access="private" output="false">
+		<cfreturn variables.instance.productGateway />
+	</cffunction>
+
+	<cffunction name="handleGrid" access="public" output="false" returntype="any">
+		<cfargument name="url" type="any" required="true" />
+
+		<cfscript>
+			var grid = {
+				pageNumber=1
+				,rowsPerPage = 20
+				,orderBy = "updated"
+				,orderDirection = "desc"
+				,start=0
+			};
+		</cfscript>
+
+		<cfif structKeyExists(arguments.url, "pageNumber")><cfset grid.pageNumber = arguments.url.pageNumber /></cfif>
+		<cfif structKeyExists(arguments.url, "rowsPerPage")><cfset grid.rowsPerPage = arguments.url.rowsPerPage /></cfif>
+		<cfif structKeyExists(arguments.url, "orderBy")><cfset grid.orderBy = arguments.url.orderBy /></cfif>
+		<cfif structKeyExists(arguments.url, "orderDirection")><cfset grid.orderDirection = arguments.url.orderDirection /></cfif>
+		<cfif structKeyExists(arguments.url, "start")><cfset grid.start = arguments.url.start /></cfif>
+
+		<cfreturn getProductGateway().getGrid(grid=grid) />
+	</cffunction>
+
+	<cffunction name="HandleRequest" access="public" output="false" returntype="any">
+		<cfargument name="url" type="any" required="true" />
+
+		<cfscript>
+			var uid = "";
+			var result = {
+			 	errorFields=""
+			 	,message=""
+			};
+		</cfscript>
+		<cfif structKeyExists(arguments.url, "uid")><cfset uid=arguments.url.uid /></cfif>
+		<cfset var product = getProductGateway().getByKey(uid=uid) />
+		<cfset var event = {product=product, result=result} />
+
+		<cfreturn event />
+	</cffunction>
+
+	<cffunction name="HandleForm" access="public" output="false" returntype="any">
+		<cfset var event = {} />
+
+		<cfreturn event />
+	</cffunction>
+</cfcomponent>

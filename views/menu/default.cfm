@@ -60,7 +60,7 @@
 		</table> --->
 		
 
-		<div class="bs-example">
+		<!--- <div class="bs-example">
 	      <table class="table table-striped table-bordered">
 	        <thead>
 	          <tr>
@@ -87,7 +87,49 @@
 	          </tr>
 	        </tbody>
 	      </table>
-	    </div>
+	    </div> --->
+
+		<div id="menuContainer">
+
+			<cfquery name="getItems01" dbtype="query">
+				select * from rc.menu where MenuItemLevel=1 order by Sort
+			</cfquery>
+
+			<ul>
+				<cfloop query="getItems01">
+					<cfset tMenuItemUID="#MenuItemUID#">
+					<cfquery name="getChildren" dbtype="query">
+						select * from rc.menu where MenuItemLevel=2 and ParentMenuItemUID='#tMenuItemUID#'
+					</cfquery>
+					<li <cfif getChildren.recordCount neq 0>class="withChildren"</cfif>>
+						<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
+						<cfif getChildren.recordCount neq 0>
+							<ul>
+								<cfloop query="getChildren">
+									<cfset tMenuItemUID="#MenuItemUID#">
+									<cfquery name="getChildren" dbtype="query">
+										select * from rc.menu where MenuItemLevel=3 and ParentMenuItemUID='#tMenuItemUID#'
+									</cfquery>
+									<li <cfif getChildren.recordCount neq 0>class="withChildren"</cfif>>
+										<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
+										<cfif getChildren.recordCount neq 0>
+											<ul>
+												<cfloop query="getChildren">
+													<li>
+														<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
+													</li>
+												</cfloop>
+											</ul>
+										</cfif>
+									</li>
+								</cfloop>
+							</ul>
+						</cfif>
+					</li>
+				</cfloop>
+			</ul>
+
+		</div>
 		
 </cfif>
 

@@ -1,13 +1,11 @@
 <cfoutput>
 
-
 <cfset fTypeID = #session.auth.TypeID# />
-
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("##addMenuItem").click(function(){
-			document.location="index.cfm?action=";
+		$("##backBtn").click(function(){
+			document.location="index.cfm?action=menu";
 		});
 	});
 </script>
@@ -41,41 +39,11 @@
 <cfif fTypeID eq 1>
 	<h2>Menu Management</h2>
 
-	<button class="btn btn-primary" type="button" id="addMenuItem" name="addMenuItem">Add Menu Item</button>
+	<button class="btn btn-primary" type="button" id="backBtn" name="backBtn">Back</button>
 	
-		<div class="bs-example">
-	      <table class="table table-striped table-bordered">
-	        <thead>
-	          <tr>
-	            <th>Menu Title</th>
-	            <th>Menu Item Level</th>
-	            <th>Sort</th>
-	          </tr>
-	        </thead>
-	        <tbody>
-	          <tr>
-	            <td>1</td>
-	            <td>Mark</td>
-	            <td>Otto</td>
-	          </tr>
-	          <tr>
-	            <td>2</td>
-	            <td>Jacob</td>
-	            <td>Thornton</td>
-	          </tr>
-	          <tr>
-	            <td>3</td>
-	            <td>Larry</td>
-	            <td>the Bird</td>
-	          </tr>
-	        </tbody>
-	      </table>
-	    </div>
+
 		
 </cfif>
-
-
-<cfdump var="#session#"/>
 
 <cfdump var="#rc#"/>
 

@@ -24,4 +24,9 @@
 	</bean>
 	<bean id="menuGateway" autowire="no" parent="ParentConfig" class="fw1Test.model.menuGateway" />
 
+	<bean id="productService" autowire="no" class="fw1Test.model.productService">
+		<constructor-arg name="productGateway"><ref bean="productGateway"/></constructor-arg>		
+	</bean>
+	<bean id="productGateway" autowire="no" parent="ParentConfig" class="fw1Test.model.productGateway"/>
+
 </beans>

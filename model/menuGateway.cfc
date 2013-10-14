@@ -19,10 +19,23 @@
 		<cfset qryMenu = ""/>
 
 		<cfquery name="qryMenu" datasource="#getDSN()#">
-			select 
-				m.*
-			from 
-				menu m with (nolock)
+			select
+				m.MenuItemUID,
+				MenuTitle=m.MenuTitle,
+				PageUID=coalesce(m.PageUID,null),
+				m.MenuItemLevel,
+				ParentMenuItemUID=coalesce(m.ParentMenuItemUID,null),
+				Sort,
+				Fuse=case when m.PageUID is not null
+					then ''
+					else ''
+				end
+			from
+				Menu m with (nolock)
+			where
+				1=1
+			order
+				by m.menuItemLevel, m.Sort
 		</cfquery>
 
 		<cfreturn qryMenu />

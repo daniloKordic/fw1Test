@@ -14,4 +14,16 @@
 		<cfreturn getMenuGateway().getAll() />
 	</cffunction>
 
+	<cffunction name="handleRequest" access="public" output="false" returntype="any">
+		<cfargument name="url" type="any" required="true" default="" />
+
+		<cfreturn structNew()/>
+	</cffunction>
+
+	<cffunction name="handleForm" access="public" output="false" returntype="any">
+		<cfargument name="form" type="any" required="true" default="" />
+
+		<cfreturn structNew()/>
+	</cffunction>
+
 </cfcomponent>
