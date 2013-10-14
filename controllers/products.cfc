@@ -24,15 +24,15 @@
 	</cffunction>
 
 	<cffunction name="manage" access="public" returntype="void">
+		
 		<cfset var productService = getProductService() />
 
-		<cfif structKeyExists(rc, "action") and Len(rc.action)>
-			<cfset var event = productService.HandleForm(form) />
+		<cfif structKeyExists(rc, "fsw") and Len(rc.fsw)>
+			<cfset var rc.event = productService.HandleForm(form) />
 		<cfelse>
-			<cfset var event = productService.HandleRequest(url) />
+			<cfset var rc.event = productService.HandleRequest(url) />
 		</cfif>
-
-		<cfset rc = structAppend(rc, event) />
+		
 	</cffunction>
 
 </cfcomponent>

@@ -50,6 +50,39 @@
 	</cffunction>
 
 	<cffunction name="HandleForm" access="public" output="false" returntype="any">
+		<cfargument name="form" type="any" required="true" />
+
+		<cfscript>
+			var productUID = "";
+			var productName = "";
+			var productDesc = "";
+			var isActive = 0;
+		</cfscript>
+
+		<cfif structKeyExists(arguments.form, "productUID")><cfset productUID=arguments.form.producUID /></cfif>
+		<cfif structKeyExists(arguments.form, "productName")><cfset productName=arguments.form.productName /></cfif>
+		<cfif structKeyExists(arguments.form, "productName")><cfset productName=arguments.form.productName /></cfif>
+		<cfif structKeyExists(arguments.form, "active")><cfset isActive=arguments.form.active /></cfif>
+
+		<cfset product.setupProduct (
+			productUID=productUID
+			,productName=productName
+			,productDescription=productDescription
+			,active=isActive
+		) />
+
+		<cfif structKeyExists(arguments.form, "fsw")>
+			<cfswitch expression="#arguments.form.fsw#">
+				<cfcase value="save">
+					
+				</cfcase>
+				<cfcase value="update">
+					<cfset result = getProductGateway().save(product = product) />
+				</cfcase>
+			</cfswitch>
+		</cfif>
+
+
 		<cfset var event = {} />
 
 		<cfreturn event />
