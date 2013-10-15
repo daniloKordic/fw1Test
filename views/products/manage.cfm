@@ -5,12 +5,11 @@
 	<cfset fProductDescription = ""/>
 	<cfset fIsActive = 0 />
 
-	<cfif isDefined("rc.event.product.ProductUID") and rc.event.product.ProductUID neq ""><cfset fProductUID="#rc.event.product.ProductUID#"/></cfif>
-	<cfif isDefined("rc.event.product.ProductName") and rc.event.product.ProductName neq ""><cfset fProductName="#rc.event.product.ProductName#"/></cfif>
-	<cfif isDefined("rc.event.product.ProductDesription") and rc.event.product.ProductDescription neq ""><cfset fProductDescription="#rc.event.product.ProductDescription#"/></cfif>
-	<cfif isDefined("rc.event.product.active") and rc.event.product.active neq ""><cfset fIsActive="#rc.event.product.active#"/></cfif>
-		
-	
+	<cfset fProductUID="#rc.event.product.getProductUID()#"/>
+	<cfset fProductName="#rc.event.product.getProductName()#"/>
+	<cfset fProductDescription="#rc.event.product.getProductDescription()#"/>
+	<cfset fIsActive="#rc.event.product.getActive()#"/>
+
 
 	<form class="form-horizontal" action="#buildUrl('products.manage')#" method="POST" id="manageProduct" name="manageProduct">
 		<input type="hidden" id="fsw" name="fsw" value=""/>
@@ -40,11 +39,11 @@
 			<label class="control-label" for="active">Active</label>
 			<div class="controls">
 			 <label class="radio inline" for="active-0">
-			   <input name="radios" id="radios-0" value="0" <cfif fIsActive eq 1>checked</cfif> type="radio">
+			   <input name="active" id="radios-1" value="1" <cfif fIsActive eq 1>checked</cfif> type="radio">
 			   Yes
 			 </label>
 			 <label class="radio inline" for="active-1">
-			   <input name="radios" id="radios-1" value="1" type="radio" <cfif fIsActive eq 0>checked</cfif>>
+			   <input name="active" id="radios-0" value="0" type="radio" <cfif fIsActive eq 0>checked</cfif>>
 			   No
 			 </label>
 			</div>
@@ -54,6 +53,7 @@
 			<!-- Button -->
 			<div class="controls">
 				<button class="btn btn-success" name="updateProduct" id="updateProduct">Save</button>
+				<button class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
 			</div>
 		</div>
 		</fieldset>
@@ -69,6 +69,10 @@
 					submitForm();
 				}
 			});
+
+			$("##backBtn").click(function() {
+				document.location = "index.cfm?action=products";
+			});
 		});
 
 		function validateForm() {
@@ -83,4 +87,6 @@
 			$("##manageProduct").submit();
 		}
 	</script>
+
+	<cfdump var="#rc#"/>
 </cfoutput>

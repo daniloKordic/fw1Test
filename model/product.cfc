@@ -1,4 +1,4 @@
-<cfcomponent>
+<cfcomponent displayname="Product" output="false">
 	
 	<cfscript>
 		variables.instance.productUID="";

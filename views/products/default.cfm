@@ -1,10 +1,22 @@
 <cfoutput>
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("##newProduct").click(function() {
+			document.location="index.cfm?action=products.manage";
+		});
+		$("##backBtn").click(function() {
+			document.location="index.cfm";
+		});
+	});
+</script>
+
 Products List
 
 
 <div class="btn-toolbar">
-    <button class="btn btn-primary">New Product</button>
+    <button class="btn btn-primary" id="newProduct" name="newProduct">New Product</button>
+    <button class="btn btn-default" id="backBtn" name="backBtn" type="button">Back</button>
 </div>
 <div class="well">
     <table class="table">

@@ -42,8 +42,11 @@
 			 	,message=""
 			};
 		</cfscript>
+
 		<cfif structKeyExists(arguments.url, "uid")><cfset uid=arguments.url.uid /></cfif>
+
 		<cfset var product = getProductGateway().getByKey(uid=uid) />
+		
 		<cfset var event = {product=product, result=result} />
 
 		<cfreturn event />
@@ -53,15 +56,16 @@
 		<cfargument name="form" type="any" required="true" />
 
 		<cfscript>
+			var product = createObject("component","model.product").init();
 			var productUID = "";
 			var productName = "";
 			var productDesc = "";
 			var isActive = 0;
 		</cfscript>
 
-		<cfif structKeyExists(arguments.form, "productUID")><cfset productUID=arguments.form.producUID /></cfif>
+		<cfif structKeyExists(arguments.form, "productUID")><cfset productUID=arguments.form.productUID /></cfif>
 		<cfif structKeyExists(arguments.form, "productName")><cfset productName=arguments.form.productName /></cfif>
-		<cfif structKeyExists(arguments.form, "productName")><cfset productName=arguments.form.productName /></cfif>
+		<cfif structKeyExists(arguments.form, "productDescription")><cfset productDescription=arguments.form.productDescription /></cfif>
 		<cfif structKeyExists(arguments.form, "active")><cfset isActive=arguments.form.active /></cfif>
 
 		<cfset product.setupProduct (
@@ -70,11 +74,19 @@
 			,productDescription=productDescription
 			,active=isActive
 		) />
-
+		<cfdump var="#product.getActive()#" output="C:\qrt.txt"/>
 		<cfif structKeyExists(arguments.form, "fsw")>
 			<cfswitch expression="#arguments.form.fsw#">
 				<cfcase value="save">
-					
+					<cfset filter = {
+						productName = product.getProductName()
+					} />
+
+					<cfset var qHowMany = getProductGateway().getByFilter(filter=filter) />
+
+					<cfif qHowMany.recordcount eq 0>
+						<cfset var newProductUID=getProductGateway().save(product=product) />
+					</cfif>
 				</cfcase>
 				<cfcase value="update">
 					<cfset result = getProductGateway().save(product = product) />
@@ -83,7 +95,10 @@
 		</cfif>
 
 
-		<cfset var event = {} />
+		<cfset var event = {
+			product = product
+			,result = result
+		} />
 
 		<cfreturn event />
 	</cffunction>

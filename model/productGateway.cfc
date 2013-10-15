@@ -14,12 +14,57 @@
 
 	<!--- CREATE --->
 	<cffunction name="create" access="public" output="false" returntype="String">
-		
+		<cfargument name="product" required="true" type="any" />
+		<cfset var qry=""/>
+		<cfquery name="qry" datasource="#getDSN()#">
+			select newid() as newuid
+		</cfquery>
+		<cfset var uid = qry.newuid />
+		<cfquery name="qry" datasource="#getDSN()#">
+			insert into Products (
+				ProductUID
+				,ProductName
+				,ProductDescription
+				,dateCreated
+				,active
+			) values (
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#uid#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductName()#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductDescription()#" />
+				,GetDate()
+				,1
+			)
+		</cfquery>
+		<cfreturn uid />
 	</cffunction>
 
 	<!--- UPDATE --->
 	<cffunction name="update" access="public" output="false" returntype="String">
-		
+		<cfargument name="product" required="true" type="any" />
+		<cfset var qry=""/>
+		<cfset var uid = arguments.product.getProductUID() />
+		<cfquery name="qry" datasource="#getDSN()#">
+			update Products set
+				ProductName=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductName()#" />
+				,ProductDescription=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductDescription()#" />
+				,active=<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.product.getActive()#" />
+			where
+				ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#" />
+		</cfquery>
+
+		<cfreturn uid />
+	</cffunction>
+
+	<!--- SAVE --->
+	<cffunction name="save" access="public" output="false" returntype="String">
+		<cfargument name="product" required="true" type="any" />
+		<cfset var uid = ""/>
+		<cfif len(arguments.product.getProductUID())>
+			<cfset var uid = update(product=arguments.product) />
+		<cfelse>
+			<cfset var uid = create(product=arguments.product) />
+		</cfif>
+		<cfreturn uid />
 	</cffunction>
 
 	<!--- READ --->
@@ -30,7 +75,7 @@
 
 		<cfquery name="qry" datasource="#getDSN()#">
 			select
-				*
+				p.*
 			from
 				Products p with (nolock)
 		</cfquery>
@@ -40,24 +85,36 @@
 
 	<cffunction name="getByKey" access="public" output="false" returntype="any">
 		<cfargument name="uid" type="any" required="true" />
-
 		<cfset qry = ""/>
+		<cfset var product = createObject("component", "model.product").init() />
 
-		<cfquery name="qry" datasource="#getDSN()#">
-			select
-				*
-			from
-				Products p with (nolock)
-			where
-				1=1
-				<cfif arguments.uid neq "">
+		<cfif arguments.uid neq "">
+			<cfquery name="qry" datasource="#getDSN()#">
+				select
+					p.ProductUID
+					,p.ProductName
+					,p.ProductDescription
+					,p.dateCreated
+					,p.active
+				from
+					Products p with (nolock)
+				where
+					1=1
 					and p.ProductUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
-				<cfelse>
-					1=2
-				</cfif>
-		</cfquery>
+			</cfquery>	
 
-		<cfreturn qry />
+			<cfif qry.recordCount eq 1>
+				<cfset product.setupProduct(
+					productUID=qry.ProductUID
+					,productName=qry.ProductName
+					,productDescription=qry.ProductDescription
+					,dateCreated=qry.dateCreated
+					,active=qry.active
+				) />
+			</cfif>
+		</cfif>		
+
+		<cfreturn product />
 	</cffunction>
 
 
