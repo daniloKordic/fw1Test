@@ -8,6 +8,10 @@
 		$("##addMenuItem").click(function(){
 			document.location="index.cfm?action=menu.manage";
 		});
+
+		$("##backBtn").click(function() {
+			document.location="index.cfm";
+		});
 	});
 </script>
 
@@ -41,101 +45,53 @@
 	<h2>Menu Management</h2>
 
 	<button class="btn btn-primary" type="button" id="addMenuItem" name="addMenuItem">Add Menu Item</button>
-	
-		<!--- <table class="table table-bordered table-striped">
-			<thead>
-				<tr>
-					<th>Menu Title</th>
-					<th>Menu Item Level</th>
-					<th>Sort</th>
-				</tr>				
-			</thead>
-			<tbody>
-				<tr>
-					<td>123</td>
-					<td>456</td>
-					<td>789</td>
-				</tr>
-			</tbody>
-		</table> --->
+	<button class="btn btn-default" id="backBtn" name="backBtn" type="button">Back</button>	
 		
-
-		<!--- <div class="bs-example">
-	      <table class="table table-striped table-bordered">
-	        <thead>
-	          <tr>
-	            <th>Menu Title</th>
-	            <th>Menu Item Level</th>
-	            <th>Sort</th>
-	          </tr>
-	        </thead>
-	        <tbody>
-	          <tr>
-	            <td>1</td>
-	            <td>Mark</td>
-	            <td>Otto</td>
-	          </tr>
-	          <tr>
-	            <td>2</td>
-	            <td>Jacob</td>
-	            <td>Thornton</td>
-	          </tr>
-	          <tr>
-	            <td>3</td>
-	            <td>Larry</td>
-	            <td>the Bird</td>
-	          </tr>
-	        </tbody>
-	      </table>
-	    </div> --->
-
-		<div id="menuContainer">
-
-			<cfquery name="getItems01" dbtype="query">
-				select * from rc.menu where MenuItemLevel=1 order by Sort
-			</cfquery>
-
-			<ul>
-				<cfloop query="getItems01">
-					<cfset tMenuItemUID="#MenuItemUID#">
-					<cfquery name="getChildren" dbtype="query">
-						select * from rc.menu where MenuItemLevel=2 and ParentMenuItemUID='#tMenuItemUID#'
-					</cfquery>
-					<li <cfif getChildren.recordCount neq 0>class="withChildren"</cfif>>
-						<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
-						<cfif getChildren.recordCount neq 0>
-							<ul>
-								<cfloop query="getChildren">
-									<cfset tMenuItemUID="#MenuItemUID#">
-									<cfquery name="getChildren" dbtype="query">
-										select * from rc.menu where MenuItemLevel=3 and ParentMenuItemUID='#tMenuItemUID#'
-									</cfquery>
-									<li <cfif getChildren.recordCount neq 0>class="withChildren"</cfif>>
-										<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
-										<cfif getChildren.recordCount neq 0>
-											<ul>
-												<cfloop query="getChildren">
-													<li>
-														<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
-													</li>
-												</cfloop>
-											</ul>
-										</cfif>
-									</li>
-								</cfloop>
-							</ul>
-						</cfif>
-					</li>
-				</cfloop>
-			</ul>
-
-		</div>
+	<br/><br/>
+	<div id="menuContainer">
+		<cfquery name="getItems01" dbtype="query">
+			select * from rc.menu where MenuItemLevel=1 order by Sort
+		</cfquery>
+		<ul>
+			<cfloop query="getItems01">
+				<cfset tMenuItemUID="#MenuItemUID#">
+				<cfquery name="getChildren" dbtype="query">
+					select * from rc.menu where MenuItemLevel=2 and ParentMenuItemUID='#tMenuItemUID#'
+				</cfquery>
+				<li <cfif getChildren.recordCount neq 0>class="withChildren"</cfif>>
+					<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
+					<cfif getChildren.recordCount neq 0>
+						<ul>
+							<cfloop query="getChildren">
+								<cfset tMenuItemUID="#MenuItemUID#">
+								<cfquery name="getChildren" dbtype="query">
+									select * from rc.menu where MenuItemLevel=3 and ParentMenuItemUID='#tMenuItemUID#'
+								</cfquery>
+								<li <cfif getChildren.recordCount neq 0>class="withChildren"</cfif>>
+									<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
+									<cfif getChildren.recordCount neq 0>
+										<ul>
+											<cfloop query="getChildren">
+												<li>
+													<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
+												</li>
+											</cfloop>
+										</ul>
+									</cfif>
+								</li>
+							</cfloop>
+						</ul>
+					</cfif>
+				</li>
+			</cfloop>
+		</ul>
+	</div>
 		
 </cfif>
-
-
-<cfdump var="#session#"/>
+<br/><br/>
 
 <cfdump var="#rc#"/>
+
+<cfdump var="#session#"/>
 
 </cfoutput>

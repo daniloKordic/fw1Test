@@ -26,13 +26,15 @@
 	<cffunction name="manage" access="public" returntype="void">
 		<cfset var menuService = getMenuService() />
 
-		<cfif structKeyExists(rc, "action") and len(rc.action)>
-			<cfset var event = menuService.handleForm(form) />
+		<cfif structKeyExists(rc, "fsw") and Len(rc.fsw)>
+			<cfset var rc.event = menuService.HandleForm(form) />
 		<cfelse>
- 			<cfset var event = menuService.handleRequest(url) />
+ 			<cfset var rc.event = menuService.HandleRequest(url) />
 		</cfif>
 
-		<cfset rc = structAppend(rc, event) />
+		<cfif structKeyExists(rc, "fsw") and (rc.fsw eq "delete" or rc.fsw eq "save") >
+			<cfset variables.fw.redirect("menu", "event") />			
+		</cfif>
 	</cffunction>
 
 </cfcomponent>

@@ -32,7 +32,7 @@
 				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductName()#" />
 				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductDescription()#" />
 				,GetDate()
-				,1
+				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.product.getActive()#" />
 			)
 		</cfquery>
 		<cfreturn uid />
@@ -115,6 +115,24 @@
 		</cfif>		
 
 		<cfreturn product />
+	</cffunction>
+
+	<cffunction name="getByFilter" access="public" output="false" returntype="Query">
+		<cfargument name="filter" required="false" type="struct" default="#structNew()#" />
+		<cfset var qry=""/>
+		<cfquery name="qry" datasource="#getDSN()#">
+			select
+				p.*
+			from
+				Products p with (nolock)
+			where
+				1=1
+				<cfif structKeyExists(arguments.filter, "ProductName") and len(arguments.filter.productName)>
+					and p.ProductName = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.filter.productName#" />
+				</cfif>
+		</cfquery>
+		
+		<cfreturn qry />
 	</cffunction>
 
 	<!--- DELETE --->

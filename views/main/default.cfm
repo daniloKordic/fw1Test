@@ -4,6 +4,13 @@
 	<cfset fullName = session.auth.user.getFirstName() & ' ' & session.auth.user.getLastName() />
 	<cfset usertype = session.auth.user.getTypeID() />
 
+	<cfif isDefined("rc.message")>
+		<div class="alert alert-info expired">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			#rc.message[1]#
+		</div>
+	</cfif>
+
 	<h2 class="form-signin-heading">Welcome #fullName#</h2>
 
 	<a href="#buildUrl('users.manage?uid=#userUID#')#">Manage User</a>

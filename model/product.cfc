@@ -56,13 +56,12 @@
 		<cfreturn variables.instance.active />
 	</cffunction>
 
-
 	<cffunction name="setupProduct" access="public" output="false" returntype="void">
 		<cfargument name="productUID" required="false" type="string" default="" />
 		<cfargument name="productName" required="false" type="string" default="" />
 		<cfargument name="productDescription" required="false" type="string" default="" />
 		<cfargument name="dateCreated" required="false" type="string" default="" />
-		<cfargument name="active" required="false" type="string" default="0" />
+		<cfargument name="active" required="false" type="numeric" default="0" />
 
 		<cfset setProductUID(arguments.productUID) />
 		<cfset setProductName(arguments.productName) />
@@ -76,7 +75,7 @@
 		<cfset setProductName("") />
 		<cfset setProductDescription("") />
 		<cfset setdateCreated("") />
-		<cfset setActive("") />
+		<cfset setActive(0) />
 	</cffunction>
 
 </cfcomponent>

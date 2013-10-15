@@ -14,16 +14,33 @@
 		<cfreturn getMenuGateway().getAll() />
 	</cffunction>
 
-	<cffunction name="handleRequest" access="public" output="false" returntype="any">
+	<cffunction name="HandleRequest" access="public" output="false" returntype="any">
 		<cfargument name="url" type="any" required="true" default="" />
 
-		<cfreturn structNew()/>
+		<cfscript>
+			var uid = "";
+			var result = {
+				errorFields=""
+				,message=""
+			};	
+		</cfscript>
+
+		<cfif structKeyExists(arguments.url, "uid")><cfset uid = "#arguments.uid#"/></cfif>
+
+		<cfset var menuItem = getMenuGateway().getByKey(uid=uid) />
+		<cfset var parents = getMenuGateway().getParents() />
+		<cfset var event = { menuItem = menuItem, parents = parents, result=result } />
+
+		<cfreturn event />		
 	</cffunction>
 
-	<cffunction name="handleForm" access="public" output="false" returntype="any">
+	<cffunction name="HandleForm" access="public" output="false" returntype="any">
 		<cfargument name="form" type="any" required="true" default="" />
 
-		<cfreturn structNew()/>
+		<cfscript>
+			
+		</cfscript>
+
 	</cffunction>
 
 </cfcomponent>

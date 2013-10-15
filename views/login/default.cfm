@@ -29,9 +29,6 @@
 	 });
 	</script>
 
-	<cfif structKeyExists(rc, "message")>
-		<p class="text-info">#rc.message[1]#</p>
-	</cfif>
 
 	<style type="text/css">
 		label.valid {
@@ -51,6 +48,12 @@
 
 	<div class="span6">
 		<form name="loginform" id="loginform" class="form-horizontal" action="#buildURL('login.login')#" method="post">
+			<cfif structKeyExists(rc, "message")>
+				<div class="alert alert-info expired">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+					#rc.message[1]#
+				</div>
+			</cfif>
 			<fieldset>
 				<h2 class="form-signin-heading">Sign in</h2>
 				<div class="control-group">

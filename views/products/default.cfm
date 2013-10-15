@@ -11,8 +11,14 @@
 	});
 </script>
 
-Products List
+<cfif isDefined("rc.event.result.message")>
+  <div class="alert alert-info expired">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    #rc.event.result.message#
+  </div>
+</cfif>
 
+Products List
 
 <div class="btn-toolbar">
     <button class="btn btn-primary" id="newProduct" name="newProduct">New Product</button>
@@ -67,10 +73,5 @@ Products List
         <button class="btn btn-danger" data-dismiss="modal">Delete</button>
     </div>
 </div>
-
-
-<cfdump var="#rc#" />
-
-<cfdump var="#session#" />
 
 </cfoutput>

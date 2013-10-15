@@ -14,6 +14,14 @@
 	<form class="form-horizontal" action="#buildUrl('products.manage')#" method="POST" id="manageProduct" name="manageProduct">
 		<input type="hidden" id="fsw" name="fsw" value=""/>
 		<input type="hidden" id="productUID" name="productUID" value="#fProductUID#" />
+
+		<cfif rc.event.result.message neq "">
+			<div class="alert alert-info expired">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				#rc.event.result.message#
+			</div>
+		</cfif>
+
 		<fieldset>
 			<div id="legend">
 				<legend class="">Product Info</legend>
@@ -38,11 +46,11 @@
 		<div class="control-group">
 			<label class="control-label" for="active">Active</label>
 			<div class="controls">
-			 <label class="radio inline" for="active-0">
+			 <label class="radio inline" for="radios-1">
 			   <input name="active" id="radios-1" value="1" <cfif fIsActive eq 1>checked</cfif> type="radio">
 			   Yes
 			 </label>
-			 <label class="radio inline" for="active-1">
+			 <label class="radio inline" for="radios-0">
 			   <input name="active" id="radios-0" value="0" type="radio" <cfif fIsActive eq 0>checked</cfif>>
 			   No
 			 </label>
@@ -52,7 +60,7 @@
 		<div class="control-group">
 			<!-- Button -->
 			<div class="controls">
-				<button class="btn btn-success" name="updateProduct" id="updateProduct">Save</button>
+				<button class="btn btn-success" name="updateProduct" id="updateProduct"><cfif fProductUID eq "">Save<cfelse>Update</cfif></button>
 				<button class="btn btn-danger" name="deleteProduct" id="deleteProduct">Delete</button>
 				<button class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
 			</div>
@@ -66,7 +74,11 @@
 		$(document).ready(function() {
 			$("##updateProduct").click(function() {
 				if (validateForm()) {
-					$("##fsw").val("update");
+					if ($("##productUID").val() == "") {
+						$("##fsw").val("save");
+					} else {
+						$("##fsw").val("update");
+					}
 					submitForm();
 				}
 			});
@@ -96,5 +108,4 @@
 		}
 	</script>
 
-	<cfdump var="#rc#"/>
 </cfoutput>

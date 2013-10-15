@@ -74,7 +74,7 @@
 			,productDescription=productDescription
 			,active=isActive
 		) />
-		<cfdump var="#product.getActive()#" output="C:\qrt.txt"/>
+		
 		<cfif structKeyExists(arguments.form, "fsw")>
 			<cfswitch expression="#arguments.form.fsw#">
 				<cfcase value="save">
@@ -86,17 +86,26 @@
 
 					<cfif qHowMany.recordcount eq 0>
 						<cfset var newProductUID=getProductGateway().save(product=product) />
+						<cfset result.message="Product successfully saved!" />
+					<cfelse>
+						<cfset result.message="Duplicate Product Name found!" />
+						<cfset product.reset() />
 					</cfif>
 				</cfcase>
 				<cfcase value="update">
-					<cfset result = getProductGateway().save(product = product) />
+					<cfset rezultat = getProductGateway().save(product = product) />
+					<cfif rezultat neq "">
+						<cfset result.message = "Product successfully updated!"/>
+					</cfif>					
 				</cfcase>
 				<cfcase value="delete">
-					<cfset result = getProductGateway().delete(product = product) />
+					<cfset rezultat = getProductGateway().delete(product = product) />
+					<cfif rezultat eq 1>
+						<cfset result.message = "Product successfully deleted!"/>
+					</cfif>					
 				</cfcase>
 			</cfswitch>
 		</cfif>
-
 		
 		<cfset var event = {
 			product = product

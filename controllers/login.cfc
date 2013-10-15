@@ -45,6 +45,8 @@
 		<cfif not userValid>
 			<cfset rc.message = ["Invalid Username or Password"] />
 			<cfset variables.fw.redirect("login","message") />
+		<cfelse>
+			<cfset rc.message = ["Login Successfull!"] />
 		</cfif>
 
 		<!--- since all ok, set sessoin variables --->
@@ -53,7 +55,7 @@
 		<cfset session.auth.TypeID = user.GetTypeID() />
 		<cfset session.auth.user = user />
 
-		<cfset variables.fw.redirect("main") />
+		<cfset variables.fw.redirect("main", "message") />
 
 	</cffunction>
 

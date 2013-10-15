@@ -41,4 +41,34 @@
 		<cfreturn qryMenu />
 	</cffunction>
 
+	<cffunction name="getByKey" access="public" output="false" returntype="struct">
+		<cfargument name="uid" required="false" type="String" default="" />
+
+		<cfset var menu = {
+			parentUID=""
+			,menuItemUID=""
+			,menuTitle=""
+			,menuItemLevel=""
+		} />
+
+		<cfreturn menu />
+	</cffunction>
+
+	<cffunction name="getParents" access="public" output="false" returntype="query">
+		<cfset var qry=""/>
+
+		<cfquery name="qry" datasource="#getDSN()#">
+			select 
+				m.* 
+			from
+				menu m with (nolock)
+			where 
+				m.menuitemuid in (select parentmenuitemuid from menu)
+			order by
+				m.sort
+		</cfquery>
+
+		<cfreturn qry />
+	</cffunction>
+
 </cfcomponent>

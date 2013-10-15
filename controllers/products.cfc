@@ -31,10 +31,10 @@
 			<cfset var rc.event = productService.HandleForm(form) />
 		<cfelse>
 			<cfset var rc.event = productService.HandleRequest(url) />
-		</cfif>
-		
-		<cfif structKeyExists(rc, "fsw") and rc.fsw eq "delete">
-			<cfset variables.fw.redirect('products','rc.event') />
+		</cfif>		
+
+		<cfif structKeyExists(rc, "fsw") and (rc.fsw eq "delete" or rc.fsw eq "save")>
+			<cfset variables.fw.redirect("products","event") />
 		</cfif>
 	</cffunction>
 
