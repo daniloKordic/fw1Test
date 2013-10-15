@@ -33,6 +33,9 @@
 			<cfset var rc.event = productService.HandleRequest(url) />
 		</cfif>
 		
+		<cfif structKeyExists(rc, "fsw") and rc.fsw eq "delete">
+			<cfset variables.fw.redirect('products','rc.event') />
+		</cfif>
 	</cffunction>
 
 </cfcomponent>

@@ -38,7 +38,6 @@ Products List
 	          <td>#active#</td>
 	          <td>
 	              <a href="index.cfm?action=products.manage&uid=#ProductUID#"><i class="icon-pencil"></i></a>
-	              <a href="##" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 	          </td>
 	        </tr>	
       	</cfloop>

@@ -117,5 +117,16 @@
 		<cfreturn product />
 	</cffunction>
 
+	<!--- DELETE --->
+	<cffunction name="delete" access="public" output="false" returntype="Numeric">
+		<cfargument name="product" required="true" type="any" />
+		<cfset qry=""/>
+
+		<cfquery name="qry" datasource="#getDSN()#">
+			delete from Products where ProductUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.product.getProductUID()#" />
+		</cfquery>
+
+		<cfreturn 1 />
+	</cffunction>
 
 </cfcomponent>

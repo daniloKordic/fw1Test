@@ -53,6 +53,7 @@
 			<!-- Button -->
 			<div class="controls">
 				<button class="btn btn-success" name="updateProduct" id="updateProduct">Save</button>
+				<button class="btn btn-danger" name="deleteProduct" id="deleteProduct">Delete</button>
 				<button class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
 			</div>
 		</div>
@@ -66,6 +67,13 @@
 			$("##updateProduct").click(function() {
 				if (validateForm()) {
 					$("##fsw").val("update");
+					submitForm();
+				}
+			});
+
+			$("##deleteProduct").click(function() {
+				if (validateForm()) {
+					$("##fsw").val("delete");
 					submitForm();
 				}
 			});

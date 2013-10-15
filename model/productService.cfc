@@ -91,10 +91,13 @@
 				<cfcase value="update">
 					<cfset result = getProductGateway().save(product = product) />
 				</cfcase>
+				<cfcase value="delete">
+					<cfset result = getProductGateway().delete(product = product) />
+				</cfcase>
 			</cfswitch>
 		</cfif>
 
-
+		
 		<cfset var event = {
 			product = product
 			,result = result
