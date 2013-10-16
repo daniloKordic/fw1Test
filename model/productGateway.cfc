@@ -93,7 +93,7 @@
 				select
 					p.ProductUID
 					,p.ProductName
-					,p.ProductDescription
+					,p.productDescription
 					,p.dateCreated
 					,p.active
 				from

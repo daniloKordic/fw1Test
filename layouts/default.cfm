@@ -34,4 +34,12 @@
 	</body>
 	</html>
 
+	<script type="text/javascript">
+		$(document).ready(function(){
+		    setTimeout(function(){ 
+		        $(".expired").hide('slow', function(){ $(".expired").remove();});
+		    }, 5000 ); 
+		});
+	</script>
+
 </cfoutput>

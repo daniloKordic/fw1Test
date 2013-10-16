@@ -42,6 +42,14 @@
 </style>
 
 <cfif fTypeID eq 1>
+
+	<cfif isDefined("rc.event.result.message")>
+	  <div class="alert alert-info expired">
+	      <button type="button" class="close" data-dismiss="alert">&times;</button>
+	    #rc.event.result.message#
+	  </div>
+	</cfif>
+		
 	<h2>Menu Management</h2>
 
 	<button class="btn btn-primary" type="button" id="addMenuItem" name="addMenuItem">Add Menu Item</button>

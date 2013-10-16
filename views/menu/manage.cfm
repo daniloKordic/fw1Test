@@ -1,10 +1,17 @@
 <cfoutput>
 
+<cfset fMenuItemUID=""/>
+<cfset fParentUID=""/>
+<cfset fMenuTitle=""/>
+<cfset fHasChildren=0 />
+
+
 <cfset fTypeID = #session.auth.TypeID# />
 
-<cfset fMenuItemUID = "#rc.event.menuItem.MenuItemUID#" />
-<cfset fParentUID = "#rc.event.menuItem.ParentUID#" />
-<cfset fMenuTitle = "#rc.event.menuItem.MenuTitle#" />
+<cfset fMenuItemUID = "#rc.event.menuItem.getMenuItemUID()#" />
+<cfset fParentUID = "#rc.event.menuItem.getParentMenuItemUID()#" />
+<cfset fMenuTitle = "#rc.event.menuItem.getMenuTitle()#" />
+<cfset fHasChildren = #rc.event.menuItem.getHasChildren()# />
 <cfset qParentMenus = "#rc.event.Parents#" />
 
 <script type="text/javascript">
@@ -45,17 +52,27 @@
 	$(document).ready(function() {
 		$("##saveBtn").click(function() {
 			if (validateForm()) {
+				if ($("##menuItemUID").val() == "") {
+					$("##fsw").val("save");
+				} else {
+					$("##fsw").val("update");
+				}
 				submitForm();
 			}
 		});
 
 		$("##cancelBtn").click(function() {
-			$("##ParentItemUID").val("");
-			$("##menuTitle").val("");
+			$("##ParentItemUID").val("#rc.event.menuItem.getParentMenuItemUID()#");
+			$("##menuTitle").val("#rc.event.menuItem.getMenuTitle()#");
+		});
+
+		$("##deleteBtn").click(function() {
+			$("##fsw").val("delete");
+			submitForm();
 		});
 
 		$("##backBtn").click(function() {
-			document.location = "index.cfm";
+			document.location = "index.cfm?action=menu";
 		});
 	});
 
@@ -72,19 +89,29 @@
 	<h2>Menu Management</h2>
 
 	<form class="form-horizontal"  action="#buildUrl('menu.manage')#" method="POST" id="manageMenu" name="manageMenu">
+		<input type="hidden" name="menuItemUID" id="menuItemUID" value="#fMenuItemUID#" />
+		<input type="hidden" name="hasChildren" id="hasChildren" value="#fHasChildren#" />
+		<input type="hidden" id="fsw" name="fsw" value="" />
+
+		<cfif rc.event.result.message neq "">
+			<div class="alert alert-info expired">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				#rc.event.result.message#
+			</div>
+		</cfif>
+
 		<fieldset>
-			<input type="hidden" name="menuItemUID" id="menuItemUID" value="#fMenuItemUID#" />
 		<!-- Form Name -->
 		<legend>Add Menu Item</legend>
 
 		<!-- Select Basic -->
 		<div class="control-group">
-		  <label class="control-label" for="ParentItemUID">Select Parent</label>
+		  <label class="control-label" for="parentMenuItemUID">Select Parent</label>
 		  <div class="controls">
-		    <select id="ParentItemUID" name="ParentItemUID" class="input-medium">
+		    <select id="parentMenuItemUID" name="parentMenuItemUID" class="input-medium" <cfif fHasChildren eq 1>disabled</cfif>>
 		    	<option value="">Please select</option>
 		      <cfloop query="qParentMenus">
-		      	<option value="#MenuItemUID#">#MenuTitle#</option>
+		      	<option value="#MenuItemUID#" <cfif fParentUID eq MenuItemUID >selected</cfif>>#MenuTitle#</option>
 		      </cfloop>
 		    </select>
 		  </div>
@@ -104,6 +131,7 @@
 		  <div class="controls">
 		    <button id="saveBtn" name="saveBtn" class="btn btn-success" type="button">Save</button>
 		    <button id="cancelBtn" name="cancelBtn" class="btn btn-danger" type="button">Cancel</button>
+		    <button id="deleteBtn" name="deleteBtn" class="btn btn-danger" type="button">Delete</button>
 		    <button id="backBtn" name="backBtn" class="btn btn-info" type="button">Back</button>
 		  </div>
 		</div>
