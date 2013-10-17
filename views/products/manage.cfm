@@ -1,10 +1,5 @@
 <cfoutput>
 
-	<cfset fProductUID = ""/>
-	<cfset fProductName = ""/>
-	<cfset fProductDescription = ""/>
-	<cfset fIsActive = 0 />
-
 	<cfset fProductUID="#rc.event.product.getProductUID()#"/>
 	<cfset fProductName="#rc.event.product.getProductName()#"/>
 	<cfset fProductDescription="#rc.event.product.getProductDescription()#"/>
@@ -60,9 +55,9 @@
 		<div class="control-group">
 			<!-- Button -->
 			<div class="controls">
-				<button class="btn btn-success" name="updateProduct" id="updateProduct"><cfif fProductUID eq "">Save<cfelse>Update</cfif></button>
-				<button class="btn btn-danger" name="deleteProduct" id="deleteProduct">Delete</button>
-				<button class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
+				<button type="button" class="btn btn-success" name="updateProduct" id="updateProduct"><cfif fProductUID eq "">Save<cfelse>Update</cfif></button>
+				<button type="button" class="btn btn-danger" name="deleteProduct" id="deleteProduct">Delete</button>
+				<button type="button" class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
 			</div>
 		</div>
 		</fieldset>

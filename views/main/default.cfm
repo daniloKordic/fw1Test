@@ -13,10 +13,10 @@
 
 	<h2 class="form-signin-heading">Welcome #fullName#</h2>
 
-	<a href="#buildUrl('users.manage?uid=#userUID#')#">Manage User</a>
+	<a href="#buildUrl('users.manage?uid=#userUID#')#">Manage Account</a>
 	<cfif usertype eq "1">
 		<br/>
-		<a href="#buildUrl('users.manage')#">Manage Users</a>
+		<a href="#buildUrl('users')#">Manage Users</a>
 		<br/>
 		<a href="#buildUrl('menu')#">Manage Menu</a>
 		<br/>

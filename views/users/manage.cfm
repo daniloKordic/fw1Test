@@ -1,57 +1,115 @@
 <cfoutput>
 
+	<cfset fUserUID="#rc.event.user.getUID()#" />
+	<cfset fFirstName="#rc.event.user.getFirstName()#" />
+	<cfset fLastName="#rc.event.user.getLastName()#" />
+	<cfset fEmail="#rc.event.user.getEmail()#" />
+	<cfset fUsername="#rc.event.user.getUsername()#"/>
+	<cfset fPassword="#rc.event.user.getPassword()#" />
+
 	<script type="text/javascript">
-		function processForm() {
-			var error = "";
 
-			if ($("##firstName").val() == "") { error = error + "First Name is required.\n"; }
-			if ($("##lastName").val() =="") { error = error + "Last Name is required.\n"; }
-			if ($("##email").val() == "") { error = error + "Email is required.\n"; }
-			if ($("##password").val() == "") { error = error + "Password is required.\n"; }
+		$(document).ready(function(){
+			$("##updateUser").click(function() {
+				if (validateForm()) {
+					if ($("##userUID").val() == "") {
+						$("##fsw").val("save");
+					} else {
+						$("##fsw").val("update");
+					}
+					submitForm();
+				}
+			});
+			$("##deleteUser").click(function() {
+				$("##fsw").val("delete");
+				submitForm();
+			});
+			$("##backBtn").click(function() {
+				document.location = "index.cfm?action=users";
+			});
+		});
 
-			if (error == "") {
-				$("##fsw").val("register");
-				$("##userRegister").submit();
-			} else {
-				alert(error);
-			}
-		}
-		function gotoHome() {
-			window.location="index.cfm?action=main.default";
-		}
 		function cancel() {
-			$("##firstName").val("#rc.user.getFirstName()#");
-			$("##lastName").val("#rc.user.getLastName()#");
-			$("##email").val("#rc.user.getEmail()#");
-			$("##password").val("#rc.user.getPassword()#");
+			$("##firstName").val("#fFirstName#");
+			$("##lastName").val("#fLastName#");
+			$("##email").val("#fEmail#");
+			$("##password").val("#fPassword#");
+		}
+		function validateForm() {
+			var error = true;
+
+			if ($("##username").val() == "") { error = false; $("##username").closest('.control-group').addClass('error'); }
+			if ($("##password").val() == "") { error = false; $("##password").closest('.control-group').addClass('error'); }
+
+			return error;
+		}
+		function submitForm() {
+			$("##userRegister").submit();
 		}
 	</script>
 
-<cfif rc.result.message neq "">
-	<p class="text-info">#rc.result.message#</p>
-</cfif>
-
-	<h1>Edit user details</h1>
-	<form action="#buildUrl('users.manage')#" method="post" id="userRegister">
+	
+	<form action="#buildUrl('users.manage')#" method="post" id="userRegister" name="userRegister" class="form-horizontal">
 		<input type="hidden" id="fsw" name="fsw" value=""/>
-		<input type="hidden" id="uid" name="uid" value="#rc.user.getUID()#"/>
+		<input type="hidden" id="userUID" name="userUID" value="#fUserUID#"/>
+		<fieldset>
 
-		<label>First Name: </label>
-		<input type="text" id="firstName" name="firstName" value="#rc.user.getFirstName()#" required placeholder="Enter first name"/><br/><br/>
-		<label>Last Name: </label>
-		<input type="text" id="lastName" name="lastName" value="#rc.user.getLastName()#" required placeholder="Enter last name"/><br/><br/>
-		<label>Email: </label>
-		<input type="text" id="email" name="email" value="#rc.user.getEmail()#" required placeholder="Enter email"/></br><br/>
-		<label>Password: </label>
-		<input type="password" id="password" name="password" value="#rc.user.getPassword()#" required placeholder="Enter password"/><br/><br/>
-		<cfif rc.user.getUID() neq "">
-			<input class="btn btn-primary" type="button" value="Save changes" onclick="processForm()"/>
-		<cfelse>	
-			<input class="btn" type="button" value="Register" onclick="processForm()"/>
-		</cfif>
-		
-		<input class="btn" type="button" value="Cancel" onclick="cancel()" />
-		<input class="btn" type="button" value="Home" onclick="gotoHome()"/>
+			<!-- Form Name -->
+			<legend>Edit user details</legend>
+
+			<!-- Text input-->
+			<div class="control-group">
+			  <label class="control-label" for="firstName">First Name:</label>
+			  <div class="controls">
+			    <input id="firstName" name="firstName" placeholder="add your name" class="input-large" type="text" value="#fFirstName#">			    
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="control-group">
+			  <label class="control-label" for="lastname">Last Name:</label>
+			  <div class="controls">
+			    <input id="lastName" name="lastName" placeholder="add your last name" class="input-large" type="text" value="#fLastName#">
+			    
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="control-group">
+			  <label class="control-label" for="email">Email:</label>
+			  <div class="controls">
+			    <input id="email" name="email" placeholder="add email" class="input-large" type="text" value="#fEmail#">			    
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="control-group">
+			  <label class="control-label" for="username">Username:</label>
+			  <div class="controls">
+			    <input id="username" name="username" placeholder="add username" class="input-large" type="text" value="#fUsername#">			    
+			  </div>
+			</div>
+
+			<!-- Password input-->
+			<div class="control-group">
+			  <label class="control-label" for="password">Password:</label>
+			  <div class="controls">
+			    <input id="password" name="password" placeholder="add password" class="input-large" type="password" value="#fPassword#">			    
+			  </div>
+			</div>
+
+			<div class="control-group">
+				<!-- Button -->
+				<div class="controls">
+					<button type="button" class="btn btn-success" name="updateUser" id="updateUser"><cfif fUserUID eq "">Save<cfelse>Update</cfif></button>
+					<button type="button" class="btn btn-danger" name="deleteUser" id="deleteUser">Delete</button>
+					<button type="button" class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
+				</div>
+			</div>
+
+		</fieldset>
 	</form>
+
+	<cfdump var="#rc#"/>
 
 </cfoutput>

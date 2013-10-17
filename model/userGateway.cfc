@@ -14,38 +14,17 @@
 		<cfreturn variables.instance.dsn />
 	</cffunction>
 
-	<cffunction name="getByEmail" access="public" output="false" returntype="Any">
-		<cfargument name="email" required="true" type="string" />
-		<cfset var qry = "" />
-		<cfset var user = createObject("component","model.user").init() />
-		<cfif arguments.email neq "">
-			<cfquery name="qry" datasource="#getDSN()#">
-				select
-					u.userUID
-					,u.FirstName
-					,u.LastName
-					,u.email
-					,u.password
-					,u.isActive
-					,u.TypeID
-				from
-					Users u
-				where
-					u.email = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar" />
-			</cfquery>
-			<cfif qry.recordCount eq 1>
-				<cfset user.setupUser(
-					UID = qry.userUID
-					,FirstName = qry.FirstName
-					,LastName = qry.LastName
-					,email = qry.email
-					,password = qry.password
-					,isActive = qry.isActive
-					,TypeID = qry.TypeID
-				) />
-			</cfif>
-		</cfif>
-		<cfreturn user />
+	<cffunction name="getGrid" access="public" output="false" returntype="query">
+		<cfargument name="grid" type="any" required="true" />
+		<cfset var qry = ""/>
+		<cfquery name="qry" datasource="#getDSN()#">
+			select
+				u.*
+			from
+				Users u with (nolock)
+		</cfquery>
+
+		<cfreturn qry />
 	</cffunction>
 
 	<cffunction name="getByFilter" access="public" output="false" returntype="query">
@@ -77,19 +56,19 @@
 	</cffunction>
 
 	<cffunction name="getByKey" access="public" output="false" returntype="Any">
-		<cfargument name="userUID" required="true" type="string" />
+		<cfargument name="uid" required="true" type="any" />
 
 		<cfset var qry=""/>
 		<cfset var user = createObject("component","model.user").init() />
 
-		<cfif arguments.userUID neq "">
+		<cfif arguments.uid neq "">
 			<cfquery name="qry" datasource="#getDSN()#">
 				select
-					*
+					u.*
 				from
-					Users
+					Users u with (nolock)
 				where
-					userUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userUID#" />
+					userUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
 			</cfquery>
 			<cfif qry.recordCount eq 1>
 				<cfset user.setupUser(
@@ -97,6 +76,7 @@
 					,FirstName=qry.FirstName
 					,LastName=qry.LastName
 					,email=qry.email
+					,username=qry.username
 					,password=qry.password
 					,isActive=qry.isActive
 					,TypeID=qry.TypeID
@@ -107,27 +87,59 @@
 		<cfreturn user />
 	</cffunction>
 
-	<cffunction name="getAll" access="public" output="false" returntype="Query">
-		<cfset var qryUsers = ""/>
+	<!--- CREATE --->
+	<cffunction name="create" access="public" output="false" returntype="string">
+		<cfargument name="user" required="true" type="any" />
+		<cfset var qry=""/>
+		<cfquery name="qry" datasource="#getDSN()#">
+			select newid() as newUID
+		</cfquery>
+		<cfset var uid = qry.newUID/>
 
-		<cfquery name="qryUsers" datasource="#getDSN()#">
-			select
-				u.userUID
-				,u.FirstName
-				,u.LastName
-				,u.email
-				,u.password
-				,u.isActive
-				,u.TypeID
-			from
-				Users u
-			order by
-				u.FirstName
+		<cfquery name="qry" datasource="#getDSN()#">
+			insert into users (
+				 userUID
+				,FirstName
+				,LastName
+				,email
+				,username
+				,password
+				,isActive
+				,typeID
+			) values(
+				<cfqueryparam cfsqltype="cf_sql_varchar" value="#uid#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getFirstname()#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getLastName()#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getEmail()#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUsername()#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getPassword()#" />
+				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIsActive()#" />
+				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getTypeID()#" />
+			)
 		</cfquery>
 
-		<cfreturn qryUsers />
+		<cfreturn uid />
 	</cffunction>
 
+	<!--- UPDATE --->
+	<cffunction name="update" access="public" output="false" returntype="string">
+		<cfargument name="user" required="true" type="any" />
+		<cfset var qry=""/>
+		<cfset var uid = arguments.user.getUID() />
+		<cfquery name="qry" datasource="#getDSN()#">
+			UPDATE Users SET
+			 FirstName=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getFirstName()#" />
+			,Lastname=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getLastName()#" />
+			,email=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getEmail()#" />
+			,username=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUsername()#" />
+			,password=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getPassword()#" />
+			WHERE UserUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
+		</cfquery>
+
+		<cfreturn uid />
+	</cffunction>
+
+	<!--- SAVE --->
 	<cffunction name="save" access="public" output="false" returntype="string">
 		<cfargument name="user" required="true" type="any" />
 		<cfset var uid=""/>
@@ -141,52 +153,16 @@
 		<cfreturn uid />
 	</cffunction>
 
-	<cffunction name="create" access="public" output="false" returntype="String">
+	<!--- DELETE --->
+	<cffunction name="delete" output="false" access="public" returntype="numeric">
 		<cfargument name="user" required="true" type="any" />
-		<cfset var qry=""/>
-		<cfquery name="getUID" datasource="#getDSN()#">
-			select newid() as newuid
-		</cfquery>
-		<cfset var uid=getUID.newuid />
-		<cfquery name="insertUser" datasource="#getDSN()#">
-			insert into Users (
-				userUID
-				,FirstName
-				,LastName
-				,email
-				,password
-				,isActive
-				,typeID
-			) values (
-				<cfqueryparam value="#uid#" cfsqltype="cf_sql_varchar" />
-				,<cfqueryparam value="#arguments.user.getFirstName()#" cfsqltype="cf_sql_varchar" />
-				,<cfqueryparam value="#arguments.user.getLastName()#" cfsqltype="cf_sql_varchar" />
-				,<cfqueryparam value="#arguments.user.getEmail()#" cfsqltype="cf_sql_varchar" />
-				,<cfqueryparam value="#arguments.user.getPassword()#" cfsqltype="cf_sql_varchar" />
-				,1
-				,2
-			)
-		</cfquery>
-
-		<cfreturn uid />
-	</cffunction>
-
-	<cffunction name="update" access="public" output="false" returntype="string">
-		<cfargument name="user" required="false" type="any" />
-
-		<cfset var qry=""/>
-		<cfset uid = arguments.user.getUID() />
+		<cfset qry=""/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
-			update users set
-				FirstName=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getFirstName()#" />
-				,LastName=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getLastName()#" />
-				,email=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getEmail()#" />
-				,password=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getPassword()#" />
-			where
-				userUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
+			delete from users where useruid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
 		</cfquery>
-		
-		<cfreturn uid />
+
+		<cfreturn 1 />
 	</cffunction>
+
 </cfcomponent>

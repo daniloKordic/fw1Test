@@ -5,9 +5,10 @@
 		variables.instance.FirstName = "";
 		variables.instance.LastName = "";
 		variables.instance.Email = "";
+		variables.instance.Username = "";
 		variables.instance.Password = "";
 		variables.instance.IsActive = 0;
-		variables.instance.TypeID = 0;
+		variables.instance.TypeID = 2;
 	</cfscript>
 
 	<cffunction name="init" access="public" output="false" returntype="user">
@@ -50,6 +51,14 @@
 		<cfreturn variables.instance.Email />
 	</cffunction>
 
+	<cffunction name="setUsername" access="public" output="false">
+		<cfargument name="Username" type="string" required="true" />
+		<cfset variables.instance.Username = arguments.Username />
+	</cffunction>
+	<cffunction name="getUsername" access="public" returntype="String" output="false">
+		<cfreturn variables.instance.Username />
+	</cffunction>
+
 	<cffunction name="setPassword" access="public" output="false">
 		<cfargument name="Password" type="string" required="true" />
 		<cfset variables.instance.Password = arguments.Password />
@@ -79,6 +88,7 @@
 		<cfargument name="FirstName" required="false" type="string" default="" />
 		<cfargument name="LastName" required="false" type="string" default="" />
 		<cfargument name="Email" required="false" type="string" default="" />
+		<cfargument name="Username" required="false" type="string" default="" />
 		<cfargument name="Password" required="false" type="string" default="" />
 		<cfargument name="IsActive" required="false" type="numeric" default="0" />
 		<cfargument name="TypeID" required="false" type="numeric" default="0" />
@@ -87,6 +97,7 @@
 		<cfset setFirstName(arguments.FirstName)>
 		<cfset setLastName(arguments.LastName)>
 		<cfset setEmail(arguments.Email)>
+		<cfset setUsername(arguments.Username)>
 		<cfset setPassword(arguments.Password)>
 		<cfset setIsActive(arguments.IsActive)>
 		<cfset setTypeID(arguments.TypeID)>
@@ -97,6 +108,7 @@
 		<cfset setFirstName('')>
 		<cfset setLastName('')>
 		<cfset setEmail('')>
+		<cfset setUsername('')>
 		<cfset setPassword('')>
 		<cfset setIsActive(0)>
 		<cfset setTypeID(0)>
