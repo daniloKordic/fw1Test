@@ -50,6 +50,9 @@
 				<cfif structKeyExists(arguments.filter,"email") and len(arguments.filter.email)>
 					and email = '#arguments.filter.email#'
 				</cfif>
+				<cfif structKeyExists(arguments.filter,"username") and len(arguments.filter.username)>
+					and username = '#arguments.filter.username#'
+				</cfif>
 		</cfquery>
 		
 		<cfreturn qry />

@@ -32,7 +32,7 @@
 		<cfelse>
 			<cfset variables.fw.redirect("register") />
 		</cfif>
-
+		
 		<cfset rc = structAppend(rc, event) />
 
 	</cffunction>

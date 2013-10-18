@@ -45,7 +45,7 @@
 			var password="";
 		</cfscript>
 		
-		<cfif structKeyExists(arguments.form, "userUID")><cfset uid=arguments.form.userUID /></cfif>
+		<cfif structKeyExists(arguments.form, "userUID")><cfset userUID=arguments.form.userUID /></cfif>
 		<cfif structKeyExists(arguments.form, "firstName")><cfset firstName=arguments.form.firstName /></cfif>
 		<cfif structKeyExists(arguments.form, "lastName")><cfset lastName=arguments.form.lastName /></cfif>
 		<cfif structKeyExists(arguments.form, "email")><cfset email=arguments.form.email /></cfif>
@@ -53,7 +53,7 @@
 		<cfif structKeyExists(arguments.form, "password")><cfset password=arguments.form.password /></cfif>
 
 		<cfset user.setupUser (
-			UID=uid
+			UID=userUID
 			,FirstName=firstName
 			,LastName=lastName
 			,Email=email
@@ -68,11 +68,13 @@
 					<cfset filter = {
 						username = user.getUsername()
 					} />
-
+					
 					<cfset var qHowMany = getUserGateway().getByFilter(filter=filter) />
-
+					
 					<cfif qHowMany.recordCount eq 0>
+						
 						<cfset var newUserUID = getUserGateway().save(user=user) />
+						
 						<cfset result.message="User Successfully saved!"/>
 					<cfelse>
 						<cfset result.message = "Duplicate User Found!"/>
