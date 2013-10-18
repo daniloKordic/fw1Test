@@ -48,7 +48,7 @@
 
 	<div class="span6">
 		<form name="loginform" id="loginform" class="form-horizontal" action="#buildURL('login.login')#" method="post">
-			<cfif structKeyExists(rc, "message")>
+			<cfif structKeyExists(rc, "message") and rc.message[1] neq "">
 				<div class="alert alert-info expired">
 						<button type="button" class="close" data-dismiss="alert">&times;</button>
 					#rc.message[1]#

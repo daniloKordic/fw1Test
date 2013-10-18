@@ -10,7 +10,7 @@
 		<input type="hidden" id="fsw" name="fsw" value=""/>
 		<input type="hidden" id="productUID" name="productUID" value="#fProductUID#" />
 
-		<cfif rc.event.result.message neq "">
+		<cfif rc.event.result.message neq "" and rc.event.result.message neq "">
 			<div class="alert alert-info expired">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 				#rc.event.result.message#

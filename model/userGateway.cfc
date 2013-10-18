@@ -87,6 +87,44 @@
 		<cfreturn user />
 	</cffunction>
 
+	<cffunction name="getByEmail" access="public" output="false" returntype="any">
+		<cfargument name="email" required="true" type="string" />
+		<cfset var qry="" />
+		<cfset var user = createObject("component","model.user").init() />
+		<cfif arguments.email neq "">
+			<cfquery name="qry" datasource="#getDSN()#">
+				select
+					 u.userUID
+					,u.FirstName
+					,u.LastName
+					,u.email
+					,u.username
+					,u.password
+					,u.isActive
+					,u.typeID
+				from
+					Users u with (nolock)
+				WHERE
+					u.email=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email#" />
+			</cfquery>
+
+			<cfif qry.recordCount eq 1>
+				<cfset user.setupUser(
+					UID=qry.userUID,
+					FirstName=qry.FirstName,
+					LastName=qry.LastName,
+					Email=qry.email,
+					Username=qry.username,
+					Password=qry.password,
+					IsActive=qry.isActive,
+					TypeID=qry.typeID
+				) />
+			</cfif>
+		</cfif>
+
+		<cfreturn user />
+	</cffunction>
+
 	<!--- CREATE --->
 	<cffunction name="create" access="public" output="false" returntype="string">
 		<cfargument name="user" required="true" type="any" />

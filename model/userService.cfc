@@ -53,12 +53,12 @@
 		<cfif structKeyExists(arguments.form, "password")><cfset password=arguments.form.password /></cfif>
 
 		<cfset user.setupUser (
-			userUID=uid
-			,firstName=firstName
-			,lastName=lastName
-			,email=email
-			,username=username
-			,password=password
+			UID=uid
+			,FirstName=firstName
+			,LastName=lastName
+			,Email=email
+			,Username=username
+			,Password=password
 		) />
 
 		<cfif structKeyExists(arguments.form, "fsw")>
@@ -120,6 +120,36 @@
 		<cfset var event = {user=user, result=result} />
 
 		<cfreturn event />
+	</cffunction>
+
+	<cffunction name="getByEmail" access="public" output="false" returntype="any">
+		<cfargument name="email" required="true" type="string" default="" />
+
+		<cfset var result = "" />
+		<cfset var user = "" />
+
+		<cfif len(arguments.email)>
+			<cfset result = getUserGateway().getByEmail(email=arguments.email) />	
+		</cfif>
+
+		<cfif not isStruct(result)>
+			<cfset result = createObject("component", "model.user").init() />
+		</cfif>
+
+		<cfreturn result />
+	</cffunction>
+
+	<cffunction name="validatePassword" access="public" output="false" returntype="boolean">
+		<cfargument name="user" required="false" type="any" />
+		<cfargument name="password" required="false" type="string" />
+
+		<cfset var validPass = false />
+
+		<cfif arguments.password eq arguments.user.getPassword()>
+			<cfset var validPass = true />
+		</cfif>
+
+		<cfreturn validPass />
 	</cffunction>
 
 </cfcomponent>

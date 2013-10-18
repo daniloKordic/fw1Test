@@ -11,7 +11,7 @@
 		});
 	</script>
 
-	<cfif isDefined("rc.event.result.message")>
+	<cfif isDefined("rc.event.result.message") and rc.event.result.message neq "">
 		<div class="alert alert-info expired">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			#rc.event.result.message#

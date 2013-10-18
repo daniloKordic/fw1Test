@@ -4,7 +4,7 @@
 	<cfset fullName = session.auth.user.getFirstName() & ' ' & session.auth.user.getLastName() />
 	<cfset usertype = session.auth.user.getTypeID() />
 
-	<cfif isDefined("rc.message")>
+	<cfif isDefined("rc.message") and rc.message neq "">
 		<div class="alert alert-info expired">
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			#rc.message[1]#

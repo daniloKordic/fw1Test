@@ -48,7 +48,13 @@
 		}
 	</script>
 
-	
+	<cfif isDefined("rc.event.result.message") and rc.event.result.message neq "">
+		<div class="alert alert-info expired">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			#rc.event.result.message#
+		</div>
+	</cfif>
+
 	<form action="#buildUrl('users.manage')#" method="post" id="userRegister" name="userRegister" class="form-horizontal">
 		<input type="hidden" id="fsw" name="fsw" value=""/>
 		<input type="hidden" id="userUID" name="userUID" value="#fUserUID#"/>
@@ -109,7 +115,5 @@
 
 		</fieldset>
 	</form>
-
-	<cfdump var="#rc#"/>
 
 </cfoutput>

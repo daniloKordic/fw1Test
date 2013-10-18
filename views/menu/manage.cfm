@@ -93,7 +93,7 @@
 		<input type="hidden" name="hasChildren" id="hasChildren" value="#fHasChildren#" />
 		<input type="hidden" id="fsw" name="fsw" value="" />
 
-		<cfif rc.event.result.message neq "">
+		<cfif rc.event.result.message neq "" and rc.event.result.message neq "">
 			<div class="alert alert-info expired">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 				#rc.event.result.message#
@@ -140,7 +140,5 @@
 		</form>
 		
 </cfif>
-
-<cfdump var="#rc#"/>
 
 </cfoutput>
