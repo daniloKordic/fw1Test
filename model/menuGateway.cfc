@@ -19,11 +19,31 @@
 	<cffunction name="create" access="public" output="false" returntype="string">
 		<cfargument name="menuItem" required="true" type="any" />
 		<cfset var qry="" />
+		<cfset var fSort =  arguments.menuItem.getSort()/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
 			select newID() as newUID
 		</cfquery>
 		<cfset var uid = qry.newUID />
+
+		<cfquery name="getSort" datasource="#getDSN()#">
+			select
+				sort = MAX(sort)+1
+			from 
+				Menu
+			where
+				1=1
+				<cfif arguments.menuItem.getParentMenuItemUID() neq "">
+					and ParentMenuItemUID='#arguments.menuItem.getParentMenuItemUID()#' 
+				<cfelse>
+					and MenuItemLevel = 1
+				</cfif>				
+		</cfquery>
+		<cfdump var="#getSort#" output="C:\getSort.txt" />
+		<cfif isDefined(getSort.sort) and getSort.sort neq null>
+			<cfset fSort = #getSort.sort# />	
+		</cfif>		
+
 		
 		<cfquery name="qry" datasource="#getDSN()#">
 			insert into Menu (
@@ -42,7 +62,7 @@
 				<cfelse>
 					,NULL
 				</cfif>				
-				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.menuItem.getSort()#" />
+				,#fSort#
 				<cfif arguments.menuItem.getPageUID() neq "">
 					,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.menuItem.getPageUID()#" />
 				<cfelse>
