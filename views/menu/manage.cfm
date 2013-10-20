@@ -57,7 +57,8 @@
 				} else {
 					$("##fsw").val("update");
 				}
-				submitForm();
+				//submitForm();
+				$("##manageMenu").submit();
 			}
 		});
 
@@ -68,7 +69,8 @@
 
 		$("##deleteBtn").click(function() {
 			$("##fsw").val("delete");
-			submitForm();
+			//submitForm();
+			$("##manageMenu").submit();
 		});
 
 		$("##backBtn").click(function() {

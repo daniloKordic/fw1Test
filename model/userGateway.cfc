@@ -124,7 +124,7 @@
 				) />
 			</cfif>
 		</cfif>
-
+		
 		<cfreturn user />
 	</cffunction>
 

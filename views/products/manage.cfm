@@ -74,14 +74,16 @@
 					} else {
 						$("##fsw").val("update");
 					}
-					submitForm();
+					//submitForm();
+					$("##manageProduct").submit();
 				}
 			});
 
 			$("##deleteProduct").click(function() {
 				if (validateForm()) {
 					$("##fsw").val("delete");
-					submitForm();
+					//submitForm();
+					$("##manageProduct").submit();
 				}
 			});
 

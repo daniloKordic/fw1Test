@@ -25,6 +25,7 @@
 
 	<cffunction name="manage" access="public" returntype="void">
 		<cfset var menuService = getMenuService() />
+		<cfset rc.menu = menuService.getMenu() />
 
 		<cfif structKeyExists(rc, "fsw") and Len(rc.fsw)>
 			<cfset var rc.event = menuService.HandleForm(form) />

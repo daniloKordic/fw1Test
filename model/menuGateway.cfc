@@ -113,10 +113,8 @@
 				m.MenuItemLevel,
 				ParentMenuItemUID=coalesce(m.ParentMenuItemUID,null),
 				Sort,
-				Fuse=case when m.PageUID is not null
-					then ''
-					else ''
-				end
+				isParent = (select count(MenuItemUID) from Menu where ParentMenuItemUID=m.MenuItemUID),
+				m.Action
 			from
 				Menu m with (nolock)
 			where
@@ -195,9 +193,11 @@
 			from
 				menu m with (nolock)
 			where 
-				m.menuitemuid in (select parentmenuitemuid from menu)
+				1=1
+				--and m.menuitemuid in (select parentmenuitemuid from menu)
+				and m.MenuItemLevel < 3
 			order by
-				m.sort
+				m.MenuItemLevel, m.sort
 		</cfquery>
 
 		<cfreturn qry />

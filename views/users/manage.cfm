@@ -11,21 +11,24 @@
 
 		$(document).ready(function(){
 			$("##updateUser").click(function() {
-				if (validateForm()) {
+				
+				if (validateForm()) {					
 					if ($("##userUID").val() == "") {
 						$("##fsw").val("save");
 					} else {
 						$("##fsw").val("update");
 					}
-					submitForm();
+					$("##userRegister").submit();
+					//submitForm();
 				}
 			});
 			$("##deleteUser").click(function() {
 				$("##fsw").val("delete");
-				submitForm();
+				//submitForm();
+				$("##userRegister").submit();
 			});
 			$("##backBtn").click(function() {
-				document.location = "index.cfm?action=users";
+				document.location = "index.cfm?action=main";
 			});
 		});
 
@@ -40,7 +43,7 @@
 
 			if ($("##username").val() == "") { error = false; $("##username").closest('.control-group').addClass('error'); }
 			if ($("##password").val() == "") { error = false; $("##password").closest('.control-group').addClass('error'); }
-
+			
 			return error;
 		}
 		function submitForm() {

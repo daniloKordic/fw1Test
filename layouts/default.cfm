@@ -3,6 +3,7 @@
 	<cfparam name="rc.pageTitle" default="Product Management" />
 	<cfparam name="rc.message" default="#arrayNew(1)#"/>
 
+
 	<!DOCTYPE HTML>
 	<html>
 	<head>
@@ -33,36 +34,68 @@
 		            <a class="brand" href="/">CMS</a>
 					<div class="nav-collapse collapse">
 						<ul class="nav">
-	                  <li class="divider-vertical"></li>
-	                  <li><a href="#buildUrl('main')#"><i class="icon-home icon-white"></i> Home</a></li>
-	              </ul>
+		                	<li class="divider-vertical"></li>
+		                	<li><a href="#buildUrl('main')#"><i class="icon-home icon-white"></i> Home</a></li>
+
+		                	<!--- MENU --->
+		                	<cfloop query="#rc.menu#">		                		
+		                		<cfset tMenuItemUID="#MenuItemUID#" />
+		                		<cfif MenuItemLevel eq 1>
+		                			<cfif  isParent gt 0>  				
+			                			<li class="dropdown">
+			                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
+			                				<ul class="dropdown-menu">
+			                					<cfloop query="#rc.menu#">
+			                						<cfset ttMenuItemUID = "#MenuItemUID#" />
+														<cfif ParentMenuItemUID eq tMenuItemUID>
+															<cfif isParent gt 0 >
+																<li class="dropdown-submenu">
+								                				<a href="#buildUrl('#Action#')#">#MenuTitle#</a>
+								                				<ul class="dropdown-menu">
+								                					<cfloop query="#rc.menu#">
+								                						<cfif ParentMenuItemUID eq ttMenuItemUID>
+								                							<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
+								                						</cfif>
+								                					</cfloop>
+								                				</ul>
+															<cfelse>														
+																<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
+															</cfif>
+														</cfif>		                						
+			                					</cfloop>
+			                				</ul>
+			                			</li>
+			                		<cfelse>
+			                			<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
+			                		</cfif>
+		                		</cfif>
+		                	</cfloop>
+
+		                </ul>		                
 						<ul class="nav pull-right">
 
 							<cfif not session.auth.isLoggedIn>
 								<li><a href="#buildUrl('register')#">Sign Up</a></li>
-			               <li class="divider-vertical"></li>
+			               		<li class="divider-vertical"></li>
 								<li class="dropdown">
 									<a class="dropdown-toggle" href="##" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
 									<div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-										<form method="post" action="#buildURL('login.login')#" accept-charset="UTF-8">
+										<form method="post" action="#buildURL('login.login')#" id="userLogin" name="userLogin">
 											<input style="margin-bottom: 15px;" type="text" placeholder="E-mail" id="email" name="email">
 											<input style="margin-bottom: 15px;" type="password" placeholder="Password" id="password" name="password">									
-											<input class="btn btn-primary btn-block" type="submit" id="sign-in" value="Sign In">
-											<!--- <label style="text-align:center;margin-top:5px">or</label>
-											<input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">
-											<input class="btn btn-primary btn-block" type="button" id="sign-in-twitter" value="Sign In with Twitter"> --->
+											<input class="btn btn-primary btn-block" type="button" id="signinBtn" value="Sign In">
 										</form>
 									</div>
 								</li>
 							<cfelse>
-	                    <li class="dropdown"><a href="##" class="dropdown-toggle" data-toggle="dropdown">Welcome, #session.auth.fullname# <b class="caret"></b></a>
-	                        <ul class="dropdown-menu">
-	                            <li><a href="/user/preferences"><i class="icon-cog"></i> Preferences</a></li>
-	                            <li><a href="/help/support"><i class="icon-envelope"></i> Contact Support</a></li>
-	                            <li class="divider"></li>
-	                            <li><a href="#buildUrl('login.logout')#"><i class="icon-off"></i> Logout</a></li>
-	                        </ul>
-	                    </li>
+			                    <li class="dropdown"><a href="##" class="dropdown-toggle" data-toggle="dropdown">Welcome, #session.auth.fullname# <b class="caret"></b></a>
+			                        <ul class="dropdown-menu">
+			                            <li><a href="index.cfm?action=users.manage&uid=#session.auth.user.getUID()#"><i class="icon-cog"></i> Preferences</a></li>
+			                            <li><a href="##"><i class="icon-envelope"></i> Contact Support</a></li>
+			                            <li class="divider"></li>
+			                            <li><a href="#buildUrl('login.logout')#"><i class="icon-off"></i> Logout</a></li>
+			                        </ul>
+			                    </li>
 							</cfif>							
 						</ul>
 					</div>
@@ -95,7 +128,28 @@
 			$('.dropdown-menu').find('form').click(function (e) {
 				e.stopPropagation();
 			});
+
+			$("##signinBtn").click(function() {
+				if (checkForm()) {
+					submitForm();
+				}
+			});			
 		});
+
+		function checkForm() {
+			var valid = 1;
+			var errorText = "";
+
+			if ($("##email").val() == "") { errorText = errorText + "Email is mandatory!\n"; valid=0; }
+			if ($("##password").val() == "") { errorText = errorText + "Password is mandatory!\n"; valid=0; }
+
+			if (errorText != "") alert(errorText);
+
+			return valid;
+		}
+		function submitForm() {
+			$("##userLogin").submit();
+		}
 	</script>
 
 </cfoutput>

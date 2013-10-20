@@ -16,9 +16,9 @@
 
 	<cffunction name="before" access="public" output="false" returntype="void">
 		<cfargument name="rc" type="struct" required="true" />
-		<cfif session.auth.isLoggedIn and variables.fw.getItem() is not 'logout'>
+		<!--- <cfif session.auth.isLoggedIn and variables.fw.getItem() is not 'logout'>
 			<cfset variables.fw.redirect('main') />
-		</cfif>
+		</cfif> --->
 		<cfset setUserService(application.beanFactory.GetBean('userService')) />
 	</cffunction>
 
@@ -31,7 +31,7 @@
 
 		<!--- if missing variables redirect to login form --->
 		<cfif not structKeyExists(rc, "email") or not structKeyExists(rc, "password")>
-			<cfset variables.fw.redirect("login") />
+			<cfset variables.fw.redirect("main") />
 		</cfif>
 
 		<!--- if all data ok, lookup user --->
@@ -43,10 +43,10 @@
 		</cfif>
 
 		<cfif not userValid>
-			<cfset rc.message = ["Invalid Username or Password"] />
-			<cfset variables.fw.redirect("login","message") />
+			<cfset rc.message = "Invalid Username or Password" />
+			<cfset variables.fw.redirect("main","message") />
 		<cfelse>
-			<cfset rc.message = ["Login Successfull!"] />
+			<cfset rc.message = "Login Successfull!" />
 		</cfif>
 
 		<!--- since all ok, set sessoin variables --->
@@ -66,8 +66,8 @@
 		<cfset session.auth.isLoggedIn = false />
 		<cfset session.auth.fullName = "Guest" />
 		<cfset structDelete(session.auth,"user") />
-		<cfset rc.message = ["You have safely logged out!"] />
-		<cfset variables.fw.redirect("login","message") />
+		<cfset rc.message = "You have safely logged out!" />
+		<cfset variables.fw.redirect("main","message") />
 	</cffunction>
 	
 </cfcomponent>

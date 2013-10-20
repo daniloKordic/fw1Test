@@ -16,19 +16,31 @@
 	<cffunction name="getUserService" access="public" output="false" returntype="any">
 		<cfreturn variables.userService />
 	</cffunction>
+	<cffunction name="setMenuService" access="public" output="false" returntype="void">
+		<cfargument name="menuService" type="any" required="true"/>
+		<cfset variables.menuService = arguments.menuService />
+	</cffunction>
+	<cffunction name="getMenuService" access="public" output="false" returntype="any">
+		<cfreturn variables.menuService />
+	</cffunction>
 
 	<cffunction name="before" access="public" returntype="void">
 		<cfset setUserService(application.beanFactory.GetBean('userService')) />
+		<cfset setMenuService(application.beanFactory.GetBean('menuService')) />
 	</cffunction>
 
 	<cffunction name="default" access="public" returntype="void">
 		<cfset var userService = getUserService() />
+		<cfset var menuService = getMenuService() />
+		<cfset rc.menu = menuService.getMenu() />
 		<cfset rc.qGrid = userService.handleGrid(url) />
 	</cffunction>
 
 	<cffunction name="manage" access="public" returntype="void">
 		
 		<cfset var userService = getUserService() />
+		<cfset var menuService = getMenuService() />
+		<cfset rc.menu = menuService.getMenu() />
 
 		<cfif structKeyExists(rc, "fsw") and Len(rc.fsw)>
 			<cfset var rc.event = userService.handleForm(form) />

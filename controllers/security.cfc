@@ -7,13 +7,14 @@
 
 	<cffunction name="authorize">
 		<cfargument name="rc" type="any" required="true" />
-		<cfif not session.auth.isLoggedIn and 	not listFindNoCase('login', variables.fw.getSection() ) and
+		<!--- <cfif not session.auth.isLoggedIn and 	not listFindNoCase('main', variables.fw.getSection() ) and
 															not listFindNoCase('register', variables.fw.getSection()) and
+															not listFindNoCase('login', variables.fw.getSection()) and
 															not listFindNoCase('main.error', variables.fw.getFullyQualifiedAction() )>
 			<!--- <cfset this.sessionTimeout = createTimeSpan(0, 0, 0, 30) />
 		<cfelse> --->
-			<cfset variables.fw.redirect('login') />
-		</cfif>
+			<cfset variables.fw.redirect('main') />
+		</cfif> --->
 	</cffunction>
 
 	<cffunction name="session">
