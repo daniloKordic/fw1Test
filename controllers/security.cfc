@@ -23,5 +23,6 @@
 		<cfset session.auth = {} />
 		<cfset session.auth.isLoggedIn = false />
 		<cfset session.auth.fullName = "Guest" />
+		<cfset session.auth.TypeID = 3 />
 	</cffunction>
 </cfcomponent>

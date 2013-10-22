@@ -65,6 +65,7 @@
 		<!--- reseting session variables --->
 		<cfset session.auth.isLoggedIn = false />
 		<cfset session.auth.fullName = "Guest" />
+		<cfset session.auth.TypeID = 3 />
 		<cfset structDelete(session.auth,"user") />
 		<cfset rc.message = "You have safely logged out!" />
 		<cfset variables.fw.redirect("main","message") />

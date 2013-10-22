@@ -11,6 +11,7 @@
 		<title>#rc.pageTitle#</title>
 
 		<link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+		<link href="assets/bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
 		<link rel="stylesheet" type="text/css" href="assets/css/datepicker.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/css/jquery-ui-1.10.2.custom.css"/>
 		<link href="assets/css/style.css" rel="stylesheet" media="screen">
@@ -20,6 +21,7 @@
 		<script src="assets/js/jquery-ui-1.10.2.custom.js"></script>
 		<script language="javascript" src="assets/js/bootstrap-datepicker.js"></script>
 		<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+		<script src="assets/bootstrap/js/jasny-bootstrap.min.js"></script>
 		<script type="text/javascript" src="assets/js/global.js"></script>
 	</head>
 	<body>
@@ -40,35 +42,39 @@
 		                	<!--- MENU --->
 		                	<cfloop query="#rc.menu#">		                		
 		                		<cfset tMenuItemUID="#MenuItemUID#" />
-		                		<cfif MenuItemLevel eq 1>
-		                			<cfif  isParent gt 0>  				
-			                			<li class="dropdown">
-			                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
-			                				<ul class="dropdown-menu">
-			                					<cfloop query="#rc.menu#">
-			                						<cfset ttMenuItemUID = "#MenuItemUID#" />
-														<cfif ParentMenuItemUID eq tMenuItemUID>
-															<cfif isParent gt 0 >
-																<li class="dropdown-submenu">
-								                				<a href="#buildUrl('#Action#')#">#MenuTitle#</a>
-								                				<ul class="dropdown-menu">
-								                					<cfloop query="#rc.menu#">
-								                						<cfif ParentMenuItemUID eq ttMenuItemUID>
-								                							<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
-								                						</cfif>
-								                					</cfloop>
-								                				</ul>
-															<cfelse>														
-																<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
-															</cfif>
-														</cfif>		                						
-			                					</cfloop>
-			                				</ul>
-			                			</li>
-			                		<cfelse>
-			                			<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
+		                		<cfif tMenuItemUID eq "3981D4BE-1A4E-4899-A919-ACB01383B8BA" and session.auth.TypeID eq 1>
+		        
+			                		<cfif MenuItemLevel eq 1>
+			                			<cfif  isParent gt 0>  				
+				                			<li class="dropdown">
+				                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
+				                				<ul class="dropdown-menu">
+				                					<cfloop query="#rc.menu#">
+				                						<cfset ttMenuItemUID = "#MenuItemUID#" />
+															<cfif ParentMenuItemUID eq tMenuItemUID>
+																<cfif isParent gt 0 >
+																	<li class="dropdown-submenu">
+									                				<a href="#buildUrl('#Action#')#">#MenuTitle#</a>
+									                				<ul class="dropdown-menu">
+									                					<cfloop query="#rc.menu#">
+									                						<cfif ParentMenuItemUID eq ttMenuItemUID>
+									                							<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
+									                						</cfif>
+									                					</cfloop>
+									                				</ul>
+																<cfelse>														
+																	<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
+																</cfif>
+															</cfif>		                						
+				                					</cfloop>
+				                				</ul>
+				                			</li>
+				                		<cfelse>
+				                			<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
+				                		</cfif>
 			                		</cfif>
-		                		</cfif>
+
+			                	</cfif>
 		                	</cfloop>
 
 		                </ul>		                

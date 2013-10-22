@@ -3,6 +3,6 @@
 	<span style="margin-top:50px;">&nbsp;</span>
 	
 		#rc.result.message#<br/>
-		<a href="#buildUrl('login')#">Go to login page!</a>	
+		<a href="#buildUrl('main')#">Go to home page!</a>	
 
 </cfoutput>

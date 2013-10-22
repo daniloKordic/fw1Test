@@ -111,7 +111,7 @@
 		<cfset setUsername('')>
 		<cfset setPassword('')>
 		<cfset setIsActive(0)>
-		<cfset setTypeID(0)>
+		<cfset setTypeID(2)>
 	</cffunction>
 
 </cfcomponent>
