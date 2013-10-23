@@ -43,6 +43,7 @@
 			var email="";
 			var username="";
 			var password="";
+			var active=0;
 		</cfscript>
 		
 		<cfif structKeyExists(arguments.form, "userUID")><cfset userUID=arguments.form.userUID /></cfif>
@@ -51,6 +52,7 @@
 		<cfif structKeyExists(arguments.form, "email")><cfset email=arguments.form.email /></cfif>
 		<cfif structKeyExists(arguments.form, "username")><cfset username=arguments.form.username /></cfif>
 		<cfif structKeyExists(arguments.form, "password")><cfset password=arguments.form.password /></cfif>
+		<cfif structKeyExists(arguments.form, "active")><cfset active=arguments.form.active /></cfif>
 
 		<cfset user.setupUser (
 			UID=userUID
@@ -59,6 +61,7 @@
 			,Email=email
 			,Username=username
 			,Password=password
+			,IsActive=active
 		) />
 
 		<cfif structKeyExists(arguments.form, "fsw")>
@@ -66,16 +69,17 @@
 				<cfcase value="save">
 					
 					<cfset filter = {
-						username = user.getUsername()
+						email = user.getEmail()
 					} />
 					
 					<cfset var qHowMany = getUserGateway().getByFilter(filter=filter) />
 					
 					<cfif qHowMany.recordCount eq 0>
 						
-						<cfset var newUserUID = getUserGateway().save(user=user) />
+						<cfset var newUserUID = getUserGateway().save(user=user) />						
 						
 						<cfset result.message="User Successfully saved!"/>
+						<cfset result.userUID=newUserUID />						
 					<cfelse>
 						<cfset result.message = "Duplicate User Found!"/>
 						<cfset user.reset() />
@@ -100,6 +104,7 @@
 			user = user
 			,result = result
 		} />
+		
 
 		<cfreturn event />
 	</cffunction>
@@ -152,6 +157,18 @@
 		</cfif>
 
 		<cfreturn validPass />
+	</cffunction>
+
+	<cffunction name="confirmUser" access="public" output="false" returntype="string">
+		<cfargument name="userUID" required="false" type="string" default="" />
+
+		<cfset var result = "Invalid User!" />
+
+		<cfif arguments.userUID neq "">			
+			<cfset var result = getUserGateway().confirmAccount(userUID=arguments.userUID) />
+		</cfif>
+
+		<cfreturn result />
 	</cffunction>
 
 </cfcomponent>

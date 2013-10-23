@@ -91,7 +91,7 @@
 		<cfargument name="Username" required="false" type="string" default="" />
 		<cfargument name="Password" required="false" type="string" default="" />
 		<cfargument name="IsActive" required="false" type="numeric" default="0" />
-		<cfargument name="TypeID" required="false" type="numeric" default="0" />
+		<cfargument name="TypeID" required="false" type="numeric" default="2" />
 
 		<cfset setUID(arguments.UID)>
 		<cfset setFirstName(arguments.FirstName)>

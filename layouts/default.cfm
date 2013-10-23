@@ -87,8 +87,8 @@
 									<a class="dropdown-toggle" href="##" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
 									<div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
 										<form method="post" action="#buildURL('login.login')#" id="userLogin" name="userLogin">
-											<input style="margin-bottom: 15px;" type="text" placeholder="E-mail" id="email" name="email">
-											<input style="margin-bottom: 15px;" type="password" placeholder="Password" id="password" name="password">									
+											<input style="margin-bottom: 15px;" type="text" placeholder="E-mail" id="email" name="email" value="">
+											<input style="margin-bottom: 15px;" type="password" placeholder="Password" id="password" name="password" value="">									
 											<input class="btn btn-primary btn-block" type="button" id="signinBtn" value="Sign In">
 										</form>
 									</div>

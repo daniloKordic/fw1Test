@@ -153,7 +153,7 @@
 		<div class="control-group">
 		  <label class="control-label" for="menuTitle">Menu Title</label>
 		  <div class="controls">
-		    <input id="menuTitle" name="menuTitle" placeholder="menu item title" class="input-large" required="" type="text" value="#fMenuTitle#">		    
+		    <input id="menuTitle" name="menuTitle" class="input-large" required="" type="text" value="#fMenuTitle#">		    
 		  </div>
 		</div>
 

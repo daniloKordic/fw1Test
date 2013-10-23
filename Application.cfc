@@ -22,12 +22,16 @@
 		<cfset application.beanFactory = createObject("component","coldspring.beans.DefaultXmlBeanFactory").init(defaultProperties=application.settings) />
 		<cfset application.beanFactory.loadBeans(application.coldspringConfig) />
 
+
 		<cfset application.assets = "assets/"/>
+
+		
 
 	</cffunction>
 
 	<cffunction name="setupRequest">
 		<cfset controller('security.authorize') />
+		<cfset controller('menu') />
 		<cfset request.ServiceLocation ="http://#cgi.HTTP_HOST#/model/" />
 	</cffunction>
 

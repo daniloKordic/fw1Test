@@ -6,6 +6,7 @@
 	<cfset fEmail="#rc.event.user.getEmail()#" />
 	<cfset fUsername="#rc.event.user.getUsername()#"/>
 	<cfset fPassword="#rc.event.user.getPassword()#" />
+	<cfset fActive="#rc.event.user.getIsActive()#"/>
 
 	<script type="text/javascript">
 
@@ -53,7 +54,11 @@
 				$("##userRegister").submit();
 			});
 			$("##backBtn").click(function() {
-				document.location = "index.cfm?action=main";
+				<cfif session.auth.TypeID eq 1>
+					document.location = "index.cfm?action=users";
+				<cfelse>
+					document.location = "index.cfm?action=main";
+				</cfif>
 			});
 		});
 
@@ -105,7 +110,12 @@
 		<fieldset>
 
 			<!-- Form Name -->
-			<legend>Edit user details</legend>
+			<cfif fUserUID neq "">
+				<legend>Edit user details</legend>
+			<cfelse>	
+				<legend>Add user details</legend>
+			</cfif>
+			
 
 			<!-- Text input-->
 			<div class="control-group">
@@ -129,7 +139,7 @@
 			<div class="control-group">
 			  <label class="control-label" for="firstName">First Name:</label>
 			  <div class="controls">
-			    <input id="firstName" name="firstName" placeholder="add your name" class="input-large" type="text" value="#fFirstName#">			    
+			    <input id="firstName" name="firstName" class="input-large" type="text" value="#fFirstName#">			    
 			  </div>
 			</div>
 
@@ -137,8 +147,7 @@
 			<div class="control-group">
 			  <label class="control-label" for="lastname">Last Name:</label>
 			  <div class="controls">
-			    <input id="lastName" name="lastName" placeholder="add your last name" class="input-large" type="text" value="#fLastName#">
-			    
+			    <input id="lastName" name="lastName" class="input-large" type="text" value="#fLastName#">		    
 			  </div>
 			</div>
 
@@ -146,7 +155,7 @@
 			<div class="control-group">
 			  <label class="control-label" for="email">Email:</label>
 			  <div class="controls">
-			    <input id="email" name="email" placeholder="add email" class="input-large" type="text" value="#fEmail#">			    
+			    <input id="email" name="email" class="input-large" type="text" value="#fEmail#">			    
 			  </div>
 			</div>
 
@@ -154,7 +163,7 @@
 			<div class="control-group">
 			  <label class="control-label" for="username">Username:</label>
 			  <div class="controls">
-			    <input id="username" name="username" placeholder="add username" class="input-large" type="text" value="#fUsername#">			    
+			    <input id="username" name="username" class="input-large" type="text" value="#fUsername#">		    
 			  </div>
 			</div>
 
@@ -162,15 +171,33 @@
 			<div class="control-group">
 			  <label class="control-label" for="password">Password:</label>
 			  <div class="controls">
-			    <input id="password" name="password" placeholder="add password" class="input-large" type="password" value="#fPassword#">			    
+			    <input id="password" name="password" class="input-large" type="password" value="#fPassword#">	    
 			  </div>
 			</div>
+
+			<cfif session.auth.TypeID eq 1>
+				<div class="control-group">
+				  <label class="control-label" for="radios">User Status</label>
+				  <div class="controls">
+				    <label class="radio" for="radios-0">
+				      <input name="active" id="radios-0" value="1" type="radio" <cfif fActive eq 1>checked</cfif>>
+				      Active
+				    </label>
+				    <label class="radio" for="radios-1">
+				      <input name="active" id="radios-1" value="0" type="radio" <cfif fActive eq 0>checked</cfif>>
+				      Inactive
+				    </label>
+				  </div>
+				</div>
+			</cfif>
 
 			<div class="control-group">
 				<!-- Button -->
 				<div class="controls">
 					<button type="submit" class="btn btn-success" name="updateUser" id="updateUser"><cfif fUserUID eq "">Save<cfelse>Update</cfif></button>
-					<button type="button" class="btn btn-danger" name="deleteUser" id="deleteUser">Delete</button>
+					<cfif session.auth.TypeID eq 1>
+						<button type="button" class="btn btn-danger" name="deleteUser" id="deleteUser">Delete</button>
+					</cfif>					
 					<button type="button" class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
 				</div>
 			</div>

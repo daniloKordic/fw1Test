@@ -1,33 +1,32 @@
 <cfoutput>
 
-
 <form name="registerForm" id="registerForm" action="#buildUrl('register.register')#" method="post">
 	<input type="hidden" id="fsw" name="fsw" value="" />
 
 	<h2 class="form-signin-heading">Register User</h2>
 	<div class="control-group"> 		
  		<div class="controls">
- 			<input type="text" name="firstName" id="registerFirstName" class="input-large" placeholder="First Name">
+ 			<input type="text" value="" name="firstName" id="registerFirstName" class="input-large" placeholder="First Name">
  		</div>
  	</div>
  	<div class="control-group"> 		
  		<div class="controls">
- 			<input type="text" name="lastName" id="registerLastName" class="input-large" placeholder="Last Name">
+ 			<input type="text" value="" name="lastName" id="registerLastName" class="input-large" placeholder="Last Name">
  		</div>
  	</div> 			
  	<div class="control-group"> 		
  		<div class="controls">
-			<input type="text" name="email" id="registerEmail" class="input-large" placeholder="Email address" required>
+			<input type="text" value="" name="email" id="registerEmail" class="input-large" placeholder="Email address" required>
  		</div>
  	</div>			
 	<div class="control-group"> 		
  		<div class="controls">
-			<input type="text" name="username" id="registerUsername" class="input-large" placeholder="Username" required>
+			<input type="text" value="" name="username" id="registerUsername" class="input-large" placeholder="Username" required>
  		</div>
  	</div>			
 	<div class="control-group"> 		
  		<div class="controls">
-			<input type="password" name="password" id="registerPassword" class="input-large" placeholder="Password" required>
+			<input type="password" value="" name="password" id="registerPassword" class="input-large" placeholder="Password" required>
  		</div>
  	</div>			
 
@@ -80,21 +79,10 @@
 			}
 		});
 
-		/*$("##registerBtn").click(function() {
-			var errorText = "";
-			if ($("##registerFirstName").val() == "") { errorText = errorText + "First Name is mandatory!\n"; }
-			if ($("##registerLastName").val() == "") { errorText = errorText + "Last Name is mandatory!\n"; }
-			if ($("##registerEmail").val() == "") { errorText = errorText + "Email is mandatory!\n"; }
-			if ($("##registerUsername").val() == "") { errorText = errorText + "Username is mandatory!\n"; }
-			if ($("##registerPassword").val() == "") { errorText = errorText + "Password is mandatory!\n"; }
-
-			if (errorText != "") {
-				alert(errorText);
-			} else {
-				$("##fsw").val("save");
-				$("##registerForm").submit();
-			}
-		});*/
+		$("##registerBtn").click(function() {
+			$("##fsw").val("save");
+			$("##registerForm").submit();
+		});
 
 		$("##cancelBtn").click(function() {
 			$("##registerFirstName").val("");

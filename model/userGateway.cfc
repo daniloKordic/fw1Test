@@ -109,6 +109,7 @@
 					Users u with (nolock)
 				WHERE
 					u.email=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email#" />
+					and u.isActive=1
 			</cfquery>
 
 			<cfif qry.recordCount eq 1>
@@ -174,6 +175,7 @@
 			,email=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getEmail()#" />
 			,username=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUsername()#" />
 			,password=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getPassword()#" />
+			,isActive=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getIsActive()#" />
 			WHERE UserUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
 		</cfquery>
 
@@ -206,4 +208,19 @@
 		<cfreturn 1 />
 	</cffunction>
 
+	<!--- CONFIRM ACCOUNT --->
+	<cffunction name="confirmAccount" output="false" access="public" returntype="string">
+		<cfargument name="userUID" required="true" default="" />
+		<cfset var result = ""/>
+
+		<cfquery name="confirmAccount" datasource="#getDSN()#">
+			update users
+			set isActive=1
+			where userUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userUID#" />
+		</cfquery>
+
+		<cfset var result = "User account activated!"/>
+
+		<cfreturn result />
+	</cffunction>
 </cfcomponent>
