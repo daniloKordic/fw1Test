@@ -46,10 +46,40 @@
 	    text-transform: uppercase;
 	    top: 15px;
 	}
+	label.valid {
+		width: 24px;
+		height: 24px;
+		background: url(assets/img/valid.png) center center no-repeat;
+		display: inline-block;
+		text-indent: -9999px;
+	}
+	label.error {
+		font-weight: bold;
+		color: red;
+		padding: 2px 8px;
+		margin-top: 2px;
+	}
 </style>
 
 <script type="text/javascript">
 	$(document).ready(function() {
+
+		$('##manageMenu').validate(
+		{
+			rules: {
+				menuTitle: {
+					minlength: 6,
+					required: true
+				}
+			},
+			highlight: function(element) {
+				$(element).closest('.control-group').removeClass('success').addClass('error');
+			},
+			success: function(element) {
+				element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+			}
+		});
+
 		$("##saveBtn").click(function() {
 			if (validateForm()) {
 				if ($("##menuItemUID").val() == "") {

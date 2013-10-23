@@ -10,6 +10,31 @@
 	<script type="text/javascript">
 
 		$(document).ready(function(){
+
+			$('##userRegister').validate(
+			{
+				rules: {
+					email: {
+						required: true,
+						email: true
+					},
+					username: {
+						minlength: 6,
+						required: true
+					},
+					password: {
+						minlength: 6,
+						required: true
+					}
+				},
+				highlight: function(element) {
+					$(element).closest('.control-group').removeClass('success').addClass('error');
+				},
+				success: function(element) {
+					element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+				}
+			});
+
 			$("##updateUser").click(function() {
 				
 				if (validateForm()) {					
@@ -51,6 +76,22 @@
 		}
 	</script>
 
+	<style type="text/css">
+		label.valid {
+			width: 24px;
+			height: 24px;
+			background: url(assets/img/valid.png) center center no-repeat;
+			display: inline-block;
+			text-indent: -9999px;
+		}
+		label.error {
+			font-weight: bold;
+			color: red;
+			padding: 2px 8px;
+			margin-top: 2px;
+		}
+	</style>
+
 	<cfif isDefined("rc.event.result.message") and rc.event.result.message neq "">
 		<div class="alert alert-info expired">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -67,6 +108,24 @@
 			<legend>Edit user details</legend>
 
 			<!-- Text input-->
+			<div class="control-group">
+				<label class="control-label" for="firstName">Photo:</label>
+			  	<div class="controls">
+					<div class="fileupload fileupload-new" data-provides="fileupload">			
+						<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
+						<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+						<div>
+							<span class="btn btn-file">
+								<span class="fileupload-new">Select image</span>
+								<span class="fileupload-exists">Change</span>
+								<input type="file" />
+							</span>
+							<a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="control-group">
 			  <label class="control-label" for="firstName">First Name:</label>
 			  <div class="controls">
@@ -110,7 +169,7 @@
 			<div class="control-group">
 				<!-- Button -->
 				<div class="controls">
-					<button type="button" class="btn btn-success" name="updateUser" id="updateUser"><cfif fUserUID eq "">Save<cfelse>Update</cfif></button>
+					<button type="submit" class="btn btn-success" name="updateUser" id="updateUser"><cfif fUserUID eq "">Save<cfelse>Update</cfif></button>
 					<button type="button" class="btn btn-danger" name="deleteUser" id="deleteUser">Delete</button>
 					<button type="button" class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
 				</div>

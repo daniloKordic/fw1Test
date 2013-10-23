@@ -67,6 +67,27 @@
 	<script type="text/javascript">
 
 		$(document).ready(function() {
+
+			$('##manageProduct').validate(
+			{
+				rules: {
+					productName: {
+						required: true,
+						minlength: 6
+					},
+					productDescription: {
+						minlength: 6,
+						required: true
+					}
+				},
+				highlight: function(element) {
+					$(element).closest('.control-group').removeClass('success').addClass('error');
+				},
+				success: function(element) {
+					element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+				}
+			});
+
 			$("##updateProduct").click(function() {
 				if (validateForm()) {
 					if ($("##productUID").val() == "") {
@@ -104,5 +125,21 @@
 			$("##manageProduct").submit();
 		}
 	</script>
+
+	<style type="text/css">
+		label.valid {
+			width: 24px;
+			height: 24px;
+			background: url(assets/img/valid.png) center center no-repeat;
+			display: inline-block;
+			text-indent: -9999px;
+		}
+		label.error {
+			font-weight: bold;
+			color: red;
+			padding: 2px 8px;
+			margin-top: 2px;
+		}
+	</style>
 
 </cfoutput>

@@ -5,21 +5,82 @@
 	<input type="hidden" id="fsw" name="fsw" value="" />
 
 	<h2 class="form-signin-heading">Register User</h2>
- 	<input type="text" name="firstName" id="registerFirstName" class="input-block-level" placeholder="First Name" required><br/>
- 	<input type="text" name="lastName" id="registerLastName" class="input-block-level" placeholder="Last Name" required><br/>
-	<input type="text" name="email" id="registerEmail" class="input-block-level" placeholder="Email address" required><br/>
-	<input type="text" name="username" id="registerUsername" class="input-block-level" placeholder="Username" required><br/>
-	<input type="password" name="password" id="registerPassword" class="input-block-level" placeholder="Password" required><br/><br/>
+	<div class="control-group"> 		
+ 		<div class="controls">
+ 			<input type="text" name="firstName" id="registerFirstName" class="input-large" placeholder="First Name">
+ 		</div>
+ 	</div>
+ 	<div class="control-group"> 		
+ 		<div class="controls">
+ 			<input type="text" name="lastName" id="registerLastName" class="input-large" placeholder="Last Name">
+ 		</div>
+ 	</div> 			
+ 	<div class="control-group"> 		
+ 		<div class="controls">
+			<input type="text" name="email" id="registerEmail" class="input-large" placeholder="Email address" required>
+ 		</div>
+ 	</div>			
+	<div class="control-group"> 		
+ 		<div class="controls">
+			<input type="text" name="username" id="registerUsername" class="input-large" placeholder="Username" required>
+ 		</div>
+ 	</div>			
+	<div class="control-group"> 		
+ 		<div class="controls">
+			<input type="password" name="password" id="registerPassword" class="input-large" placeholder="Password" required>
+ 		</div>
+ 	</div>			
+
 	
-	<button class="btn btn-primary" type="button" id="registerBtn" name="registerBtn">Register</button>
+	<button class="btn btn-primary" type="submit" id="registerBtn" name="registerBtn">Register</button>
 	<button class="btn" type="button" id="cancelBtn">Cancel</button>
-	<button class="btn" type="button" id="homeButton">Go to login page</button>
 </form>
 
+	<style type="text/css">
+		label.valid {
+			width: 22px;
+			height: 22px;
+			background: url(assets/img/valid.png) center center no-repeat;
+			display: inline-block;
+			text-indent: -9999px;
+		}
+		label.error {
+			font-weight: bold;
+			color: red;
+			padding: 0 8px;
+			margin-top: 2px;
+			top: -5px;
+		}
+	</style>
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("##registerBtn").click(function() {
+
+		$('##registerForm').validate(
+			{
+			rules: {
+				email: {
+					required: true,
+					email: true
+				},
+				username: {
+					minlength: 6,
+					required: true
+				},
+				password: {
+					minlength: 6,
+					required: true
+				}
+			},
+			highlight: function(element) {
+				$(element).closest('.control-group').removeClass('success').addClass('error');
+			},
+			success: function(element) {
+				element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+			}
+		});
+
+		/*$("##registerBtn").click(function() {
 			var errorText = "";
 			if ($("##registerFirstName").val() == "") { errorText = errorText + "First Name is mandatory!\n"; }
 			if ($("##registerLastName").val() == "") { errorText = errorText + "Last Name is mandatory!\n"; }
@@ -33,7 +94,7 @@
 				$("##fsw").val("save");
 				$("##registerForm").submit();
 			}
-		});
+		});*/
 
 		$("##cancelBtn").click(function() {
 			$("##registerFirstName").val("");
@@ -41,10 +102,6 @@
 			$("##registerEmail").val("");
 			$("##registerUsername").val("");
 			$("##registerPassword").val("");
-		});
-
-		$("##homeButton").click(function() {
-			document.location="index.cfm?action=login";
 		});
 	});
 </script>
