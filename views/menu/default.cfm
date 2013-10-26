@@ -13,6 +13,12 @@
 			document.location="index.cfm";
 		});
 	});
+
+	function deleteMenuItem(menuItemUID) {
+		$("##fsw").val("delete");
+		$("##menuItemUID").val(menuItemUID);
+		$("##manageMenu").submit();
+	}
 </script>
 
 <style type="text/css">
@@ -51,50 +57,79 @@
 	</cfif>
 		
 	<h2>Menu Management</h2>
+	
+	<form class="form-horizontal"  action="#buildUrl('menu.manage')#" method="POST" id="manageMenu" name="manageMenu">
+		<input type="hidden" name="menuItemUID" id="menuItemUID" value="" />
+		<input type="hidden" id="fsw" name="fsw" value="" />
 
-	<button class="btn btn-primary" type="button" id="addMenuItem" name="addMenuItem">Add Menu Item</button>
-	<button class="btn btn-default" id="backBtn" name="backBtn" type="button">Back</button>	
-		
-	<br/><br/>
-	<div id="menuContainer">
-		<cfquery name="getItems01" dbtype="query">
-			select * from rc.menu where MenuItemLevel=1 order by Sort
-		</cfquery>
-		<ul>
-			<cfloop query="getItems01">
-				<cfset tMenuItemUID="#MenuItemUID#">
-				<cfquery name="getChildren" dbtype="query">
-					select * from rc.menu where MenuItemLevel=2 and ParentMenuItemUID='#tMenuItemUID#'
-				</cfquery>
-				<li <cfif getChildren.recordCount neq 0>class="withChildren"</cfif>>
-					<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
-					<cfif getChildren.recordCount neq 0>
-						<ul>
-							<cfloop query="getChildren">
-								<cfset tMenuItemUID="#MenuItemUID#">
-								<cfquery name="getChildren" dbtype="query">
-									select * from rc.menu where MenuItemLevel=3 and ParentMenuItemUID='#tMenuItemUID#'
-								</cfquery>
-								<li <cfif getChildren.recordCount neq 0>class="withChildren"</cfif>>
-									<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
-									<cfif getChildren.recordCount neq 0>
-										<ul>
-											<cfloop query="getChildren">
-												<li>
-													<a href="index.cfm?action=menu.manage&uid=#MenuItemUID#">#MenuTitle#</a>
-												</li>
-											</cfloop>
-										</ul>
+		<div class="well">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>##</th>
+						<th>Menu Item Level</th>
+						<th>Menu Title</th>
+						<th>Sort</th>
+						<th>Action</th>
+						<th style="width: 36px;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<cfif rc.menu.recordCount neq 0>				
+						<cfloop query="#rc.menu#">	
+							<cfif rc.menu.menuitemlevel eq 1>						
+								<cfset tMenuItemUID = rc.menu.menuitemuid />
+								<tr>
+									<td>#rc.menu.currentRow#</td>
+									<td>#rc.menu.menuitemlevel#</td>
+									<td>#rc.menu.menuTitle#</td>
+									<td>#rc.menu.sort#</td>
+									<td>#rc.menu.action#</td>
+								</tr>
+								<cfloop query="#rc.menu#">
+									<cfif rc.menu.ParentMenuItemUID eq tMenuItemUID>
+										<cfset ttMenuItemUID = rc.menu.MenuItemUID />
+										<tr>
+											<td>#rc.menu.currentRow#</td>
+											<td>#rc.menu.menuitemlevel#</td>
+											<td>#rc.menu.menuTitle#</td>
+											<td>#rc.menu.sort#</td>
+											<td>#rc.menu.action#</td>
+											<td>
+												<a href="index.cfm?action=menu.manage&uid=#ttMenuItemUID#"><i class="icon-pencil"></i></a>
+												<a href="##" onClick="deleteMenuItem('#ttMenuItemUID#')"><i class="icon-remove"></i></a>
+											</td>
+										</tr>
+										<cfloop query="#rc.menu#">
+											<cfset tttMenuItemUID = rc.menu.MenuItemUID />
+											<cfif rc.menu.ParentMenuItemUID eq ttMenuItemUID>
+												<tr>
+													<td>#rc.menu.currentRow#</td>
+													<td>#rc.menu.menuitemlevel#</td>
+													<td>#rc.menu.menuTitle#</td>
+													<td>#rc.menu.sort#</td>
+													<td>#rc.menu.action#</td>
+													<td>
+														<a href="index.cfm?action=menu.manage&uid=#tttMenuItemUID#"><i class="icon-pencil"></i></a>
+														<a href="##" onClick="deleteMenuItem('#tttMenuItemUID#')"><i class="icon-remove"></i></a>
+													</td>
+												</tr>
+											</cfif>
+										</cfloop>
 									</cfif>
-								</li>
-							</cfloop>
-						</ul>
-					</cfif>
-				</li>
-			</cfloop>
-		</ul>
-	</div>
-		
+								</cfloop>
+							</cfif>					
+						</cfloop>
+					<cfelse>
+						<tr>
+							<td colspan="5">No results</td>
+						</tr>
+					</cfif>				
+				</tbody>
+			</table>
+		</div>	
+
+	</form>
 </cfif>
 
 </cfoutput>

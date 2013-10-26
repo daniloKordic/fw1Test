@@ -23,6 +23,7 @@
 		<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 		<script src="assets/bootstrap/js/jasny-bootstrap.min.js"></script>
 		<script type="text/javascript" src="assets/js/global.js"></script>
+		<script type="text/javascript" src="assets/js/twitter-bootstrap-hover-dropdown.min.js"></script>
 	</head>
 	<body>
 		<div class="navbar navbar-inverse nav">
@@ -47,7 +48,7 @@
 			                		<cfif MenuItemLevel eq 1>
 			                			<cfif  isParent gt 0>  				
 				                			<li class="dropdown">
-				                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
+				                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
 				                				<ul class="dropdown-menu">
 				                					<cfloop query="#rc.menu#">
 				                						<cfset ttMenuItemUID = "#MenuItemUID#" />
