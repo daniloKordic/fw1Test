@@ -74,6 +74,36 @@
 				                		</cfif>
 			                		</cfif>
 
+			                	<cfelse>
+			                		<cfif MenuItemLevel eq 1>
+			                			<cfif  isParent gt 0>  				
+				                			<li class="dropdown">
+				                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
+				                				<ul class="dropdown-menu">
+				                					<cfloop query="#rc.menu#">
+				                						<cfset ttMenuItemUID = "#MenuItemUID#" />
+															<cfif ParentMenuItemUID eq tMenuItemUID>
+																<cfif isParent gt 0 >
+																	<li class="dropdown-submenu">
+									                				<a href="#buildUrl('#Action#')#">#MenuTitle#</a>
+									                				<ul class="dropdown-menu">
+									                					<cfloop query="#rc.menu#">
+									                						<cfif ParentMenuItemUID eq ttMenuItemUID>
+									                							<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
+									                						</cfif>
+									                					</cfloop>
+									                				</ul>
+																<cfelse>														
+																	<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
+																</cfif>
+															</cfif>		                						
+				                					</cfloop>
+				                				</ul>
+				                			</li>
+				                		<cfelse>
+				                			<li><a href="#buildUrl('#Action#')#">#MenuTitle#</a></li>
+				                		</cfif>
+			                		</cfif>
 			                	</cfif>
 		                	</cfloop>
 

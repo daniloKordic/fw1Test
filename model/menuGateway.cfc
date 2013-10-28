@@ -28,7 +28,7 @@
 
 		<cfquery name="getSort" datasource="#getDSN()#">
 			select
-				sort = MAX(sort)+1
+				sort = MAX(coalesce(sort,0))+1
 			from 
 				Menu
 			where
@@ -37,13 +37,14 @@
 					and ParentMenuItemUID='#arguments.menuItem.getParentMenuItemUID()#' 
 				<cfelse>
 					and MenuItemLevel = 1
-				</cfif>				
+				</cfif>			
+				and menuItemUID != '3981D4BE-1A4E-4899-A919-ACB01383B8BA'	
 		</cfquery>
 		<cfdump var="#getSort#" output="C:\getSort.txt" />
-		<cfif isDefined(getSort.sort) and getSort.sort neq null>
+		<cfif getSort.sort neq "">
 			<cfset fSort = #getSort.sort# />	
 		</cfif>		
-
+		<cfdump var="#fSort#" output="C:\getSort.txt" />
 		
 		<cfquery name="qry" datasource="#getDSN()#">
 			insert into Menu (

@@ -68,7 +68,7 @@
 		{
 			rules: {
 				menuTitle: {
-					minlength: 6,
+					minlength: 2,
 					required: true
 				}
 			},
