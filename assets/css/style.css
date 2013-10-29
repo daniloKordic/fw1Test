@@ -1,0 +1,20 @@
+body{
+	background: #f1f1f1;
+}
+.menu{
+	height:250px;
+}
+.content{
+	border: 1px solid #333;
+   border-radius: 4px 4px 4px 4px;
+	padding:5px;
+	height:250px;
+}
+.footer {
+	margin-top: 20px;
+}
+.footerColumn {
+	border: 1px solid #333;
+   border-radius: 4px 4px 4px 4px;
+	padding: 10px;
+}
