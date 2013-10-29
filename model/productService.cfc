@@ -59,7 +59,7 @@
 			var product = createObject("component","model.product").init();
 			var productUID = "";
 			var productName = "";
-			var productDesc = "";
+			var productDescription = "";
 			var isActive = 0;
 		</cfscript>
 

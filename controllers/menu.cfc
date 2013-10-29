@@ -31,7 +31,7 @@
  			<cfset var rc.event = menuService.HandleRequest(url) />
 		</cfif>
 
-		<cfif structKeyExists(rc, "fsw") and (rc.fsw eq "delete" or rc.fsw eq "save") >
+		<cfif structKeyExists(rc, "fsw") and (rc.fsw eq "delete" or rc.fsw eq "save" or rc.fsw eq "update") >
 			<cfset variables.fw.redirect("menu", "event") />			
 		</cfif>
 	</cffunction>

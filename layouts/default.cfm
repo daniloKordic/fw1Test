@@ -23,6 +23,7 @@
 		<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 		<script src="assets/bootstrap/js/jasny-bootstrap.min.js"></script>
 		<script type="text/javascript" src="assets/js/global.js"></script>
+		<script type="text/javascript" src="assets/js/twitter-bootstrap-hover-dropdown.min.js"></script>
 	</head>
 	<body>
 		<div class="navbar navbar-inverse nav">
@@ -33,12 +34,12 @@
 		                <span class="icon-bar"></span>
 		                <span class="icon-bar"></span>
 		            </a>
-		            <a class="brand" href="/">CMS</a>
-					<div class="nav-collapse collapse">
+		            <a class="brand" href="#buildUrl('main')#">
+		            	<img src="assets/img/CloudPlainBlue.png" />
+		            </a>
+					<div class="nav-collapse collapse" style="margin-top:15px;">
 						<ul class="nav">
-		                	<li class="divider-vertical"></li>
-		                	<li><a href="#buildUrl('main')#"><i class="icon-home icon-white"></i> Home</a></li>
-
+							
 		                	<!--- MENU --->
 		                	<cfloop query="#rc.menu#">		                		
 		                		<cfset tMenuItemUID="#MenuItemUID#" />
@@ -47,7 +48,7 @@
 			                		<cfif MenuItemLevel eq 1>
 			                			<cfif  isParent gt 0>  				
 				                			<li class="dropdown">
-				                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
+				                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
 				                				<ul class="dropdown-menu">
 				                					<cfloop query="#rc.menu#">
 				                						<cfset ttMenuItemUID = "#MenuItemUID#" />

@@ -132,7 +132,8 @@
 				MenuTitle=m.MenuTitle,
 				PageUID=coalesce(m.PageUID,null),
 				m.MenuItemLevel,
-				ParentMenuItemUID=coalesce(m.ParentMenuItemUID,null),
+				ParentMenuItemUID=coalesce(m.ParentMenuItemUID,null),				
+				ParentMenuItem = (select MenuTitle from Menu mm where mm.MenuItemUID=m.ParentMenuItemUID),
 				Sort,
 				isParent = (select count(MenuItemUID) from Menu where ParentMenuItemUID=m.MenuItemUID),
 				m.Action
