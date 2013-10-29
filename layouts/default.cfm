@@ -75,11 +75,11 @@
 				                		</cfif>
 			                		</cfif>
 
-			                	<cfelse>
+			                	<cfelseif tMenuItemUID neq "3981D4BE-1A4E-4899-A919-ACB01383B8BA">
 			                		<cfif MenuItemLevel eq 1>
 			                			<cfif  isParent gt 0>  				
 				                			<li class="dropdown">
-				                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
+				                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
 				                				<ul class="dropdown-menu">
 				                					<cfloop query="#rc.menu#">
 				                						<cfset ttMenuItemUID = "#MenuItemUID#" />
@@ -115,7 +115,8 @@
 								<li><a href="#buildUrl('register')#">Sign Up</a></li>
 			               		<li class="divider-vertical"></li>
 								<li class="dropdown">
-									<a class="dropdown-toggle" href="##" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+									<!--- <a class="dropdown-toggle" href="##" data-toggle="dropdown">Sign In <strong class="caret"></strong></a> --->
+									<a href="##" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">Sign In <b class="caret"></b></a>
 									<div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
 										<form method="post" action="#buildURL('login.login')#" id="userLogin" name="userLogin">
 											<input style="margin-bottom: 15px;" type="text" placeholder="E-mail" id="email" name="email" value="">
@@ -125,14 +126,16 @@
 									</div>
 								</li>
 							<cfelse>
-			                    <li class="dropdown"><a href="##" class="dropdown-toggle" data-toggle="dropdown">Welcome, #session.auth.fullname# <b class="caret"></b></a>
-			                        <ul class="dropdown-menu">
-			                            <li><a href="index.cfm?action=users.manage&uid=#session.auth.user.getUID()#"><i class="icon-cog"></i> Preferences</a></li>
-			                            <li><a href="##"><i class="icon-envelope"></i> Contact Support</a></li>
-			                            <li class="divider"></li>
-			                            <li><a href="#buildUrl('login.logout')#"><i class="icon-off"></i> Logout</a></li>
-			                        </ul>
-			                    </li>
+			               <li class="dropdown">
+		                    	<!--- <a href="##" class="dropdown-toggle" data-toggle="dropdown">Welcome, #session.auth.fullname# <b class="caret"></b></a> --->
+		                    	<a href="##" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">Welcome, #session.auth.fullname# <b class="caret"></b></a>
+		                        <ul class="dropdown-menu">
+		                            <li><a href="index.cfm?action=users.manage&uid=#session.auth.user.getUID()#"><i class="icon-cog"></i> Preferences</a></li>
+		                            <li><a href="##"><i class="icon-envelope"></i> Contact Support</a></li>
+		                            <li class="divider"></li>
+		                            <li><a href="#buildUrl('login.logout')#"><i class="icon-off"></i> Logout</a></li>
+		                        </ul>
+		                    </li>
 							</cfif>							
 						</ul>
 					</div>

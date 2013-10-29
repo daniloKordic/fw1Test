@@ -40,11 +40,11 @@
 				</cfif>			
 				and menuItemUID != '3981D4BE-1A4E-4899-A919-ACB01383B8BA'	
 		</cfquery>
-		<cfdump var="#getSort#" output="C:\getSort.txt" />
+		
 		<cfif getSort.sort neq "">
 			<cfset fSort = #getSort.sort# />	
 		</cfif>		
-		<cfdump var="#fSort#" output="C:\getSort.txt" />
+		
 		
 		<cfquery name="qry" datasource="#getDSN()#">
 			insert into Menu (
@@ -54,6 +54,7 @@
 				,ParentMenuItemUID
 				,Sort
 				,PageUID
+				,action
 			) values (
 				 <cfqueryparam cfsqltype="cf_sql_varchar" value="#uid#" />
 				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.menuItem.getMenuTitle()#" />
@@ -69,7 +70,11 @@
 				<cfelse>
 					,NULL	
 				</cfif>
-				
+				<cfif arguments.menuItem.getMenuAction() neq "">
+					,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.menuItem.getMenuAction()#" />
+				<cfelse>
+					,NULL	
+				</cfif>
 			)
 		</cfquery>
 
@@ -91,6 +96,11 @@
 					,ParentMenuItemUID=NULL	
 				</cfif>				
 				,Sort=<cfqueryparam value="#arguments.menuItem.getSort()#" cfsqltype="cf_sql_integer" />
+				<cfif arguments.menuItem.getMenuAction() neq "">
+					,action=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.menuItem.getMenuAction()#" />
+				<cfelse>
+					,action=NULL	
+				</cfif>		
 			where
 				MenuItemUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.menuItem.getMenuItemUID()#" />
 		</cfquery>
@@ -163,6 +173,7 @@
 					,m.ParentMenuItemUID
 					,m.Sort
 					,m.PageUID
+					,m.action
 					,hasChildren = case when (select count(me.MenuTitle) from Menu me with (nolock) where m.MenuItemUID=me.ParentMenuItemUID) >= 1 then 1 else 0 end
 				from
 					Menu m with (nolock)
@@ -179,6 +190,7 @@
 					,parentMenuItemUID=qry.ParentMenuItemUID
 					,sort=qry.Sort 
 					,pageUID=qry.PageUID
+					,menuAction=qry.action
 					,hasChildren=qry.hasChildren
 				) />
 			</cfif>

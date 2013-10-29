@@ -41,6 +41,7 @@
 			var menuItem = createObject("component","model.menu").init();
 			var menuItemUID="";
 			var menuTitle="";
+			var menuAction="";
 			var menuItemLevel=1;
 			var parentMenuItemUID="";
 			var sort=1;
@@ -50,6 +51,7 @@
 
 		<cfif structKeyExists(arguments.form, "menuItemUID")><cfset menuItemUID=arguments.form.menuItemUID /></cfif>
 		<cfif structKeyExists(arguments.form, "menuTitle")><cfset menuTitle=arguments.form.menuTitle /></cfif>
+		<cfif structKeyExists(arguments.form, "menuAction")><cfset menuAction=arguments.form.menuAction /></cfif>
 		<cfif structKeyExists(arguments.form, "menuItemLevel")><cfset menuItemLevel=arguments.form.menuItemLevel /></cfif>
 		<cfif structKeyExists(arguments.form, "parentMenuItemUID")><cfset parentMenuItemUID=arguments.form.parentMenuItemUID /></cfif>
 		<cfif structKeyExists(arguments.form, "sort")><cfset sort=arguments.form.sort /></cfif>
@@ -63,6 +65,7 @@
 		<cfset menuItem.setupMenuItem(
 			 menuItemUID=menuItemUID
 			,menuTitle=menuTitle
+			,menuAction=menuAction
 			,menuItemLevel=menuItemLevel
 			,parentMenuItemUID=parentMenuItemUID
 			,sort=sort

@@ -3,6 +3,7 @@
 <cfset fMenuItemUID=""/>
 <cfset fParentUID=""/>
 <cfset fMenuTitle=""/>
+<cfset fMenuAction=""/>
 <cfset fHasChildren=0 />
 
 
@@ -11,6 +12,7 @@
 <cfset fMenuItemUID = "#rc.event.menuItem.getMenuItemUID()#" />
 <cfset fParentUID = "#rc.event.menuItem.getParentMenuItemUID()#" />
 <cfset fMenuTitle = "#rc.event.menuItem.getMenuTitle()#" />
+<cfset fMenuAction = "#rc.event.menuItem.getMenuAction()#" />
 <cfset fHasChildren = #rc.event.menuItem.getHasChildren()# />
 <cfset qParentMenus = "#rc.event.Parents#" />
 
@@ -154,6 +156,14 @@
 		  <label class="control-label" for="menuTitle">Menu Title</label>
 		  <div class="controls">
 		    <input id="menuTitle" name="menuTitle" class="input-large" required="" type="text" value="#fMenuTitle#">		    
+		  </div>
+		</div>
+
+		<!-- Text input-->
+		<div class="control-group">
+		  <label class="control-label" for="menuAction">Menu Action</label>
+		  <div class="controls">
+		    <input id="menuAction" name="menuAction" class="input-large" type="text" value="#fMenuAction#">		    
 		  </div>
 		</div>
 

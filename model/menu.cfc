@@ -3,6 +3,7 @@
 	<cfscript>
 		variables.instance.menuItemUID="";
 		variables.instance.menuTitle="";
+		variables.instance.menuAction="";
 		variables.instance.menuItemLevel=0;
 		variables.instance.parentMenuItemUID="";
 		variables.instance.sort=0;
@@ -32,6 +33,14 @@
 	</cffunction>
 	<cffunction name="getMenuTitle" access="public" output="false" returntype="string">
 		<cfreturn variables.instance.menuTitle />
+	</cffunction>
+
+	<cffunction name="setMenuAction" access="public" output="false">
+		<cfargument name="menuAction" required="true" type="string" />
+		<cfset variables.instance.menuAction=arguments.menuAction />
+	</cffunction>
+	<cffunction name="getMenuAction" access="public" output="false" returntype="string">
+		<cfreturn variables.instance.menuAction />
 	</cffunction>
 
 	<cffunction name="setMenuItemLevel" access="public" output="false">
@@ -77,6 +86,7 @@
 	<cffunction name="setupMenuItem" access="public" output="false" returntype="void">
 		<cfargument name="menuItemUID" required="false" default="" type="string" />
 		<cfargument name="menuTitle" required="false" default="" type="string" />
+		<cfargument name="menuAction" required="false" default="" type="string" />
 		<cfargument name="menuItemLevel" required="false" default="0" type="numeric" />
 		<cfargument name="parentMenuItemUID" required="false" default="" type="string" />
 		<cfargument name="sort" required="false" default="0" type="numeric" />
@@ -85,6 +95,7 @@
 
 		<cfset setMenuItemUID(arguments.menuItemUID) />
 		<cfset setMenuTitle(arguments.menuTitle) />
+		<cfset setMenuAction(arguments.menuAction) />
 		<cfset setMenuItemLevel(arguments.menuItemLevel) />
 		<cfset setParentMenuItemUID(arguments.parentMenuItemUID) />
 		<cfset setSort(arguments.sort) />
@@ -96,6 +107,7 @@
 	<cffunction name="reset" access="public" output="false" returntype="void">
 		<cfset setMenuItemUID("") />
 		<cfset setMenuTitle("") />
+		<cfset setMenuAction("") />
 		<cfset setMenuItemLevel(0) />
 		<cfset setParentMenuItemUID("") />
 		<cfset setSort(0) />
