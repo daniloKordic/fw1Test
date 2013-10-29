@@ -20,7 +20,7 @@
 						email: true
 					},
 					username: {
-						minlength: 6,
+						minlength: 3,
 						required: true
 					},
 					password: {

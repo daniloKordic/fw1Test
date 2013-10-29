@@ -85,6 +85,10 @@
 									<td>#rc.menu.menuTitle#</td>
 									<td>#rc.menu.sort#</td>
 									<td>#rc.menu.action#</td>
+									<td>
+										<a href="index.cfm?action=menu.manage&uid=#tMenuItemUID#"><i class="icon-pencil"></i></a>
+										<a href="##" onClick="deleteMenuItem('#tMenuItemUID#')"><i class="icon-remove"></i></a>
+									</td>
 								</tr>
 								<cfloop query="#rc.menu#">
 									<cfif rc.menu.ParentMenuItemUID eq tMenuItemUID>

@@ -36,7 +36,7 @@
 			<cfset var rc.event = userService.handleRequest(url) />
 		</cfif>
 
-		<cfif structKeyExists(rc, "fsw") and (rc.fsw eq "save" 	or rc.fsw eq "delete")>
+		<cfif structKeyExists(rc, "fsw") and (rc.fsw eq "save" 	or rc.fsw eq "delete" or rc.fsw eq "update")>
 			<cfset variables.fw.redirect("users","event") />
 		</cfif>
 	</cffunction>

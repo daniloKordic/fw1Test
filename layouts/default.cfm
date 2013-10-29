@@ -34,12 +34,12 @@
 		                <span class="icon-bar"></span>
 		                <span class="icon-bar"></span>
 		            </a>
-		            <a class="brand" href="/">CMS</a>
-					<div class="nav-collapse collapse">
+		            <a class="brand" href="#buildUrl('main')#">
+		            	<img src="assets/img/CloudPlainBlue.png" />
+		            </a>
+					<div class="nav-collapse collapse" style="margin-top:15px;">
 						<ul class="nav">
-		                	<li class="divider-vertical"></li>
-		                	<li><a href="#buildUrl('main')#"><i class="icon-home icon-white"></i> Home</a></li>
-
+							
 		                	<!--- MENU --->
 		                	<cfloop query="#rc.menu#">		                		
 		                		<cfset tMenuItemUID="#MenuItemUID#" />
