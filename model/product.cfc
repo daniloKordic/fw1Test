@@ -6,6 +6,7 @@
 		variables.instance.productDescription="";
 		variables.instance.dateCreated="";
 		variables.instance.active=0;
+		variables.instance.categoryUID="";
 	</cfscript>
 
 	<cffunction name="init" access="public" output="false" returntype="product">
@@ -56,18 +57,28 @@
 		<cfreturn variables.instance.active />
 	</cffunction>
 
+	<cffunction name="setCategoryUID" access="public" output="false">
+		<cfargument name="categoryUID" type="string" required="true" />
+		<cfset variables.instance.categoryUID = arguments.categoryUID />
+	</cffunction>
+	<cffunction name="getCategoryUID" access="public" output="false" returntype="string">
+		<cfreturn variables.instance.categoryUID />
+	</cffunction>
+
 	<cffunction name="setupProduct" access="public" output="false" returntype="void">
 		<cfargument name="productUID" required="false" type="string" default="" />
 		<cfargument name="productName" required="false" type="string" default="" />
 		<cfargument name="productDescription" required="false" type="string" default="" />
 		<cfargument name="dateCreated" required="false" type="string" default="" />
 		<cfargument name="active" required="false" type="numeric" default="0" />
+		<cfargument name="categoryUID" required="false" type="string" default="" />
 
 		<cfset setProductUID(arguments.productUID) />
 		<cfset setProductName(arguments.productName) />
 		<cfset setProductDescription(arguments.productDescription) />
 		<cfset setDateCreated(arguments.dateCreated) />
 		<cfset setActive(arguments.active) />
+		<cfset setCategoryUID(arguments.categoryUID) />
 	</cffunction>
 
 	<cffunction name="reset" access="public" output="false" returntype="void">
@@ -76,6 +87,7 @@
 		<cfset setProductDescription("") />
 		<cfset setdateCreated("") />
 		<cfset setActive(0) />
+		<cfset setCategoryUID("") />
 	</cffunction>
 
 </cfcomponent>

@@ -176,7 +176,9 @@
 				c.*
 				,hasChildren=(select count(categoryUID) from Categories ca with (nolock) where ca.ParentUID=c.CategoryUID)
 			from
-				Categories c with (nolock)			
+				Categories c with (nolock)		
+			order by
+				c.Sort	
 		</cfquery>
 
 		<cfreturn qry />

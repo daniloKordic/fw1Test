@@ -46,8 +46,8 @@
 		<cfif structKeyExists(arguments.url, "uid")><cfset uid=arguments.url.uid /></cfif>
 
 		<cfset var product = getProductGateway().getByKey(uid=uid) />
-		
-		<cfset var event = {product=product, result=result} />
+		<cfset var categories = getProductGateway().getCategories() />
+		<cfset var event = {product=product, categories=categories, result=result} />
 
 		<cfreturn event />
 	</cffunction>
@@ -61,17 +61,20 @@
 			var productName = "";
 			var productDescription = "";
 			var isActive = 0;
+			var categoryUID = "";
 		</cfscript>
 
 		<cfif structKeyExists(arguments.form, "productUID")><cfset productUID=arguments.form.productUID /></cfif>
 		<cfif structKeyExists(arguments.form, "productName")><cfset productName=arguments.form.productName /></cfif>
 		<cfif structKeyExists(arguments.form, "productDescription")><cfset productDescription=arguments.form.productDescription /></cfif>
 		<cfif structKeyExists(arguments.form, "active")><cfset isActive=arguments.form.active /></cfif>
+		<cfif structKeyExists(arguments.form, "categoryUID")><cfset categoryUID=arguments.form.categoryUID /></cfif>
 
 		<cfset product.setupProduct (
 			productUID=productUID
 			,productName=productName
 			,productDescription=productDescription
+			,categoryUID=categoryUID
 			,active=isActive
 		) />
 		

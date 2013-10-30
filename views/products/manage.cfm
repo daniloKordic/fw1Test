@@ -4,6 +4,8 @@
 	<cfset fProductName="#rc.event.product.getProductName()#"/>
 	<cfset fProductDescription="#rc.event.product.getProductDescription()#"/>
 	<cfset fIsActive="#rc.event.product.getActive()#"/>
+	<cfset fCategoryUID="#rc.event.product.getCategoryUID()#"/>
+	<cfset qCategory = "#rc.event.Categories#" />
 
 
 	<form class="form-horizontal" action="#buildUrl('products.manage')#" method="POST" id="manageProduct" name="manageProduct">
@@ -22,7 +24,7 @@
 				<legend class="">Product Info</legend>
 			</div>
 		<div class="control-group">
-			<!-- Username -->
+			<!-- Product Name -->
 			<label class="control-label" for="productName">Product Name</label>
 			<div class="controls">
 				<input type="text" id="productName" name="productName" placeholder="" value="#fProductName#" class="input-xlarge">
@@ -30,11 +32,23 @@
 		</div>
 
 		<div class="control-group">
-		<!-- E-mail -->
+		<!-- Product Description -->
 			<label class="control-label" for="productDescription">Product Description</label>
 			<div class="controls">
 				<input type="text" id="productDescription" name="productDescription" placeholder="" class="input-xlarge" value="#fProductDescription#">
 			</div>
+		</div>
+
+		<div class="control-group">
+		  <label class="control-label" for="categoryUID">Select Category</label>
+		  <div class="controls">
+		    <select id="categoryUID" name="categoryUID" class="input-medium">
+		    	<option value="">Please select</option>
+		      <cfloop query="qCategory">
+		      	<option value="#CategoryUID#" <cfif fCategoryUID eq CategoryUID >selected</cfif>>#CategoryName#</option>
+		      </cfloop>
+		    </select>
+		  </div>
 		</div>
 
 		<!-- Multiple Radios (inline) -->
@@ -77,6 +91,9 @@
 					},
 					productDescription: {
 						minlength: 6,
+						required: true
+					},
+					category: {
 						required: true
 					}
 				},
