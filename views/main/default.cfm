@@ -24,28 +24,56 @@
 		</div>
 		<div class="row-fluid">
 			<div class="span3 menu">
-				<div class="accordion" id="accordion-628013">
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion-628013" href="##accordion-element-790247">Collapsible Group Item ##1</a>
-						</div>
-						<div id="accordion-element-790247" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Anim pariatur cliche...
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion-628013" href="##accordion-element-141063">Collapsible Group Item ##2</a>
-						</div>
-						<div id="accordion-element-141063" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Anim pariatur cliche...
-							</div>
-						</div>
-					</div>
+
+				<div class="well" style="padding: 8px 0;">
+				    <div style="overflow-y: scroll; overflow-x: hidden; height: 430px;">
+				        <ul class="nav nav-list">
+				        		<cfloop query="#rc.categories#">
+				        			<cfif parentUID eq "">
+				        				<cfset tCategoryUID = CategoryUID />
+				        				<li><label class="tree-toggler nav-header">#CategoryName#</label>	
+				        					<cfif hasChildren neq 0>			        					
+						        				<ul class="nav nav-list tree">
+							        				<cfloop query="#rc.categories#">
+							        					<cfif ParentUID eq tCategoryUID>						        						
+							        						<cfset ttCategoryUID=CategoryUID />
+							                    		<cfif hasChildren neq 0>
+							                    			<li><label class="tree-toggler nav-header">#CategoryName#</label>
+							                    			<ul class="nav nav-list tree">
+							                    				<cfloop query="#rc.categories#">
+							                    					<cfif ParentUID eq ttCategoryUID>
+							                    						<cfset tttCategoryUID= CategoryUID />
+							                    						<cfif hasChildren eq 0>							                    							
+							                    							<li><a href="##">#CategoryName#</a></li>
+							                    						<cfelse>
+							                    							<li><label class="tree-toggler nav-header">#CategoryName#</label>
+											                    			<ul class="nav nav-list tree">
+											                    				<cfloop query="#rc.categories#">
+											                    					<cfif ParentUID eq tttCategoryUID>
+											                    						<cfset ttttCategoryUID= CategoryUID />                  							
+											                    						<li><a href="##">#CategoryName#</a></li>
+											                    					</cfif>
+											                    				</cfloop>
+											                    			</ul>
+							                    						</cfif>
+							                    					</cfif>
+							                    				</cfloop>
+							                    			</ul>
+							                    		<cfelse>
+							                    			<li><a href="##">#CategoryName#</a></li>
+							                    		</cfif>
+							        					</cfif>
+							        				</cfloop>
+						        				</ul>	
+						        			</cfif>
+						        		</li>	        	
+				        				<li class="divider"></li>					        				
+				        			</cfif>
+				        		</cfloop>
+				        </ul>
+				    </div>
 				</div>
+
 			</div>
 			<div class="span9 content">
 				CONTENT
@@ -64,4 +92,13 @@
 		</div>
 	</div>
 
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('label.tree-toggler').click(function () {
+			$(this).parent().children('ul.tree').toggle(300);
+		});
+	  $('label.tree-toggler').trigger('click');
+	});
+	
+</script>
 </cfoutput>

@@ -25,4 +25,19 @@
 		<cfset rc.qGrid = categoryService.handleGrid(url) />
 	</cffunction>
 
+	<cffunction name="manage" access="public" returntype="void">
+		
+		<cfset var categoryService = getCategoryService() />
+
+		<cfif structKeyExists(rc, "fsw") and Len(rc.fsw)>
+			<cfset var rc.event = categoryService.HandleForm(form) />
+		<cfelse>
+			<cfset var rc.event = categoryService.HandleRequest(url) />
+		</cfif>
+
+		<cfif structKeyExists(rc, "fsw") and (rc.fsw eq "delete" or rc.fsw eq "save" or rc.fsw eq "update")>
+			<cfset variables.fw.redirect("categories","event") />
+		</cfif>
+	</cffunction>
+
 </cfcomponent>
