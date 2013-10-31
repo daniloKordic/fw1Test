@@ -106,8 +106,12 @@
 		<cfquery name="qry" datasource="#getDSN()#">
 			select
 				c.*
+				,Parent=(select CategoryName from Categories cc where  cc.CategoryUID=c.ParentUID)				
+				,hasChildren=(select count(categoryUID) from Categories ccc where ccc.ParentUID = c.CategoryUID)
 			from
 				Categories c with (nolock)
+			order by
+				c.sort
 		</cfquery>
 
 		<cfreturn qry />

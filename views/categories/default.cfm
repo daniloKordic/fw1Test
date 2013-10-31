@@ -10,11 +10,15 @@
 		});
 	});
 
-  function deleteCategory(uid) {
-    $("##categoryUID").val(uid);
-    $("##fsw").val("delete");
+  function deleteCategory(uid, hasChildren) {
+    if (hasChildren != 0) {
+      alert("Category has subcategories!\r\nPlease delete subcategories first!");
+    } else {
+      $("##categoryUID").val(uid);
+      $("##fsw").val("delete");
 
-    $("##manageCategories").submit();
+      $("##manageCategories").submit();
+    }
   }
 </script>
 
@@ -43,20 +47,82 @@
             </tr>
           </thead>
           <tbody>
-          	<cfloop query="rc.qGrid">
-          		<tr>
-    	          <td>#rc.qGrid.currentRow#</td>
-    	          <td>#CategoryName#</td>
-    	          <td>#CategoryDetails#</td>
-    	          <td>#ParentUID#</td>
-    	          <td>
-    	              <a href="index.cfm?action=categories.manage&uid=#CategoryUID#"><i class="icon-pencil"></i></a>
-                    <a href="##" onClick="deleteCategory('#CategoryUID#')"><i class="icon-remove"></i></a>
-    	          </td>
-    	        </tr>	
+            <cfset count = 1/>
+          	<cfloop query="rc.qGrid">              
+              <cfif ParentUID eq "">
+                <cfset tCategoryUID="#CategoryUID#" />
+                <tr>
+                  <td>#count#</td>
+                  <td>                  
+                    <a href="index.cfm?action=categories.manage&uid=#CategoryUID#">#CategoryName#</a>
+                  </td>
+                  <td>#CategoryDetails#</td>
+                  <td>#Parent#</td>
+                  <td>
+                      <a href="index.cfm?action=categories.manage&uid=#CategoryUID#"><i class="icon-pencil"></i></a>
+                      <a href="##" onClick="deleteCategory('#CategoryUID#',#hasChildren#)"><i class="icon-remove"></i></a>
+                  </td>
+                </tr> 
+                <cfloop query="#rc.qGrid#">
+                  <cfif ParentUID eq tCategoryUID>
+                    <cfset count = count+1 />
+                    <cfset ttCategoryUID = "#CategoryUID#" />
+                    <tr>
+                      <td>#count#</td>
+                      <td>                  
+                        <a href="index.cfm?action=categories.manage&uid=#CategoryUID#">&nbsp;&nbsp;#CategoryName#</a>
+                      </td>
+                      <td>#CategoryDetails#</td>
+                      <td>#Parent#</td>
+                      <td>
+                          <a href="index.cfm?action=categories.manage&uid=#CategoryUID#"><i class="icon-pencil"></i></a>
+                          <a href="##" onClick="deleteCategory('#CategoryUID#',#hasChildren#)"><i class="icon-remove"></i></a>
+                      </td>
+                    </tr>
+                    <cfloop query="#rc.qGrid#">
+                      <cfif ParentUID eq ttCategoryUID>
+                        <cfset count = count+1 />
+                        <cfset ttCategoryUID = "#CategoryUID#" />
+                        <tr>
+                          <td>#count#</td>
+                          <td>                  
+                            <a href="index.cfm?action=categories.manage&uid=#CategoryUID#">&nbsp;&nbsp;&nbsp;&nbsp;#CategoryName#</a>
+                          </td>
+                          <td>#CategoryDetails#</td>
+                          <td>#Parent#</td>
+                          <td>
+                              <a href="index.cfm?action=categories.manage&uid=#CategoryUID#"><i class="icon-pencil"></i></a>
+                              <a href="##" onClick="deleteCategory('#CategoryUID#',#hasChildren#)"><i class="icon-remove"></i></a>
+                          </td>
+                        </tr>
+                        <cfloop query="#rc.qGrid#">
+                          <cfif ParentUID eq ttCategoryUID>
+                            <cfset count = count+1 />
+                            <cfset tttCategoryUID = "#CategoryUID#" />
+                            <tr>
+                              <td>#count#</td>
+                              <td>                  
+                                <a href="index.cfm?action=categories.manage&uid=#CategoryUID#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#CategoryName#</a>
+                              </td>
+                              <td>#CategoryDetails#</td>
+                              <td>#Parent#</td>
+                              <td>
+                                  <a href="index.cfm?action=categories.manage&uid=#CategoryUID#"><i class="icon-pencil"></i></a>
+                                  <a href="##" onClick="deleteCategory('#CategoryUID#',#hasChildren#)"><i class="icon-remove"></i></a>
+                              </td>
+                            </tr>
+                          </cfif>
+                        </cfloop>
+                      </cfif>
+                    </cfloop>
+                  </cfif>
+                </cfloop>
+                <cfset count = count + 1/>
+              </cfif>          		
           	</cfloop>
           </tbody>
         </table>
     </div>
   </form>
+
 </cfoutput>
