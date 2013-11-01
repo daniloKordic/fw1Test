@@ -54,4 +54,10 @@
 		
 	</cffunction>
 
+	<cffunction name="image" access="public" returntype="any">
+		<cfset var userService = getUserService() />
+		
+				
+	</cffunction>
+
 </cfcomponent>

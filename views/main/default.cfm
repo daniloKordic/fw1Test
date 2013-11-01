@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="span4 menu">
+			<div class="span3 menu">
 
 				<div class="well" style="padding: 8px 0;">
 				    <div style="overflow-y: scroll; overflow-x: hidden; height: 430px;">
@@ -75,8 +75,11 @@
 				</div>
 
 			</div>
-			<div class="span8 content">
+			<div class="span6 content">
 				CONTENT
+			</div>
+			<div class="span3 news">
+				NEWS
 			</div>
 		</div>
 		<div class="row-fluid footer">

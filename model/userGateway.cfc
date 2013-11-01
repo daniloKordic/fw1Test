@@ -223,4 +223,46 @@
 
 		<cfreturn result />
 	</cffunction>
+
+	<cffunction name="qSelect" output="false" returntype="any" access="public" >
+		
+		<cfscript>
+			var qGetQery="";
+			var qres="";
+			var res={QUERYRESULT=false};
+		</cfscript>		
+		
+		<cfquery name="qGetQery" datasource="#variables.DevDSN#">
+			select top(1) Sql  FROM Table_Query where name='#arguments.qKey#'
+		</cfquery>
+		
+		<cfif qGetQery.recordCount eq 1>
+			<cfset qres="#qGetQery.Sql#">
+			
+			<cfloop list="#structKeyList(qParamsStruct)#" index="key">
+<!--- 
+				<cfset qres=ReplaceNoCase(qres,"$#key#","#qParamsStruct[key]#","All") >
+ --->
+				<cfset qres=ReplaceNoCase(qres,"$#key#",ReplaceNoCase("#qParamsStruct[key]#","'","''","All"),"All") >
+				
+			</cfloop>
+			
+			<cfif qDebug eq 1>
+				<cfset StructAppend(res, {QUERYTEXT="#qres#"}, true) >
+			</cfif>
+
+			<cfquery name="qGetQery" datasource="#variables.DevDSN#">
+				#PreserveSingleQuotes(qres)#
+			</cfquery>
+			<cfif IsDefined("qGetQery.recordCount") and qGetQery.recordCount gt 0>
+				<cfset StructAppend(res,QueryToStruct(qGetQery), true) >
+				<cfset StructAppend(res,{QUERYRESULT=true}, true) >
+			</cfif>
+		</cfif>
+
+<!--- 
+		<cf_ftdebugger file="c:/temp/somefile.txt" output="out from productconceptgateway.qselect (#qKey# #SerializeJSON(qParamsStruct)#): #SerializeJSON(res)#">
+ --->
+		<cfreturn res />
+	</cffunction>
 </cfcomponent>

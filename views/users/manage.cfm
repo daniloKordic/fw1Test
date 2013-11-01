@@ -1,4 +1,5 @@
 <cfoutput>
+	<cfajaxproxy cfc="#application.com#.userService" jsclassname="jsobj_usr" />
 
 	<cfset fUserUID="#rc.event.user.getUID()#" />
 	<cfset fFirstName="#rc.event.user.getFirstName()#" />
@@ -11,7 +12,7 @@
 	<script type="text/javascript">
 
 		$(document).ready(function(){
-
+			path = '#application.ImagesDirRel#';
 			$('##userRegister').validate(
 			{
 				rules: {
@@ -60,6 +61,10 @@
 					document.location = "index.cfm?action=main";
 				</cfif>
 			});
+
+			// creating an instance of the proxy class. 
+			var jsusr = new jsobj_usr();			
+			jsusr.setCallbackHandler(callbckimefje);
 		});
 
 		function cancel() {
@@ -78,6 +83,26 @@
 		}
 		function submitForm() {
 			$("##userRegister").submit();
+		}
+		function modalWin(uid) {
+		
+			var result=window.showModalDialog("index.cfm?action=users.image&uid="+uid+"&modal=1","Upload",
+				"dialogWidth:860px;dialogHeight:650px");
+				console.log(result);
+		}
+		function resultFromPopup(message){
+			console.log('Popup returned: ' + message);
+
+			if (message) {
+				var pathToFile=path+message;
+				console.log("pathToFile: "+pathToFile);
+				$("##UserImage").append("<img id='userImg' name='userImg' width='440' src='"+pathToFile+"' />");
+			}
+			
+			//jsusr.getFile();
+		}
+		function callbckimefje(fileObj){
+			
 		}
 	</script>
 
@@ -116,89 +141,93 @@
 				<legend>Add user details</legend>
 			</cfif>
 			
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="span6 pull-down-50">
 
-			<!-- Text input-->
-			<div class="control-group">
-				<label class="control-label" for="firstName">Photo:</label>
-			  	<div class="controls">
-					<div class="fileupload fileupload-new" data-provides="fileupload">			
-						<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" /></div>
-						<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-						<div>
-							<span class="btn btn-file">
-								<span class="fileupload-new">Select image</span>
-								<span class="fileupload-exists">Change</span>
-								<input type="file" />
-							</span>
-							<a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="firstName">First Name:</label>
+						  <div class="controls">
+						    <input id="firstName" name="firstName" class="input-large" type="text" value="#fFirstName#">			    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="lastname">Last Name:</label>
+						  <div class="controls">
+						    <input id="lastName" name="lastName" class="input-large" type="text" value="#fLastName#">		    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="email">Email:</label>
+						  <div class="controls">
+						    <input id="email" name="email" class="input-large" type="text" value="#fEmail#">			    
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="control-group">
+						  <label class="control-label" for="username">Username:</label>
+						  <div class="controls">
+						    <input id="username" name="username" class="input-large" type="text" value="#fUsername#">		    
+						  </div>
+						</div>
+
+						<!-- Password input-->
+						<div class="control-group">
+						  <label class="control-label" for="password">Password:</label>
+						  <div class="controls">
+						    <input id="password" name="password" class="input-large" type="password" value="#fPassword#">	    
+						  </div>
+						</div>
+
+						<cfif session.auth.TypeID eq 1>
+							<div class="control-group">
+							  <label class="control-label" for="radios">User Status</label>
+							  <div class="controls">
+							    <label class="radio" for="radios-0">
+							      <input name="active" id="radios-0" value="1" type="radio" <cfif fActive eq 1>checked</cfif>>
+							      Active
+							    </label>
+							    <label class="radio" for="radios-1">
+							      <input name="active" id="radios-1" value="0" type="radio" <cfif fActive eq 0>checked</cfif>>
+							      Inactive
+							    </label>
+							  </div>
+							</div>
+						</cfif>
+
+						<div class="control-group">
+							<!-- Button -->
+							<div class="controls">
+								<button type="submit" class="btn btn-success" name="updateUser" id="updateUser"><cfif fUserUID eq "">Save<cfelse>Update</cfif></button>
+								<cfif session.auth.TypeID eq 1>
+									<button type="button" class="btn btn-danger" name="deleteUser" id="deleteUser">Delete</button>
+								</cfif>					
+								<button type="button" class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-
-			<div class="control-group">
-			  <label class="control-label" for="firstName">First Name:</label>
-			  <div class="controls">
-			    <input id="firstName" name="firstName" class="input-large" type="text" value="#fFirstName#">			    
-			  </div>
-			</div>
-
-			<!-- Text input-->
-			<div class="control-group">
-			  <label class="control-label" for="lastname">Last Name:</label>
-			  <div class="controls">
-			    <input id="lastName" name="lastName" class="input-large" type="text" value="#fLastName#">		    
-			  </div>
-			</div>
-
-			<!-- Text input-->
-			<div class="control-group">
-			  <label class="control-label" for="email">Email:</label>
-			  <div class="controls">
-			    <input id="email" name="email" class="input-large" type="text" value="#fEmail#">			    
-			  </div>
-			</div>
-
-			<!-- Text input-->
-			<div class="control-group">
-			  <label class="control-label" for="username">Username:</label>
-			  <div class="controls">
-			    <input id="username" name="username" class="input-large" type="text" value="#fUsername#">		    
-			  </div>
-			</div>
-
-			<!-- Password input-->
-			<div class="control-group">
-			  <label class="control-label" for="password">Password:</label>
-			  <div class="controls">
-			    <input id="password" name="password" class="input-large" type="password" value="#fPassword#">	    
-			  </div>
-			</div>
-
-			<cfif session.auth.TypeID eq 1>
-				<div class="control-group">
-				  <label class="control-label" for="radios">User Status</label>
-				  <div class="controls">
-				    <label class="radio" for="radios-0">
-				      <input name="active" id="radios-0" value="1" type="radio" <cfif fActive eq 1>checked</cfif>>
-				      Active
-				    </label>
-				    <label class="radio" for="radios-1">
-				      <input name="active" id="radios-1" value="0" type="radio" <cfif fActive eq 0>checked</cfif>>
-				      Inactive
-				    </label>
-				  </div>
-				</div>
-			</cfif>
-
-			<div class="control-group">
-				<!-- Button -->
-				<div class="controls">
-					<button type="submit" class="btn btn-success" name="updateUser" id="updateUser"><cfif fUserUID eq "">Save<cfelse>Update</cfif></button>
-					<cfif session.auth.TypeID eq 1>
-						<button type="button" class="btn btn-danger" name="deleteUser" id="deleteUser">Delete</button>
-					</cfif>					
-					<button type="button" class="btn btn-default" name="backBtn" id="backBtn" type="button">Back</button>
+					<div class="span6 pull-down-50">
+						<div class="row margin-top-0 padding-top-0 padding-right-0 padding-left-0 white" style="padding:0 !important;">
+							<div class="tabtitle width-100 margin-bottom-10 margin-top-0">
+								User Image
+							</div>
+							<div class="backgrey-100">
+								<div id="UserImage" style="clear:both;">
+								
+								</div>
+							<div class="clear"></div>
+						</div>
+						<div class="clear"></div>
+						<div>
+							<button type="button" class="btn btn-default right margin-right-10 margin-bottom-10" name="addImage" id="addImage" type="button" onclick="modalWin('#fUserUID#')">Add Image</button>
+						</div>
+					</div>
 				</div>
 			</div>
 
