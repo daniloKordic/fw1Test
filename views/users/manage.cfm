@@ -8,6 +8,7 @@
 	<cfset fUsername="#rc.event.user.getUsername()#"/>
 	<cfset fPassword="#rc.event.user.getPassword()#" />
 	<cfset fActive="#rc.event.user.getIsActive()#"/>
+	<cfset fUserImage="#rc.event.user.getUserImage()#"/>
 
 	<script type="text/javascript">
 
@@ -96,7 +97,12 @@
 			if (message) {
 				var pathToFile=path+message;
 				console.log("pathToFile: "+pathToFile);
-				$("##UserImage").append("<img id='userImg' name='userImg' width='440' src='"+pathToFile+"' />");
+				if ($("##UserImage").html() != "") {
+					$("##UserImage").html("");
+				}
+
+				$("##UserImage").append("<img style='max-width:440px;margin-bottom:10px;' src='"+pathToFile+"' /><input type='hidden' id='userImage' name='userImage' value='"+message+"' />");
+				
 			}
 			
 			//jsusr.getFile();
@@ -218,8 +224,11 @@
 								User Image
 							</div>
 							<div class="backgrey-100">
-								<div id="UserImage" style="clear:both;">
-								
+								<div id="UserImage" style="clear:both;text-align:center;">
+									<cfif fUserImage neq "">
+										<img style="max-width:440px;margin-bottom:10px;" src="#application.ImagesDirRel##fUserImage#" />
+										<input type="hidden" id="userImage" name="userImage" value="#fUserImage#"/>
+									</cfif>
 								</div>
 							<div class="clear"></div>
 						</div>

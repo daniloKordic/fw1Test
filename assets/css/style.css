@@ -102,7 +102,7 @@ body{
 }
 .backgrey-100 {
     -moz-box-sizing: padding-box;
-    background: none repeat scroll 0 0 #F1F1F1;
+    /*background: none repeat scroll 0 0 #F1F1F1;*/
     border: medium none;
     border-radius: 5px;
     font-size: 12px;

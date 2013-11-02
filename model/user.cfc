@@ -9,6 +9,7 @@
 		variables.instance.Password = "";
 		variables.instance.IsActive = 0;
 		variables.instance.TypeID = 2;
+		variables.instance.UserImage = "";
 	</cfscript>
 
 	<cffunction name="init" access="public" output="false" returntype="user">
@@ -83,6 +84,14 @@
 		<cfreturn variables.instance.TypeID />
 	</cffunction>
 
+	<cffunction name="setUserImage" access="public" output="false">
+		<cfargument name="UserImage" type="string" required="true" />
+		<cfset variables.instance.UserImage = arguments.UserImage />
+	</cffunction>
+	<cffunction name="getUserImage" access="public" returntype="String" output="false">
+		<cfreturn variables.instance.UserImage />
+	</cffunction>
+
 	<cffunction name="setupUser" access="public" output="false" returntype="void">
 		<cfargument name="UID" required="false" type="string" default="" />
 		<cfargument name="FirstName" required="false" type="string" default="" />
@@ -92,6 +101,7 @@
 		<cfargument name="Password" required="false" type="string" default="" />
 		<cfargument name="IsActive" required="false" type="numeric" default="0" />
 		<cfargument name="TypeID" required="false" type="numeric" default="2" />
+		<cfargument name="UserImage" required="false" type="string" default="" />
 
 		<cfset setUID(arguments.UID)>
 		<cfset setFirstName(arguments.FirstName)>
@@ -101,6 +111,7 @@
 		<cfset setPassword(arguments.Password)>
 		<cfset setIsActive(arguments.IsActive)>
 		<cfset setTypeID(arguments.TypeID)>
+		<cfset setUserImage(arguments.UserImage)>
 	</cffunction>
 
 	<cffunction name="reset" access="public" output="false" returntype="void">
@@ -112,6 +123,7 @@
 		<cfset setPassword('')>
 		<cfset setIsActive(0)>
 		<cfset setTypeID(2)>
+		<cfset setUserImage('')>
 	</cffunction>
 
 </cfcomponent>

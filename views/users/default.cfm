@@ -34,25 +34,25 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>##</th>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Email</th>
-						<th>Username</th>
-						<th>Password</th>
-						<th style="width: 36px;"></th>
+						<th style="width:50px;text-align:center;">##</th>
+						<th style="width:175px;text-align:center;">First Name</th>
+						<th style="width:175px;text-align:center;">Last Name</th>
+						<th style="width:175px;text-align:center;">Email</th>
+						<th style="width:175px;text-align:center;">Username</th>
+						<th style="width:175px;text-align:center;">Password</th>
+						<th style="width:56px;"></th>
 					</tr>
 				</thead>
 				<tbody>	
 					<cfloop query="rc.qGrid">				
 						<tr>
-							<td>#rc.qGrid.currentRow#</td>
-							<td>#FirstName#</td>
-							<td>#LastName#</td>
-							<td>#Email#</td>
-							<td>#Username#</td>
-							<td>#Password#</td>
-							<td>
+							<td style="width:50px;text-align:center;">#rc.qGrid.currentRow#</td>
+							<td style="width:175px;text-align:center;">#FirstName#</td>
+							<td style="width:175px;text-align:center;">#LastName#</td>
+							<td style="width:175px;text-align:center;">#Email#</td>
+							<td style="width:175px;text-align:center;">#Username#</td>
+							<td style="width:175px;text-align:center;">#Password#</td>
+							<td style="width:56px;text-align:center;">
 								<a href="index.cfm?action=users.manage&uid=#userUID#"><i class="icon-pencil"></i></a>
 								<a href="##" onClick="deleteUser('#userUID#')"><i class="icon-remove"></i></a>
 							</td>

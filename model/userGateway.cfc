@@ -83,6 +83,7 @@
 					,password=qry.password
 					,isActive=qry.isActive
 					,TypeID=qry.TypeID
+					,UserImage=qry.UserImage
 					) />
 			</cfif>
 		</cfif>
@@ -105,6 +106,7 @@
 					,u.password
 					,u.isActive
 					,u.typeID
+					,u.userImage
 				from
 					Users u with (nolock)
 				WHERE
@@ -121,7 +123,8 @@
 					Username=qry.username,
 					Password=qry.password,
 					IsActive=qry.isActive,
-					TypeID=qry.typeID
+					TypeID=qry.typeID,
+					UserImage=qry.userImage
 				) />
 			</cfif>
 		</cfif>
@@ -148,6 +151,7 @@
 				,password
 				,isActive
 				,typeID
+				,userImage
 			) values(
 				<cfqueryparam cfsqltype="cf_sql_varchar" value="#uid#" />
 				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getFirstname()#" />
@@ -157,6 +161,7 @@
 				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getPassword()#" />
 				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIsActive()#" />
 				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getTypeID()#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUserImage()#" />
 			)
 		</cfquery>
 
@@ -176,6 +181,7 @@
 			,username=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUsername()#" />
 			,password=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getPassword()#" />
 			,isActive=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getIsActive()#" />
+			,userImage=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUserImage()#" />
 			WHERE UserUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
 		</cfquery>
 

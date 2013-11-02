@@ -31,7 +31,7 @@
 		</cfif>
 		<cfset application.TempImagesDir="C:\webs\fw1Test\tmpImages\"/>
 		<cfif not DirectoryExists(application.TempImagesDir)>
-			<cfdirectory action="Create" directory="#application.TempDir#">
+			<cfdirectory action="Create" directory="#application.TempImagesDir#">
 		</cfif>
 
 		<cfset application.com = "fw1Test.model" />
