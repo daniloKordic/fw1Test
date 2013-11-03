@@ -34,7 +34,7 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th style="width:50px;text-align:center;">##</th>
+						<th style="width:50px;text-align:center;">Image</th>
 						<th style="width:175px;text-align:center;">First Name</th>
 						<th style="width:175px;text-align:center;">Last Name</th>
 						<th style="width:175px;text-align:center;">Email</th>
@@ -45,11 +45,29 @@
 				</thead>
 				<tbody>	
 					<cfloop query="rc.qGrid">				
-						<tr>
-							<td style="width:50px;text-align:center;">#rc.qGrid.currentRow#</td>
-							<td style="width:175px;text-align:center;">#FirstName#</td>
-							<td style="width:175px;text-align:center;">#LastName#</td>
-							<td style="width:175px;text-align:center;">#Email#</td>
+						<tr class="userRow">
+							<td style="width:50px;text-align:center;">
+								<cfif userImage neq "">
+									<img style="max-width:150px;" src="#application.ImagesDirRel##userImage#">
+								<cfelse>									
+									NO IMAGE
+								</cfif>
+							</td>
+							<td style="width:175px;text-align:center;">
+								<a href="index.cfm?action=users.manage&uid=#userUID#">
+									#FirstName#
+								</a>
+							</td>
+							<td style="width:175px;text-align:center;">
+								<a href="index.cfm?action=users.manage&uid=#userUID#">
+									#LastName#
+								</a>
+							</td>
+							<td style="width:175px;text-align:center;">
+								<a href="index.cfm?action=users.manage&uid=#userUID#">
+									#Email#
+								</a>
+							</td>
 							<td style="width:175px;text-align:center;">#Username#</td>
 							<td style="width:175px;text-align:center;">#Password#</td>
 							<td style="width:56px;text-align:center;">
