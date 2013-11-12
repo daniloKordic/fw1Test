@@ -255,6 +255,33 @@
 		<cfreturn qry />
 	</cffunction>
 
+	<cffunction name="getByUID" output="false" access="public" returntype="query">
+		<cfargument name="uid" type="String" required="false" default="" />		
+		<cfset var qry=""/>
+
+		<cfquery name="qry" datasource="#getDSN()#">
+			select 
+				tbl.*
+				,images = (select dbo.GROUP_CONCAT(ImageFile) from ProductImages where ProductUID = tbl.ProductUID)
+			from (			
+			select
+				p.ProductUID
+				,p.ProductName
+				,p.ProductDescription
+				,p.active
+				,CategoryUID=(select CategoryUID from Products2CategoriesLookup where ProductUID=p.ProductUID)
+				--,images=(select top 1 ImageFile from ProductImages where ProductUID = p.ProductUID)
+			from
+				Products p with (nolock)			
+			) tbl
+			where
+				<cfif arguments.uid neq "">
+					tbl.ProductUID = '#arguments.uid#'
+				</cfif>
+		</cfquery>
+		<cfreturn qry />
+	</cffunction>
+
 	<!--- DELETE --->
 	<cffunction name="delete" access="public" output="false" returntype="Numeric">
 		<cfargument name="product" required="true" type="any" />

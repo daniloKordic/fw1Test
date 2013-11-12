@@ -38,4 +38,12 @@
 		</cfif>
 	</cffunction>
 
+	<cffunction name="view" access="public" returntype="void">
+		<cfset var productService = getProductService() />
+
+		<cfif structKeyExists(rc, "uid")>
+			<cfset var rc.product = productService.getProducts(uid=rc.uid) />					
+		</cfif>
+	</cffunction>
+
 </cfcomponent>

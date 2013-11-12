@@ -128,8 +128,8 @@
 		<cfargument name="uid" default="" type="string" required="false" />
 		<cfset var products = ""/>
 
-		<cfset products = getProductGateway().getProducts(uid=arguments.uid) />
-
+		<cfset products = getProductGateway().getByUID(uid=arguments.uid) />
+		
 		<cfreturn products />
 	</cffunction>
 
