@@ -109,7 +109,7 @@
 				,Parent=(select CategoryName from Categories cc where  cc.CategoryUID=c.ParentUID)				
 				,hasChildren=(select count(categoryUID) from Categories ccc where ccc.ParentUID = c.CategoryUID)
 			from
-				Categories c with (nolock)
+				Categories c 
 			order by
 				c.sort
 		</cfquery>
@@ -134,7 +134,7 @@
 					,c.DateUpdated
 					,sort=coalesce(c.Sort, 0)
 				from
-					Categories c with (nolock)
+					Categories c 
 				where
 					CategoryUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
 			</cfquery>
@@ -162,7 +162,7 @@
 			select
 				c.*
 			from
-				Categories c with (nolock)
+				Categories c 
 			where
 				1=1
 				<cfif structKeyExists(arguments.filter, "CategoryName")and len(arguments.filter.CategoryName)>
@@ -178,9 +178,9 @@
 		<cfquery name="qry" datasource="#getDSN()#">
 			select
 				c.*
-				,hasChildren=(select count(categoryUID) from Categories ca with (nolock) where ca.ParentUID=c.CategoryUID)
+				,hasChildren=(select count(categoryUID) from Categories ca  where ca.ParentUID=c.CategoryUID)
 			from
-				Categories c with (nolock)		
+				Categories c 		
 			order by
 				c.Sort	
 		</cfquery>

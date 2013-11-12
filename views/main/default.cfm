@@ -1,6 +1,6 @@
 <cfoutput>
 	<cfset userUID=""/>
-	<cfset fullName = "Guest" />
+	<cfset fullName = "Guest" />	
 	<cfset usertype= 2 />
 	<cfset fCategoryUID = ""/>
 
@@ -15,6 +15,9 @@
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			#rc.message#
 		</div>
+	</cfif>
+	<cfif isDefined("rc.uid") and rc.uid neq "">
+		<cfset fCategoryUID="#rc.uid#" />
 	</cfif>
 	
 	<cfif isDefined("rc.cuid") and rc.cuid neq "">
@@ -113,7 +116,7 @@
 			</div>
 		</div>
 	</div>
-<cfdump var="#rc.products#"/>
+
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('label.tree-toggler').click(function () {

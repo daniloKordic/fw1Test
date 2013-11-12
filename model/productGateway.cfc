@@ -117,7 +117,7 @@
 			select
 				p.*
 			from
-				Products p with (nolock)
+				Products p 
 		</cfquery>
 
 		<cfreturn qry />
@@ -138,7 +138,7 @@
 					,p.active
 					,CategoryUID=(select CategoryUID from Products2CategoriesLookup where ProductUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />)
 				from
-					Products p with (nolock)
+					Products p 
 				where
 					1=1
 					and p.ProductUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
@@ -176,7 +176,7 @@
 			select
 				p.*
 			from
-				Products p with (nolock)
+				Products p 
 			where
 				1=1
 				<cfif structKeyExists(arguments.filter, "ProductName") and len(arguments.filter.productName)>
@@ -187,6 +187,32 @@
 		<cfreturn qry />
 	</cffunction>
 
+	<!--- <cffunction name="getProducts" output="false" access="public" returntype="query">
+		<cfargument name="uid" type="string" required="false" default="" />
+		<cfset var qry=""/>
+
+		<cfquery name="qry" datasource="#getDSN()#">
+			select * from (
+				select
+					p.ProductUID
+					,p.ProductName
+					,p.ProductDescription
+					,p.active				
+					,CategoryUID=(select CategoryUID from Products2CategoriesLookup p2c  where p2c.ProductUID=p.ProductUID)
+				from
+					Products p 
+				<cfif arguments.uid neq "">
+					where
+						1=1
+						and p.ProductUID in (select ProductUID from Products2CategoriesLookup where CategoryUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />)
+				</cfif>
+			) tbl
+			where
+				tbl.active = 1
+		</cfquery>
+		<cfreturn qry />
+	</cffunction> --->
+
 	<cffunction name="getCategories" output="false" access="public" returntype="query">
 		<cfset var qry=""/>
 
@@ -194,14 +220,15 @@
 			select * from (
 				select
 					c.CategoryUID
-					,c.CategoryName				
-					,hasChildren=(select count(categoryUID) from Categories ca with (nolock) where ca.ParentUID=c.CategoryUID)
+					,c.CategoryName
+					,hasChildren=(select count(CategoryUID) from Categories ca  where ca.ParentUID=c.CategoryUID)
 				from
-					Categories c with (nolock)
+					Categories c 
 			) tbl
 			where
 				tbl.hasChildren = 0
 		</cfquery>
+
 		<cfreturn qry />
 	</cffunction>
 
