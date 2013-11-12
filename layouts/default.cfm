@@ -15,6 +15,8 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/datepicker.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/css/jquery-ui-1.10.2.custom.css"/>
 		<link href="assets/css/style.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" type="text/css" href="assets/css/colorbox.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/slimbox2.css">
 
 		<script type="text/javascript" src="assets/js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="assets/js/jquery.validate.js"></script>
@@ -24,6 +26,8 @@
 		<script src="assets/bootstrap/js/jasny-bootstrap.min.js"></script>
 		<script type="text/javascript" src="assets/js/global.js"></script>
 		<script type="text/javascript" src="assets/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.colorbox-min.js"></script>
+		<script type="text/javascript" src="assets/js/slimbox2.js"></script>
 	</head>
 	<body>
 		<cfif not isDefined("rc.modal")>				
@@ -36,12 +40,15 @@
 			                <span class="icon-bar"></span>
 			            </a>
 			            <a class="brand" href="#buildUrl('main')#">
-			            	<img src="assets/img/CloudPlainBlue.png" />
+			            	<img style="height:20px;" src="assets/img/CloudPlainBlue.png" />
 			            </a>
-							<div class="nav-collapse collapse" style="margin-top:15px;">
+							<div class="nav-collapse collapse">
 								<ul class="nav">
 									
 			                	<!--- MENU --->
+			                	<cfif isDefined("rc.menu")>
+			                		
+			                	
 			                	<cfloop query="#rc.menu#">		                		
 			                		<cfset tMenuItemUID="#MenuItemUID#" />
 			                		<cfif tMenuItemUID eq "3981D4BE-1A4E-4899-A919-ACB01383B8BA" and session.auth.TypeID eq 1>
@@ -49,7 +56,7 @@
 				                		<cfif MenuItemLevel eq 1>
 				                			<cfif  isParent gt 0>  				
 					                			<li class="dropdown">
-					                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
+					                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
 					                				<ul class="dropdown-menu">
 					                					<cfloop query="#rc.menu#">
 					                						<cfset ttMenuItemUID = "#MenuItemUID#" />
@@ -80,7 +87,7 @@
 				                		<cfif MenuItemLevel eq 1>
 				                			<cfif  isParent gt 0>  				
 					                			<li class="dropdown">
-					                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
+					                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
 					                				<ul class="dropdown-menu">
 					                					<cfloop query="#rc.menu#">
 					                						<cfset ttMenuItemUID = "#MenuItemUID#" />
@@ -108,6 +115,8 @@
 				                		</cfif>
 				                	</cfif>
 			                	</cfloop>
+
+			                	</cfif>
 		                	</ul>		                
 								<ul class="nav pull-right">
 
@@ -116,7 +125,7 @@
 					               		<li class="divider-vertical"></li>
 										<li class="dropdown">
 											
-											<a href="##" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">Sign In <b class="caret"></b></a>
+											<a href="##" class="dropdown-toggle" data-close-others="true" data-delay="10" data-toggle="dropdown">Sign In <b class="caret"></b></a>
 											<div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
 												<form method="post" action="#buildURL('login.login')#" id="userLogin" name="userLogin">
 													<input style="margin-bottom: 15px;" type="text" placeholder="E-mail" id="email" name="email" value="">
@@ -151,13 +160,13 @@
 			<div class="row">
 				#body#
 			</div>
-			<cfif isDefined("rc.modal") and rc.modal neq 1>		
+			<cfif not isDefined("rc.modal")>		
 				<hr>
 				<footer>
 					<p>&copy; danilokordic.com 2013</p>
 				</footer>
 			</cfif>
-		</div>		
+		</div>	
 	</body>
 	</html>
 

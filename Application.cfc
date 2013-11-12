@@ -22,14 +22,18 @@
 		<cfset application.beanFactory = createObject("component","coldspring.beans.DefaultXmlBeanFactory").init(defaultProperties=application.settings) />
 		<cfset application.beanFactory.loadBeans(application.coldspringConfig) />
 
+		
+		<cfset application.root  = getDirectoryFromPath(getCurrentTemplatePath()) />
+		<cfset application.WebLocation = "http://#cgi.SERVER_NAME#/fw1Test/" />
+
 		<cfset application.assets = "assets/"/>
-		<cfset application.model = "C:\webs\fw1Test\model\"/>
-		<cfset application.ImagesDir="C:\webs\fw1Test\Images\"/>
+		<cfset application.model = "#application.root#model\"/>
+		<cfset application.ImagesDir="#application.root#Images\"/>
 		<cfset application.ImagesDirRel="Images/"/>
 		<cfif not DirectoryExists(application.ImagesDir)>
 			<cfdirectory action="Create" directory="#application.ImagesDir#">
 		</cfif>
-		<cfset application.TempImagesDir="C:\webs\fw1Test\tmpImages\"/>
+		<cfset application.TempImagesDir="#application.root#tmpImages\"/>
 		<cfif not DirectoryExists(application.TempImagesDir)>
 			<cfdirectory action="Create" directory="#application.TempImagesDir#">
 		</cfif>
@@ -41,8 +45,6 @@
 	<cffunction name="setupRequest">
 		<cfset controller('security.authorize') />
 		<cfset controller('menu') />
-		<cfset request.ServiceLocation ="http://#cgi.HTTP_HOST#/model/" />
-		<cfset request.WebRootLocation  ="http://#cgi.HTTP_HOST#/fw1Test/" />
 	</cffunction>
 
 	<cffunction name="setupSession">

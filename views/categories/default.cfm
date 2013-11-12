@@ -39,11 +39,11 @@
         <table class="table">
           <thead>
             <tr>
-              <th>##</th>
-              <th>Category Name</th>
-              <th>Category Description</th>
-              <th>Parent</th>
-              <th style="width: 36px;"></th>
+              <th style="text-align:center;width:30px;">##</th>
+              <th style="text-align:center;width:300px;">Category Name</th>
+              <th style="text-align:center;width:370px;">Category Description</th>
+              <th style="text-align:center;width:290px;">Parent</th>
+              <th style="width:56px;"></th>
             </tr>
           </thead>
           <tbody>

@@ -35,20 +35,22 @@
         <table class="table">
           <thead>
             <tr>
-              <th>##</th>
-              <th>Product Name</th>
-              <th>Product Description</th>
-              <th>Is Active?</th>
-              <th style="width: 36px;"></th>
+              <th style="text-align:center;width:30px;">##</th>
+              <th style="text-align:center;width:300px;">Product Name</th>
+              <th style="text-align:center;width:470px;">Product Description</th>
+              <th style="text-align:center;width:170px;">Is Active?</th>
+              <th style="width: 56px;"></th>
             </tr>
           </thead>
           <tbody>
           	<cfloop query="rc.qGrid">
           		<tr>
-    	          <td>#rc.qGrid.currentRow#</td>
-    	          <td>#ProductName#</td>
-    	          <td>#ProductDescription#</td>
-    	          <td>#active#</td>
+    	          <td style="text-align:center;">#rc.qGrid.currentRow#</td>
+    	          <td style="text-align:center;">
+                  <a href="index.cfm?action=products.manage&uid=#ProductUID#">#ProductName#</a>
+                </td>
+    	          <td style="text-align:center;">#ProductDescription#</td>
+    	          <td style="text-align:center;"><cfif active eq 1>Active<cfelse>Inactive</cfif></td>
     	          <td>
     	              <a href="index.cfm?action=products.manage&uid=#ProductUID#"><i class="icon-pencil"></i></a>
                     <a href="##" onClick="deleteProduct('#ProductUID#')"><i class="icon-remove"></i></a>

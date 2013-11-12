@@ -232,3 +232,7 @@ span.bold {
 .userRow:hover {
     background-color: lightgrey;
 }
+.selected a{
+    font-size: 11px !important;
+    font-weight: bold !important;
+}

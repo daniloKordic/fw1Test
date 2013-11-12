@@ -2,6 +2,7 @@
 	<cfset userUID=""/>
 	<cfset fullName = "Guest" />
 	<cfset usertype= 2 />
+	<cfset fCategoryUID = ""/>
 
 	<cfif structKeyExists(session.auth, "user")>
 		<cfset userUID = session.auth.user.getUID() />
@@ -16,6 +17,10 @@
 		</div>
 	</cfif>
 	
+	<cfif isDefined("rc.cuid") and rc.cuid neq "">
+		<cfset fCategoryUID = "#rc.cuid#" />
+	</cfif>
+
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span12">
@@ -31,40 +36,43 @@
 				        		<cfloop query="#rc.categories#">
 				        			<cfif parentUID eq "">
 				        				<cfset tCategoryUID = CategoryUID />
-				        				<li><label class="tree-toggler nav-header">#CategoryName#</label>	
-				        					<cfif hasChildren neq 0>			        					
+				        				<cfif hasChildren neq 0>	
+				        					<li><label class="tree-toggler nav-header">#CategoryName#</label>			  					
 						        				<ul class="nav nav-list tree">
 							        				<cfloop query="#rc.categories#">
 							        					<cfif ParentUID eq tCategoryUID>						        						
 							        						<cfset ttCategoryUID=CategoryUID />
 							                    		<cfif hasChildren neq 0>
 							                    			<li><label class="tree-toggler nav-header">#CategoryName#</label>
-							                    			<ul class="nav nav-list tree">
-							                    				<cfloop query="#rc.categories#">
-							                    					<cfif ParentUID eq ttCategoryUID>
-							                    						<cfset tttCategoryUID= CategoryUID />
-							                    						<cfif hasChildren eq 0>							                    							
-							                    							<li><a href="##">#CategoryName#</a></li>
-							                    						<cfelse>
-							                    							<li><label class="tree-toggler nav-header">#CategoryName#</label>
-											                    			<ul class="nav nav-list tree">
-											                    				<cfloop query="#rc.categories#">
-											                    					<cfif ParentUID eq tttCategoryUID>
-											                    						<cfset ttttCategoryUID= CategoryUID />                  							
-											                    						<li><a href="##">#CategoryName#</a></li>
-											                    					</cfif>
-											                    				</cfloop>
-											                    			</ul>
-							                    						</cfif>
-							                    					</cfif>
-							                    				</cfloop>
-							                    			</ul>
+								                    			<ul class="nav nav-list tree">
+								                    				<cfloop query="#rc.categories#">
+								                    					<cfif ParentUID eq ttCategoryUID>
+								                    						<cfset tttCategoryUID= CategoryUID />
+								                    						<cfif hasChildren eq 0>							                    							
+								                    							<li <cfif fCategoryUID eq tttCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#tttCategoryUID#">#CategoryName#</a></li>
+								                    						<cfelse>
+								                    							<li><label class="tree-toggler nav-header">#CategoryName#</label>
+												                    			<ul class="nav nav-list tree">
+												                    				<cfloop query="#rc.categories#">
+												                    					<cfif ParentUID eq tttCategoryUID>
+												                    						<cfset ttttCategoryUID= CategoryUID />         		
+												                    						<li <cfif fCategoryUID eq ttttCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#tttCategoryUID#">#CategoryName#</a></li>
+												                    					</cfif>
+												                    				</cfloop>
+												                    			</ul>
+								                    						</cfif>
+								                    					</cfif>
+								                    				</cfloop>
+								                    			</ul>
+								                    		</li>
 							                    		<cfelse>
-							                    			<li><a href="##">#CategoryName#</a></li>
+							                    			<li <cfif fCategoryUID eq ttCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#ttCategoryUID#">#CategoryName#</a></li>
 							                    		</cfif>
 							        					</cfif>
 							        				</cfloop>
 						        				</ul>	
+						        			<cfelse>
+						        				<li <cfif fCategoryUID eq tCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#tCategoryUID#">#CategoryName#</a></li>
 						        			</cfif>
 						        		</li>	        	
 				        				<li class="divider"></li>					        				
@@ -73,10 +81,21 @@
 				        </ul>
 				    </div>
 				</div>
-
 			</div>
 			<div class="span6 content">
-				CONTENT
+				<ul class="thumbnails">
+					<cfloop query="#rc.products#">
+						<cfif CategoryUID eq fCategoryUID>						
+							<li class="span6" <cfif rc.products.currentRow mod 2 neq 0>style="margin-left:0;"</cfif>>
+						   	<div class="thumbnail">
+							   	<img data-src="holder.js/300x200" alt="">
+							   	<h3>Thumbnail label</h3>
+							   	<p>Thumbnail caption...</p>
+						   	</div>
+							</li>
+						</cfif>
+					</cfloop>
+				</ul>
 			</div>
 			<div class="span3 news">
 				NEWS
@@ -94,14 +113,18 @@
 			</div>
 		</div>
 	</div>
-
+<cfdump var="#rc.products#"/>
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('label.tree-toggler').click(function () {
 			$(this).parent().children('ul.tree').toggle(300);
 		});
 	  $('label.tree-toggler').trigger('click');
-	});
-	
+
+	  $('.selected').parent().parent().parent().parent().parent().children('ul.tree').toggle(300);
+	  $('.selected').parent().parent().parent().parent().children('ul.tree').toggle(300);
+	  $('.selected').parent().parent().parent().children('ul.tree').toggle(300);
+	  $('.selected').parent().parent().children('ul.tree').toggle(300);
+	});	
 </script>
 </cfoutput>
