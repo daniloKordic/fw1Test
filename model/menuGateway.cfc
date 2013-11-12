@@ -148,7 +148,7 @@
 				isParent = (select count(MenuItemUID) from Menu where ParentMenuItemUID=m.MenuItemUID),
 				m.Action
 			from
-				Menu m with (nolock)
+				Menu m 
 			where
 				1=1
 			order
@@ -174,9 +174,9 @@
 					,m.Sort
 					,m.PageUID
 					,m.action
-					,hasChildren = case when (select count(me.MenuTitle) from Menu me with (nolock) where m.MenuItemUID=me.ParentMenuItemUID) >= 1 then 1 else 0 end
+					,hasChildren = case when (select count(me.MenuTitle) from Menu me  where m.MenuItemUID=me.ParentMenuItemUID) >= 1 then 1 else 0 end
 				from
-					Menu m with (nolock)
+					Menu m 
 				where
 					1=1
 					and m.MenuItemUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
@@ -207,7 +207,7 @@
 			select
 				m.*
 			from
-				Menu m with (nolock)
+				Menu m 
 			where
 				1=1
 				<cfif structKeyExists(arguments.filter, "menuTitle") and len(arguments.filter.menuTitle)>
@@ -225,7 +225,7 @@
 			select 
 				m.* 
 			from
-				menu m with (nolock)
+				menu m 
 			where 
 				1=1
 				--and m.menuitemuid in (select parentmenuitemuid from menu)
@@ -245,7 +245,7 @@
 			select
 				menuItemLevel=coalesce(m.MenuItemLevel,0)+1
 			from
-				Menu m with (nolock)
+				Menu m 
 			where
 				m.MenuItemUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parentMenuItemUID#" />
 		</cfquery>

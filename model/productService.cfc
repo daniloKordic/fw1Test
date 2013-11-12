@@ -117,4 +117,13 @@
 
 		<cfreturn event />
 	</cffunction>
+
+	<cffunction name="getProducts" access="public" output="false" returntype="any">
+		<cfargument name="uid" default="" type="string" required="false" />
+		<cfset var products = ""/>
+
+		<cfset products = getProductGateway().getProducts(uid=arguments.uid) />
+
+		<cfreturn products />
+	</cffunction>
 </cfcomponent>

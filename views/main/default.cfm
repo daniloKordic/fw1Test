@@ -1,7 +1,8 @@
 <cfoutput>
 	<cfset userUID=""/>
-	<cfset fullName = "Guest" />
+	<cfset fullName = "Guest" />	
 	<cfset usertype= 2 />
+	<cfset fCategoryUID = ""/>
 
 	<cfif structKeyExists(session.auth, "user")>
 		<cfset userUID = session.auth.user.getUID() />
@@ -14,6 +15,9 @@
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 			#rc.message#
 		</div>
+	</cfif>
+	<cfif isDefined("rc.uid") and rc.uid neq "">
+		<cfset fCategoryUID="#rc.uid#" />
 	</cfif>
 	
 	<div class="container-fluid">
@@ -44,14 +48,14 @@
 							                    					<cfif ParentUID eq ttCategoryUID>
 							                    						<cfset tttCategoryUID= CategoryUID />
 							                    						<cfif hasChildren eq 0>							                    							
-							                    							<li><a href="##">#CategoryName#</a></li>
+							                    							<li><a href="index.cfm?uid=#tttCategoryUID#">#CategoryName#</a></li>
 							                    						<cfelse>
 							                    							<li><label class="tree-toggler nav-header">#CategoryName#</label>
 											                    			<ul class="nav nav-list tree">
 											                    				<cfloop query="#rc.categories#">
 											                    					<cfif ParentUID eq tttCategoryUID>
 											                    						<cfset ttttCategoryUID= CategoryUID />                  							
-											                    						<li><a href="##">#CategoryName#</a></li>
+											                    						<li><a href="index.cfm?uid=#ttttCategoryUID#">#CategoryName#</a></li>
 											                    					</cfif>
 											                    				</cfloop>
 											                    			</ul>
@@ -60,7 +64,7 @@
 							                    				</cfloop>
 							                    			</ul>
 							                    		<cfelse>
-							                    			<li><a href="##">#CategoryName#</a></li>
+							                    			<li><a href="index.cfm?uid=#ttCategoryUID#">#CategoryName#</a></li>
 							                    		</cfif>
 							        					</cfif>
 							        				</cfloop>
@@ -94,7 +98,7 @@
 			</div>
 		</div>
 	</div>
-
+<cfdump var="#rc#"/>
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('label.tree-toggler').click(function () {

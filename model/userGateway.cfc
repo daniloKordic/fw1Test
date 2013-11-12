@@ -21,7 +21,7 @@
 			select
 				u.*
 			from
-				Users u with (nolock)
+				Users u 
 		</cfquery>
 
 		<cfreturn qry />
@@ -69,7 +69,7 @@
 				select
 					u.*
 				from
-					Users u with (nolock)
+					Users u 
 				where
 					userUID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.uid#" />
 			</cfquery>
@@ -108,7 +108,7 @@
 					,u.typeID
 					,u.userImage
 				from
-					Users u with (nolock)
+					Users u 
 				WHERE
 					u.email=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email#" />
 					and u.isActive=1

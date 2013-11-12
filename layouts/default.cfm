@@ -15,6 +15,9 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/datepicker.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/css/jquery-ui-1.10.2.custom.css"/>
 		<link href="assets/css/style.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox-buttons.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox-thumbs.css" />
 
 		<script type="text/javascript" src="assets/js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="assets/js/jquery.validate.js"></script>
@@ -24,6 +27,10 @@
 		<script src="assets/bootstrap/js/jasny-bootstrap.min.js"></script>
 		<script type="text/javascript" src="assets/js/global.js"></script>
 		<script type="text/javascript" src="assets/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.fancybox.pack.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.fancybox-buttons.js" /></script>
+		<script type="text/javascript" src="assets/js/jquery.fancybox-thumbs.js" /></script>
+		<script type="text/javascript" src="assets/js/jquery.fancybox-media.js" /></script>
 	</head>
 	<body>
 		<cfif not isDefined("rc.modal")>				
@@ -36,9 +43,9 @@
 			                <span class="icon-bar"></span>
 			            </a>
 			            <a class="brand" href="#buildUrl('main')#">
-			            	<img src="assets/img/CloudPlainBlue.png" />
+			            	<img style="height:20px;" src="assets/img/CloudPlainBlue.png" />
 			            </a>
-							<div class="nav-collapse collapse" style="margin-top:15px;">
+							<div class="nav-collapse collapse">
 								<ul class="nav">
 									
 			                	<!--- MENU --->
@@ -49,7 +56,7 @@
 				                		<cfif MenuItemLevel eq 1>
 				                			<cfif  isParent gt 0>  				
 					                			<li class="dropdown">
-					                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
+					                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
 					                				<ul class="dropdown-menu">
 					                					<cfloop query="#rc.menu#">
 					                						<cfset ttMenuItemUID = "#MenuItemUID#" />
@@ -80,7 +87,7 @@
 				                		<cfif MenuItemLevel eq 1>
 				                			<cfif  isParent gt 0>  				
 					                			<li class="dropdown">
-					                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
+					                				<a href="#buildUrl('#Action#')#" class="dropdown-toggle" data-close-others="true" data-delay="10" data-toggle="dropdown">#MenuTitle# <b class="caret"></b></a>
 					                				<ul class="dropdown-menu">
 					                					<cfloop query="#rc.menu#">
 					                						<cfset ttMenuItemUID = "#MenuItemUID#" />
@@ -116,7 +123,7 @@
 					               		<li class="divider-vertical"></li>
 										<li class="dropdown">
 											
-											<a href="##" class="dropdown-toggle" data-hover="dropdown" data-close-others="true" data-delay="10" data-toggle="dropdown">Sign In <b class="caret"></b></a>
+											<a href="##" class="dropdown-toggle" data-close-others="true" data-delay="10" data-toggle="dropdown">Sign In <b class="caret"></b></a>
 											<div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
 												<form method="post" action="#buildURL('login.login')#" id="userLogin" name="userLogin">
 													<input style="margin-bottom: 15px;" type="text" placeholder="E-mail" id="email" name="email" value="">
