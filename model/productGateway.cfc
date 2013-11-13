@@ -233,11 +233,15 @@
 	</cffunction>
 
 	<cffunction name="getProducts" output="false" access="public" returntype="query">
-		<cfargument name="uid" type="String" required="false" default="" />		
+		<cfargument name="uid" type="String" required="false" default="" />	
+		<cfargument name="count" type="numeric" required="false" default="0" />
 		<cfset var qry=""/>
 
 		<cfquery name="qry" datasource="#getDSN()#">
 			select
+				<cfif arguments.count neq 0>
+					top #arguments.count#
+				</cfif>
 				p.ProductUID
 				,p.ProductName
 				,p.ProductDescription
@@ -278,6 +282,34 @@
 				1=1
 				<cfif arguments.uid neq "">
 					and tbl.ProductUID = '#arguments.uid#'
+				</cfif>
+		</cfquery>
+		<cfreturn qry />
+	</cffunction>
+
+	<cffunction name="getByCategory" output="false" access="public" returntype="query">
+		<cfargument name="cuid" type="String" required="false" default="" />		
+		<cfset var qry=""/>
+
+		<cfquery name="qry" datasource="#getDSN()#">
+			select 
+				tbl.*
+				,images = (select dbo.GROUP_CONCAT(ImageFile) from ProductImages where ProductUID = tbl.ProductUID)
+			from (			
+			select
+				p.ProductUID
+				,p.ProductName
+				,p.ProductDescription
+				,p.active
+				,CategoryUID=(select CategoryUID from Products2CategoriesLookup where ProductUID=p.ProductUID)
+				,mainImage=(select top 1 ImageFile from ProductImages where ProductUID = p.ProductUID)
+			from
+				Products p with (nolock)			
+			) tbl
+			where
+				1=1
+				<cfif arguments.cuid neq "">
+					and tbl.CategoryUID = '#arguments.cuid#'
 				</cfif>
 		</cfquery>
 		<cfreturn qry />

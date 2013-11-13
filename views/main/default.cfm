@@ -16,9 +16,9 @@
 			#rc.message#
 		</div>
 	</cfif>
-	<cfif isDefined("rc.uid") and rc.uid neq "">
+	<!--- <cfif isDefined("rc.uid") and rc.uid neq "">
 		<cfset fCategoryUID="#rc.uid#" />
-	</cfif>
+	</cfif> --->
 	
 	<cfif isDefined("rc.cuid") and rc.cuid neq "">
 		<cfset fCategoryUID = "#rc.cuid#" />
@@ -86,23 +86,42 @@
 				</div>
 			</div>
 			<div class="span6 content">
-				<ul class="thumbnails" style="float:left;">
-					<cfloop query="#rc.products#">
-						<cfif CategoryUID eq fCategoryUID>						
-							<li class="span4" <cfif rc.products.currentRow mod 3 neq 0 and rc.products.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
-						   	<div class="thumbnail">
-						   		<cfif mainImage neq "">
-						   			<a href="index.cfm?action=products.view&uid=#ProductUID#">
-						   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
-						   			</a>
-						   		</cfif>							   	
-							   	<h4>#ProductName#</h4>
-							   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
-						   	</div>
-							</li>
-							<cfif rc.products.currentRow mod 3 eq 0><div class="clear"></div></cfif>
-						</cfif>
-					</cfloop>
+				<ul class="thumbnails span12" style="float:left;">
+					<cfif rc.products.recordCount neq 0>					
+						<cfloop query="#rc.products#">						
+							<cfif CategoryUID eq fCategoryUID>						
+								<li class="span4" <cfif rc.products.currentRow mod 3 neq 0 and rc.products.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
+							   	<div class="thumbnail">
+							   		<cfif mainImage neq "">
+							   			<a href="index.cfm?action=products.view&uid=#ProductUID#">
+							   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
+							   			</a>
+							   		</cfif>							   	
+								   	<h4>#ProductName# #rc.products.currentRow#</h4>
+								   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
+							   	</div>
+								</li>
+								<cfif rc.products.currentRow mod 3 eq 0><div class="clear"></div></cfif>
+							<cfelseif fCategoryUID eq "">
+								<li class="span4" <cfif rc.products.currentRow mod 3 neq 0 and rc.products.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
+							   	<div class="thumbnail">
+							   		<cfif mainImage neq "">
+							   			<a href="index.cfm?action=products.view&uid=#ProductUID#">
+							   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
+							   			</a>
+							   		</cfif>							   	
+								   	<h4>#ProductName# - #rc.products.currentRow#</h4>
+								   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
+							   	</div>
+								</li>
+								<cfif rc.products.currentRow mod 3 eq 0><div class="clear"></div></cfif>
+							</cfif>
+						</cfloop>
+					<cfelse>
+						<li class="span12" style="text-align:center;min-height:400px;vertical-align:middle;padding-top:100px;">
+							<h2>No products</h2>
+						</li>
+					</cfif>
 				</ul>
 			</div>
 			<div class="span3 news">
@@ -121,7 +140,7 @@
 			</div>
 		</div>
 	</div>
-<!--- <cfdump var="#rc.products#"/> --->
+
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('label.tree-toggler').click(function () {

@@ -36,8 +36,10 @@
 
 		<cfif structKeyExists(rc, "uid")>
 			<cfset var rc.products = productService.getProducts(uid=rc.uid) />
+		<cfelseif structKeyExists(rc, "cuid")>
+			<cfset var rc.products = productService.getProductsByCategory(cuid=rc.cuid) />	
 		<cfelse>
-			<cfset var rc.products = productService.getProducts() />	
+			<cfset var rc.products = productService.getProducts(count=6) />	
 		</cfif>
 		
 	</cffunction>

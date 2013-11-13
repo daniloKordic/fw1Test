@@ -126,10 +126,27 @@
 
 	<cffunction name="getProducts" access="public" output="false" returntype="any">
 		<cfargument name="uid" default="" type="string" required="false" />
+		<cfargument name="count" type="numeric" required="false" default="0" />
 		<cfset var products = ""/>
 
-		<cfset products = getProductGateway().getByUID(uid=arguments.uid) />
+		<cfif arguments.uid neq "">
+			<cfset products = getProductGateway().getByUID(uid=arguments.uid) />
+		<cfelse>	
+			<cfset products = getProductGateway().getProducts(count=arguments.count) />
+		</cfif>
 		
+		
+		<cfreturn products />
+	</cffunction>
+
+	<cffunction name="getProductsByCategory" access="public" output="false" returntype="any">
+		<cfargument name="cuid" required="false" type="string" default="" />
+		<cfset var products=""/>
+
+		<cfif arguments.cuid neq "">
+			<cfset products = getProductGateway().getByCategory(cuid=arguments.cuid) />
+		</cfif>
+
 		<cfreturn products />
 	</cffunction>
 
@@ -160,7 +177,7 @@
 
 	<!--- Chunks mambodzambo --->
 	    <cfscript>
-	      var uploadFile =  uploadDir & arguments.NAME;
+	      var uploadFile =  uploadDir & arguments.NAME;	      
 	      var response = {'result' = arguments.NAME, 'id' = 0};
 	      var result = {};
 	      // if chunked append chunk number to filename for reassembly
@@ -169,7 +186,7 @@
 	        response.id = arguments.CHUNK;
 	      }
 	    </cfscript>		
-			
+		<cfdump var="#uploadFile#" output="C:\uploadFuile.txt" />
 	    <!--- save file data from multi-part form.FILE --->
 	    <cffile action="upload" result="fileResult" filefield="file" destination="#uploadFile#" nameconflict="makeUnique"/>
 			
@@ -233,6 +250,8 @@
 		    action = "move" 
 		    source = "#uploadFile#" 
 		    destination = "#dest#original\#arguments.NAME#">
+
+		<!--- <cffile action="delete" source="" /> --->
 
 		<cffile 
 		    action = "copy" 

@@ -1,5 +1,15 @@
 <cfoutput>
 
+	<cfset fProductUID=""/>
+	<cfset fProductName=""/>
+	<cfset fProductDescription=""/>
+
+	<cfif rc.product.recordCount neq 0>
+		<cfset fProductUID="#rc.product.ProductUID#" />
+		<cfset fProductName="#rc.product.ProductName#"/>
+		<cfset fProductDescription="#rc.product.ProductDescription#"/>
+	</cfif>
+
 	<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
 	    <div class="slides"></div>
 	    <h3 class="title"></h3>
@@ -11,43 +21,19 @@
 	</div>
 
 	<div id="links">
-	    <a href="Images/original/p1898lpuoa102ha7014e61kkp1psg9.jpg">
-	        <img src="Images/p1898lpuoa102ha7014e61kkp1psg9.jpg" >
-	    </a>
-	    <a href="images/original/p1898lpuoavs0ckknflds1rs88.jpg">
-	        <img src="images/p1898lpuoavs0ckknflds1rs88.jpg" >
-	    </a>
-	    <a href="images/original/p1898lpuoa1pq511jqoal1u0qg4hd.jpg">
-	        <img src="images/p1898lpuoa1pq511jqoal1u0qg4hd.jpg" >
-	    </a>
-	    <a href="images/original/p1898lpuoa198cr2umlvc37ub.jpg">
-	        <img src="images/p1898lpuoa198cr2umlvc37ub.jpg" >
-	    </a>
-	    <a href="images/original/p1898lpuoa1g5s1l70ug18n61emlc.jpg">
-	        <img src="images/p1898lpuoa1g5s1l70ug18n61emlc.jpg" >
-	    </a>
-	    <a href="images/original/p1898lpuoaoci6ol1kjk1o6vk0ra.jpg">
-	        <img src="images/p1898lpuoaoci6ol1kjk1o6vk0ra.jpg" >
-	    </a>
-	    <a href="images/original/p1898lpuoa1la11tkk3ef1bp88mb6.jpg">
-	        <img src="images/p1898lpuoa1la11tkk3ef1bp88mb6.jpg" >
-	    </a>
-	    <a href="images/original/p1898lpuo9a2h14vl156cebn11gk4.jpg">
-	        <img src="images/p1898lpuo9a2h14vl156cebn11gk4.jpg" >
-	    </a>
-	    <a href="images/original/p1898lpuob1i49kbq1dbesp213f6e.jpg">
-	        <img src="images/p1898lpuob1i49kbq1dbesp213f6e.jpg" >
-	    </a>
-	    <a href="images/original/p1898lpuoa9re1vqjvu71ok87vh5.jpg">
-	        <img src="images/p1898lpuoa9re1vqjvu71ok87vh5.jpg" >
-	    </a>
-	    <a href="images/original/p1898lpuoa1dm116i19of1qd31h1n7.jpg">
-	        <img src="images/p1898lpuoa1dm116i19of1qd31h1n7.jpg" >
-	    </a>
+		<cfloop query="#rc.product#">
+			<cfset imagesList = "#rc.product.images#" />
+			<cfloop list="#imagesList#" index="ListItem" delimiters=",">
+				<a href="Images/original/#ListItem#">
+					<img src="Images/#ListItem#" >
+				</a>
+			</cfloop>
+		</cfloop>
 	</div>
 
 	<div id="productInfo">
-		asd
+		<h2>#fProductName#</h2>
+		<h4>#fProductDescription#</h4>
 	</div>
 	<script type="text/javascript">
 		document.getElementById('links').onclick = function (event) {
@@ -66,7 +52,9 @@
 		##links img {
 			margin: 5px;
 		}
+		##productInfo{
+			padding-left: 200px;
+		}
 	</style>
-	<cfdump var="#rc#"/>
 
 </cfoutput>
