@@ -10,24 +10,16 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>#rc.pageTitle#</title>
 
+		<script type="text/javascript" src="assets/js/jquery-1.9.1.js"></script>
+		
 		<link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 		<link href="assets/bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
 		<link rel="stylesheet" type="text/css" href="assets/css/datepicker.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/css/jquery-ui-1.10.2.custom.css"/>
-		<link href="assets/css/style.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/colorbox.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/slimbox2.css">
-
-		<script type="text/javascript" src="assets/js/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="assets/js/jquery.validate.js"></script>
-		<script src="assets/js/jquery-ui-1.10.2.custom.js"></script>
-		<script language="javascript" src="assets/js/bootstrap-datepicker.js"></script>
-		<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-		<script src="assets/bootstrap/js/jasny-bootstrap.min.js"></script>
-		<script type="text/javascript" src="assets/js/global.js"></script>
-		<script type="text/javascript" src="assets/js/twitter-bootstrap-hover-dropdown.min.js"></script>
-		<script type="text/javascript" src="assets/js/jquery.colorbox-min.js"></script>
-		<script type="text/javascript" src="assets/js/slimbox2.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/blueimp-gallery.css">		
 	</head>
 	<body>
 		<cfif not isDefined("rc.modal")>				
@@ -166,7 +158,19 @@
 					<p>&copy; danilokordic.com 2013</p>
 				</footer>
 			</cfif>
-		</div>	
+		</div>
+
+		
+		<script type="text/javascript" src="assets/js/jquery.validate.js"></script>
+		<script type="text/javascript" src="assets/js/jquery-ui-1.10.2.custom.js"></script>
+		<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+		<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="assets/bootstrap/js/jasny-bootstrap.min.js"></script>
+		<script type="text/javascript" src="assets/js/global.js"></script>
+		<script type="text/javascript" src="assets/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.colorbox-min.js"></script>
+		<script type="text/javascript" src="assets/js/slimbox2.js"></script>
+		<script type="text/javascript" src="assets/js/blueimp-gallery.min.js"></script>	
 	</body>
 	</html>
 

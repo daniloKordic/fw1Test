@@ -270,13 +270,14 @@
 				,p.ProductDescription
 				,p.active
 				,CategoryUID=(select CategoryUID from Products2CategoriesLookup where ProductUID=p.ProductUID)
-				--,images=(select top 1 ImageFile from ProductImages where ProductUID = p.ProductUID)
+				,mainImage=(select top 1 ImageFile from ProductImages where ProductUID = p.ProductUID)
 			from
 				Products p with (nolock)			
 			) tbl
 			where
+				1=1
 				<cfif arguments.uid neq "">
-					tbl.ProductUID = '#arguments.uid#'
+					and tbl.ProductUID = '#arguments.uid#'
 				</cfif>
 		</cfquery>
 		<cfreturn qry />

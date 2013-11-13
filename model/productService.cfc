@@ -232,7 +232,23 @@
 		<cffile 
 		    action = "move" 
 		    source = "#uploadFile#" 
+		    destination = "#dest#original\#arguments.NAME#">
+
+		<cffile 
+		    action = "copy" 
+		    source = "#dest#original\#arguments.NAME#" 
 		    destination = "#dest##arguments.NAME#">
+
+		<cfimage source="#dest##arguments.NAME#" name="myImage">
+		<cfset ImageScaleToFit(myImage,200,"","highestPerformance")>
+
+		<cfimage 
+		    action = "write" 
+		    destination = "#dest##arguments.NAME#" 
+		    source = "#myImage#" 
+		    overwrite = "yes" 
+		    quality = "1">
+		
 		 		 		
 	</cffunction>
 </cfcomponent>

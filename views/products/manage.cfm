@@ -106,7 +106,7 @@
                                 var numPhotos = $("##numProductPhotos").val();                                
                                 $("##numProductPhotos").val(parseInt(numPhotos)+parseInt(imagesArr.length));
                                 for (var i=0; i<imagesArr.length; i++) {                                        
-                                        $("##ProductImagess").append("<a rel='lightbox' title='some title' href='#application.ImagesDirRel#"+imagesArr[i]+"'><img style='max-width:200px;margin:10px 5px;' alt='' src='#application.ImagesDirRel#"+imagesArr[i]+"' /><input type='hidden' id='productImage_"+(parseInt(numPhotos)+i+1)+"' name='productImage' value='"+imagesArr[i]+"' /></a>");
+                                        $("##ProductImagess").append("<a rel='lightbox' title='some title' href='#application.ImagesDirRel#original/"+imagesArr[i]+"'><img style='max-width:200px;margin:10px 5px;' alt='' src='#application.ImagesDirRel#"+imagesArr[i]+"' /><input type='hidden' id='productImage_"+(parseInt(numPhotos)+i+1)+"' name='productImage' value='"+imagesArr[i]+"' /></a>");
                                 }
 
                                 $("a[rel^='lightbox']").slimbox({
@@ -227,7 +227,7 @@
                                                                                 <cfif fProductImages neq "">
                                                                                         <cfset ix = 1/>
                                                                                         <cfloop list="#fProductImages#" index="i">
-                                                                                                <a rel='lightbox' title='some title' href='#application.ImagesDirRel##i#'>
+                                                                                                <a rel='lightbox' title='some title' href='#application.ImagesDirRel#original/#i#'>
                                                                                                         <img style='max-width:200px;margin:10px 5px;' alt='' src='#application.ImagesDirRel##i#' />
                                                                                                         <input type='hidden' id='productImage_#ix#' name='productImage' value='' /></a>
                                                                                                         <cfset ix = ix + 1 />
