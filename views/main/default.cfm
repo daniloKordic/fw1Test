@@ -3,6 +3,7 @@
 	<cfset fullName = "Guest" />	
 	<cfset usertype= 2 />
 	<cfset fCategoryUID = ""/>
+	<cfset fPage=1/>
 
 	<cfif structKeyExists(session.auth, "user")>
 		<cfset userUID = session.auth.user.getUID() />
@@ -20,9 +21,8 @@
 		<cfset fCategoryUID="#rc.uid#" />
 	</cfif> --->
 	
-	<cfif isDefined("rc.cuid") and rc.cuid neq "">
-		<cfset fCategoryUID = "#rc.cuid#" />
-	</cfif>
+	<cfif isDefined("rc.cuid") and rc.cuid neq ""><cfset fCategoryUID = "#rc.cuid#" /></cfif>
+	<cfif isDefined("rc.p") and rc.p neq ""><cfset fPage = "#rc.p#" /></cfif>
 
 	<div class="container-fluid">
 		<div class="row-fluid">
@@ -52,14 +52,14 @@
 								                    					<cfif ParentUID eq ttCategoryUID>
 								                    						<cfset tttCategoryUID= CategoryUID />
 								                    						<cfif hasChildren eq 0>							                    							
-								                    							<li <cfif fCategoryUID eq tttCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#tttCategoryUID#">#CategoryName#</a></li>
+								                    							<li <cfif fCategoryUID eq tttCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#tttCategoryUID#&p=1">#CategoryName#</a></li>
 								                    						<cfelse>
 								                    							<li><label class="tree-toggler nav-header">#CategoryName#</label>
 												                    			<ul class="nav nav-list tree">
 												                    				<cfloop query="#rc.categories#">
 												                    					<cfif ParentUID eq tttCategoryUID>
 												                    						<cfset ttttCategoryUID= CategoryUID />         		
-												                    						<li <cfif fCategoryUID eq ttttCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#tttCategoryUID#">#CategoryName#</a></li>
+												                    						<li <cfif fCategoryUID eq ttttCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#tttCategoryUID#&p=1">#CategoryName#</a></li>
 												                    					</cfif>
 												                    				</cfloop>
 												                    			</ul>
@@ -69,13 +69,13 @@
 								                    			</ul>
 								                    		</li>
 							                    		<cfelse>
-							                    			<li <cfif fCategoryUID eq ttCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#ttCategoryUID#">#CategoryName#</a></li>
+							                    			<li <cfif fCategoryUID eq ttCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#ttCategoryUID#&p=1">#CategoryName#</a></li>
 							                    		</cfif>
 							        					</cfif>
 							        				</cfloop>
 						        				</ul>	
 						        			<cfelse>
-						        				<li <cfif fCategoryUID eq tCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#tCategoryUID#">#CategoryName#</a></li>
+						        				<li <cfif fCategoryUID eq tCategoryUID>class="selected"</cfif>><a href="index.cfm?main&cuid=#tCategoryUID#&p=1">#CategoryName#</a></li>
 						        			</cfif>
 						        		</li>	        	
 				        				<li class="divider"></li>					        				
@@ -85,44 +85,96 @@
 				    </div>
 				</div>
 			</div>
-			<div class="span6 content">
+			<div class="span6 content" style="position:relative;">
 				<ul class="thumbnails span12" style="float:left;">
 					<cfif rc.products.recordCount neq 0>					
-						<cfloop query="#rc.products#">						
-							<cfif CategoryUID eq fCategoryUID>						
-								<li class="span4" <cfif rc.products.currentRow mod 3 neq 0 and rc.products.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
-							   	<div class="thumbnail">
-							   		<cfif mainImage neq "">
-							   			<a href="index.cfm?action=products.view&uid=#ProductUID#">
-							   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
-							   			</a>
-							   		</cfif>							   	
-								   	<h4>#ProductName# #rc.products.currentRow#</h4>
-								   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
-							   	</div>
-								</li>
-								<cfif rc.products.currentRow mod 3 eq 0><div class="clear"></div></cfif>
-							<cfelseif fCategoryUID eq "">
-								<li class="span4" <cfif rc.products.currentRow mod 3 neq 0 and rc.products.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
-							   	<div class="thumbnail">
-							   		<cfif mainImage neq "">
-							   			<a href="index.cfm?action=products.view&uid=#ProductUID#">
-							   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
-							   			</a>
-							   		</cfif>							   	
-								   	<h4>#ProductName# - #rc.products.currentRow#</h4>
-								   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
-							   	</div>
-								</li>
-								<cfif rc.products.currentRow mod 3 eq 0><div class="clear"></div></cfif>
+						<cfloop query="#rc.products#">		
+
+							<!--- CHECK IF ON THIS PAGE --->
+							<cfif rowid lte (#fPage#*6) and rowid gt ((#fPage#-1)*6)>												
+
+								<cfif CategoryUID eq fCategoryUID>
+										<li class="span4" <cfif rc.products.currentRow mod 3 neq 0 and rc.products.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
+									   	<div class="thumbnail">
+									   		<cfif mainImage neq "">
+									   			<a href="index.cfm?action=products.view&uid=#ProductUID#">
+									   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
+									   			</a>
+									   		</cfif>							   	
+										   	<h4>#ProductName#</h4>
+										   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
+									   	</div>
+										</li>
+									<cfif rc.products.currentRow mod 3 eq 0><div class="clear"></div></cfif>
+								<cfelseif fCategoryUID eq "">
+									<li class="span4" <cfif rc.products.currentRow mod 3 neq 0 and rc.products.currentRow mod 3 neq 2>style="margin-left:0;"</cfif>>
+								   	<div class="thumbnail">
+								   		<cfif mainImage neq "">
+								   			<a href="index.cfm?action=products.view&uid=#ProductUID#">
+								   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
+								   			</a>
+								   		</cfif>							   	
+									   	<h4>#ProductName# - #rc.products.currentRow#</h4>
+									   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
+								   	</div>
+									</li>
+									<cfif rc.products.currentRow mod 3 eq 0><div class="clear"></div></cfif>
+								</cfif>
+
 							</cfif>
-						</cfloop>
+						</cfloop>			
+
 					<cfelse>
 						<li class="span12" style="text-align:center;min-height:400px;vertical-align:middle;padding-top:100px;">
 							<h2>No products</h2>
 						</li>
 					</cfif>
 				</ul>
+
+				<!--- PAGINATION --->
+				<cfif fCategoryUID neq "">
+					<div class="pagination pagination-small" style="text-align:center;position:absolute;bottom:0;width:100%;margin-bottom:5px;">
+						<ul>	
+							<cfif fPage neq 1>
+								<li><a href="index.cfm?main&cuid=#fCategoryUID#&p=#fPage-1#">Prev</a></li>
+							<cfelse>										
+								<li class="disabled"><a href="javascript:void(0);">Prev</a></li>
+							</cfif>								
+							<cfset fNumPages = rc.products.recordCount / 6 />
+							<cfset fLastPage = round(fNumPages mod 6) + 1 />
+							<cfloop from="1" to="#fNumPages#" index="i">
+								<cfif fPage eq #i#>
+									<li class="active"><a href="javascript:void(0)">#i#</a></li>		
+								<cfelse>
+									<li><a href="index.cfm?main&cuid=#fCategoryUID#&p=#i#">#i#</a></li>		
+								</cfif>
+							</cfloop>
+							<cfif fNumPages mod 6 neq 0>	
+								<cfif fPage eq #fLastPage#>									
+									<li class="disabled">
+										<a href="javascript: void(0)">#fLastPage#</a>
+									</li>
+								<cfelse>
+									<li><a href="index.cfm?main&cuid=#fCategoryUID#&p=#fLastPage#">#fLastPage#</a></li>
+								</cfif>
+							</cfif>							
+							<cfif round(fNumPages mod 6) eq 0>
+								<li class="disabled">
+									<a href="javascript: void(0)">1</a>
+								</li>
+							</cfif>
+							<cfif fPage eq fLastPage>
+								<li class="disabled">
+									<a href="javascript: void(0)">Next</a>
+								</li>
+							<cfelse>
+								<li>
+									<a href="index.cfm?main&cuid=#fCategoryUID#&p=#fPage+1#">Next</a>
+								</li>
+							</cfif>
+						</ul>
+					</div>							
+				</cfif>
 			</div>
 			<div class="span3 news">
 				NEWS

@@ -242,7 +242,8 @@
 				<cfif arguments.count neq 0>
 					top #arguments.count#
 				</cfif>
-				p.ProductUID
+				ROW_NUMBER() OVER (ORDER BY p.datecreated desc) as rowid
+				,p.ProductUID
 				,p.ProductName
 				,p.ProductDescription
 				,p.active
@@ -293,7 +294,8 @@
 
 		<cfquery name="qry" datasource="#getDSN()#">
 			select 
-				tbl.*
+				ROW_NUMBER() OVER (ORDER BY tbl.datecreated desc) as rowid
+				,tbl.*
 				,images = (select dbo.GROUP_CONCAT(ImageFile) from ProductImages where ProductUID = tbl.ProductUID)
 			from (			
 			select
@@ -301,6 +303,7 @@
 				,p.ProductName
 				,p.ProductDescription
 				,p.active
+				,p.datecreated
 				,CategoryUID=(select CategoryUID from Products2CategoriesLookup where ProductUID=p.ProductUID)
 				,mainImage=(select top 1 ImageFile from ProductImages where ProductUID = p.ProductUID)
 			from
