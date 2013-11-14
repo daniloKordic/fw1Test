@@ -23,15 +23,9 @@
 	
 	<cfif isDefined("rc.cuid") and rc.cuid neq ""><cfset fCategoryUID = "#rc.cuid#" /></cfif>
 	<cfif isDefined("rc.p") and rc.p neq ""><cfset fPage = "#rc.p#" /></cfif>
-
-	<div class="container-fluid">
+	<div class="container-fluid" style="padding-left:0;padding-right:0;">		
 		<div class="row-fluid">
-			<div class="span12">
-				<h2 class="form-signin-heading">Welcome #fullName#</h2>
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span3 menu">
+			<div class="span3New menu">
 
 				<div class="well" style="padding: 8px 0;">
 				    <div style="overflow-y: scroll; overflow-x: hidden; height: 430px;">
@@ -85,7 +79,7 @@
 				    </div>
 				</div>
 			</div>
-			<div class="span6 content" style="position:relative;">
+			<div class="span6New content" style="position:relative;">
 				<ul class="thumbnails span12" style="float:left;">
 					<cfif rc.products.recordCount neq 0>					
 						<cfloop query="#rc.products#">		
@@ -114,7 +108,7 @@
 								   				<img src="#application.ImagesDirRel##mainImage#" style="width:100%;" alt="">	
 								   			</a>
 								   		</cfif>							   	
-									   	<h4>#ProductName# - #rc.products.currentRow#</h4>
+									   	<h4>#ProductName#</h4>
 									   	<p><cfif len(ProductDescription) gt 40>#left("#ProductDescription#", 37)#...<cfelse>#ProductDescription#</cfif></p>
 								   	</div>
 									</li>
@@ -176,8 +170,25 @@
 					</div>							
 				</cfif>
 			</div>
-			<div class="span3 news">
-				NEWS
+			<div class="span3New news">
+				<div class="thumbnail center well well-small text-center">
+                <h2>Newsletter</h2>
+                
+                <p>Subscribe to our weekly<br/>Newsletter and stay tuned.</p>
+                
+                <form id="newsletterForm" action="" method="post">
+
+                    <div class="control-group">
+					        <div class="controls">
+					        	<div class="input-prepend"><span class="add-on"><i class="icon-envelope"></i></span>
+					            <input type="text" name="email" id="email" placeholder="Your email address" style="width:126px;">
+					         </div>
+					        </div>
+					    </div>
+
+                    <input type="button" id="newsletterBtn" onclick="registerNewsletter()" value="Subscribe Now!" class="btn btn-large" />
+              </form>
+            </div>
 			</div>
 		</div>
 		<div class="row-fluid footer">
@@ -204,6 +215,27 @@
 	  $('.selected').parent().parent().parent().parent().children('ul.tree').toggle(300);
 	  $('.selected').parent().parent().parent().children('ul.tree').toggle(300);
 	  $('.selected').parent().parent().children('ul.tree').toggle(300);
+
+	  $("##newsletterForm").validate({
+		    rules: {
+		        email: {
+		            required: true,
+		            email: true
+		        }
+		    },
+		    highlight: function (element) {
+		        $(element).closest('.control-group').removeClass('success').addClass('error');
+		    },
+		    success: function (element) {
+		        element.text('OK!').addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+		    }
+		});
 	});	
+
+	function registerNewsletter() {
+		if ($("##email").val() == "") {
+			alert("Please add your email.");
+		}
+	}
 </script>
 </cfoutput>

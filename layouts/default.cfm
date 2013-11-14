@@ -2,8 +2,7 @@
 
 	<cfparam name="rc.pageTitle" default="Product Management" />
 	<cfparam name="rc.message" default="#arrayNew(1)#"/>
-
-
+	
 	<!DOCTYPE HTML>
 	<html>
 	<head>
@@ -148,6 +147,7 @@
 				</div>			
 		</cfif>
 		<!--/.navbar -->
+
 		<div class="container container-long">		
 			<div class="row">
 				#body#
