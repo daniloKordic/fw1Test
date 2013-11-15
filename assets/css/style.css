@@ -1,4 +1,4 @@
-body{
+{
 	background: #f1f1f1;
 }
 .menu{
@@ -235,4 +235,45 @@ span.bold {
 .selected a{
     font-size: 11px !important;
     font-weight: bold !important;
+}
+/*.imageHolder {
+    min-width: 225px;
+    min-height: 200px;
+    text-align: center;
+    border: 1px solid #BFBFBF;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+.imageHolder img {
+    vertical-align: middle;
+    margin: auto 0;
+}*/
+.imageHolder {
+    height: 200px;      /* equals max image height */
+    width: 225px;
+    border: 1px solid #BFBFBF;
+    border-radius: 5px;   
+    text-align: center; 
+    margin: 5px;
+    padding: 5px;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.imageHolder img {
+    background: #3A6F9A;
+    vertical-align: middle;
+    max-height: 200px;
+    max-width: 225px;
+}
+#productPhotos{
+    padding: 30px;
+}
+#productInfo{
+    padding-left: 200px;
 }

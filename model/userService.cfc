@@ -45,6 +45,8 @@
 			var password="";
 			var active=0;
 			var userImage="";
+			var address="";
+			var timezone="";
 		</cfscript>
 		
 		<cfif structKeyExists(arguments.form, "userUID")><cfset userUID=arguments.form.userUID /></cfif>
@@ -55,6 +57,8 @@
 		<cfif structKeyExists(arguments.form, "password")><cfset password=arguments.form.password /></cfif>
 		<cfif structKeyExists(arguments.form, "active")><cfset active=arguments.form.active /></cfif>
 		<cfif structKeyExists(arguments.form, "userImage")><cfset userImage=arguments.form.userImage /></cfif>
+		<cfif structKeyExists(arguments.form, "address")><cfset address=arguments.form.address /></cfif>
+		<cfif structKeyExists(arguments.form, "Timezone")><cfset timezone=arguments.form.Timezone /></cfif>
 
 		<cfset user.setupUser (
 			UID=userUID
@@ -65,6 +69,8 @@
 			,Password=password
 			,IsActive=active
 			,UserImage=userImage
+			,Address=address
+			,Timezone=timezone
 		) />
 
 		<cfif structKeyExists(arguments.form, "fsw")>

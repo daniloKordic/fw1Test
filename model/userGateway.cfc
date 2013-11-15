@@ -84,6 +84,8 @@
 					,isActive=qry.isActive
 					,TypeID=qry.TypeID
 					,UserImage=qry.UserImage
+					,Address=qry.Address
+					,Timezone=qry.Timezone
 					) />
 			</cfif>
 		</cfif>
@@ -107,6 +109,8 @@
 					,u.isActive
 					,u.typeID
 					,u.userImage
+					,u.Address
+					,u.Timezone
 				from
 					Users u 
 				WHERE
@@ -124,7 +128,9 @@
 					Password=qry.password,
 					IsActive=qry.isActive,
 					TypeID=qry.typeID,
-					UserImage=qry.userImage
+					UserImage=qry.userImage,
+					Address=qry.Address,
+					Timezone=qry.Timezone
 				) />
 			</cfif>
 		</cfif>
@@ -152,6 +158,8 @@
 				,isActive
 				,typeID
 				,userImage
+				,Address
+				,Timezone
 			) values(
 				<cfqueryparam cfsqltype="cf_sql_varchar" value="#uid#" />
 				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getFirstname()#" />
@@ -162,6 +170,8 @@
 				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getIsActive()#" />
 				,<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.user.getTypeID()#" />
 				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUserImage()#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getAddress()#" />
+				,<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getTimezone()#" />
 			)
 		</cfquery>
 
@@ -182,6 +192,8 @@
 			,password=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getPassword()#" />
 			,isActive=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getIsActive()#" />
 			,userImage=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUserImage()#" />
+			,address=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getAddress()#" />
+			,timezone=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getTimezone()#" />
 			WHERE UserUID=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.user.getUID()#" />
 		</cfquery>
 

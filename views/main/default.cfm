@@ -171,24 +171,27 @@
 				</cfif>
 			</div>
 			<div class="span3New news">
-				<div class="thumbnail center well well-small text-center">
-                <h2>Newsletter</h2>
-                
-                <p>Subscribe to our weekly<br/>Newsletter and stay tuned.</p>
-                
-                <form id="newsletterForm" action="" method="post">
 
-                    <div class="control-group">
-					        <div class="controls">
-					        	<div class="input-prepend"><span class="add-on"><i class="icon-envelope"></i></span>
-					            <input type="text" name="email" id="email" placeholder="Your email address" style="width:126px;">
-					         </div>
-					        </div>
-					    </div>
+				<cfif session.auth.typeid neq 3>				
+					<div class="thumbnail center well well-small text-center">
+	                <h2>Newsletter</h2>
+	                
+	                <p>Subscribe to our weekly<br/>Newsletter and stay tuned.</p>
+	                
+	                <form id="newsletterForm" action="" method="post">
 
-                    <input type="button" id="newsletterBtn" onclick="registerNewsletter()" value="Subscribe Now!" class="btn btn-large" />
-              </form>
-            </div>
+	                    <div class="control-group">
+						        <div class="controls">
+						        	<div class="input-prepend"><span class="add-on"><i class="icon-envelope"></i></span>
+						            <input type="text" name="email" id="email" placeholder="Your email address" style="width:126px;">
+						         </div>
+						        </div>
+						    </div>
+
+	                    <input type="button" id="newsletterBtn" onclick="registerNewsletter()" value="Subscribe Now!" class="btn btn-large" />
+	              </form>
+	            </div>
+            </cfif>
 			</div>
 		</div>
 		<div class="row-fluid footer">

@@ -9,7 +9,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>#rc.pageTitle#</title>
 
-		<script type="text/javascript" src="assets/js/jquery-1.9.1.js"></script>
+		<!---<script type="text/javascript" src="assets/js/jquery-1.9.1.js"></script>--->
+		<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>		
 		
 		<link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 		<link href="assets/bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
@@ -18,7 +19,9 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/colorbox.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/slimbox2.css">
-		<link rel="stylesheet" type="text/css" href="assets/css/blueimp-gallery.css">		
+		<link rel="stylesheet" type="text/css" href="assets/css/blueimp-gallery.css">	    
+		<link rel="stylesheet" type="text/css" media="all" href="assets/css/styles.css">
+		<link rel="stylesheet" type="text/css" media="all" href="assets/css/jquery.lightbox-0.5.css">	
 	</head>
 	<body>
 		<cfif not isDefined("rc.modal")>				
@@ -170,7 +173,8 @@
 		<script type="text/javascript" src="assets/js/twitter-bootstrap-hover-dropdown.min.js"></script>
 		<script type="text/javascript" src="assets/js/jquery.colorbox-min.js"></script>
 		<script type="text/javascript" src="assets/js/slimbox2.js"></script>
-		<script type="text/javascript" src="assets/js/blueimp-gallery.min.js"></script>	
+		<script type="text/javascript" src="assets/js/blueimp-gallery.min.js"></script>	  
+		<script type="text/javascript" src="assets/js/jquery.lightbox-0.5.min.js"></script>
 	</body>
 	</html>
 

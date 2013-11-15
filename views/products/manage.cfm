@@ -22,7 +22,9 @@
 
                 $(document).ready(function() {                        
                         path = '#application.ImagesDirRel#';
-                        
+
+                        $('##thumbnails a').lightBox();
+
                         $("a[rel^='lightbox']").slimbox({
                                 overlayOpacity: 0.6,
                                 counterText: "Image {x} of {y}",
@@ -99,29 +101,22 @@
                                 console.log(result);
                 }
                 function resultFromPopup(message){
-                        console.log('Popup returned: ' + message);
-                        var numImages = $("##numProductPhotos").val();
-                        if (message) {
-                                var imagesArr = message.split(',');
-                                var numPhotos = $("##numProductPhotos").val();                                
-                                $("##numProductPhotos").val(parseInt(numPhotos)+parseInt(imagesArr.length));
-                                for (var i=0; i<imagesArr.length; i++) {                                        
-                                        $("##ProductImagess").append("<a rel='lightbox' title='some title' href='#application.ImagesDirRel#original/"+imagesArr[i]+"'><img style='max-width:200px;margin:10px 5px;' alt='' src='#application.ImagesDirRel#"+imagesArr[i]+"' /><input type='hidden' id='productImage_"+(parseInt(numPhotos)+i+1)+"' name='productImage' value='"+imagesArr[i]+"' /></a>");
-                                }
-
-                                $("a[rel^='lightbox']").slimbox({
-                                        overlayOpacity: 0.6,
-                                        counterText: "Image {x} of {y}",
-                                        closeKeys: [27, 70],
-                                        nextKeys: [39, 83]
-                                }, null, function(el) {
-                                        return (this == el) || ((this.rel.length > 8) && (this.rel == el.rel));
-                                });                                
-                                
+                    var numImages = $("##numProductPhotos").val();
+                    if (message) {
+                        var imagesArr = message.split(',');
+                        var numPhotos = $("##numProductPhotos").val();                                
+                        $("##numProductPhotos").val(parseInt(numPhotos)+parseInt(imagesArr.length));
+                        for (var i=0; i<imagesArr.length; i++) {                                        
+                                $(".ProductImagess").append("<li><div class='imageHolder'><a href='#application.ImagesDirRel#original/"+imagesArr[i]+"' title='Turntable by Jens Kappelmann'><img style='max-width:143px;' src='#application.ImagesDirRel#"+imagesArr[i]+"' alt='turntable'></a><input type='hidden' id='productImage_"+(parseInt(numPhotos)+i+1)+"' name='productImage' value='"+imagesArr[i]+"' /></div></li>");
+                                    
                         }
-                        
-                        //jsusr.getFile();
+
+                        $('##thumbnails a').lightBox();
+                    }          
+                                
                 }
+                        
+            
         </script>
 
         <style type="text/css">
@@ -218,29 +213,46 @@
                                         </div>
                                         <div class="span6 pull-down-50">
                                                 <div class="row margin-top-0 padding-top-0 padding-right-0 padding-left-0 white" style="padding:0 !important;">
-                                                        <div class="tabtitle width-100 margin-bottom-10 margin-top-0">
-                                                                Product Images
+                                                    <div class="tabtitle width-100 margin-bottom-10 margin-top-0">
+                                                            Product Images
+                                                    </div>
+                                                    <div class="backgrey-100">
+                                                        <!--- <div id="ProductImages" style="clear:both;text-align:center;">
+                                                            <p style="display:block;" id="ProductImagess">
+                                                                <cfif fProductImages neq "">
+                                                                    <cfset ix = 1/>
+                                                                    <cfloop list="#fProductImages#" index="i">
+                                                                        <a rel='lightbox' title='some title' href='#application.ImagesDirRel#original/#i#'>
+                                                                            <img style='max-width:140px;margin:10px 5px;' alt='' src='#application.ImagesDirRel##i#' />
+                                                                            <input type='hidden' id='productImage_#ix#' name='productImage' value='' />
+                                                                        </a>
+                                                                        <cfset ix = ix + 1 />
+                                                                    </cfloop>
+                                                                </cfif>
+                                                            </p>
+                                                        </div> --->
+                                                        <div id="thumbnails">
+                                                            <ul class="clearfix ProductImagess" style="margin-left:0 !important;">
+                                                                <cfif fProductImages neq "">
+                                                                    <cfset ix = 1/>
+                                                                    <cfloop list="#fProductImages#" index="i">
+                                                                        <li>
+                                                                        	<div class="imageHolder">
+                                                                            <a href="#application.ImagesDirRel#original/#i#" title="Turntable by Jens Kappelmann">
+                                                                                <img style='max-width:143px;' src="#application.ImagesDirRel##i#" alt="turntable">
+                                                                            </a>
+                                                                           </div>
+                                                                        </li>          
+                                                                    </cfloop>
+                                                                </cfif>                                                              
+                                                            </ul>
                                                         </div>
-                                                        <div class="backgrey-100">
-                                                                <div id="ProductImages" style="clear:both;text-align:center;">
-                                                                        <p style="display:block;" id="ProductImagess">
-                                                                                <cfif fProductImages neq "">
-                                                                                        <cfset ix = 1/>
-                                                                                        <cfloop list="#fProductImages#" index="i">
-                                                                                                <a rel='lightbox' title='some title' href='#application.ImagesDirRel#original/#i#'>
-                                                                                                        <img style='max-width:200px;margin:10px 5px;' alt='' src='#application.ImagesDirRel##i#' />
-                                                                                                        <input type='hidden' id='productImage_#ix#' name='productImage' value='' /></a>
-                                                                                                        <cfset ix = ix + 1 />
-                                                                                        </cfloop>
-                                                                                </cfif>
-                                                                        </p>
-                                                                </div>
-                                                        <div class="clear"></div>
+                                                    <div class="clear"></div>
                                                 </div>
                                                 <div class="clear"></div>
                                                 <div>
-                                                        <button type="button" class="btn btn-default right margin-right-10 margin-bottom-10" name="addImage" id="addImage" type="button" onclick="modalWin('#fProductUID#')">Add Images</button>
-                                                </div>
+                                                    <button type="button" class="btn btn-default right margin-right-10 margin-bottom-10" name="addImage" id="addImage" type="button" onclick="modalWin('#fProductUID#')">Add Images</button>
+                                                </div>                                                
                                         </div>
                                 </div>
                         </div>
